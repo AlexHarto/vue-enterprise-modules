@@ -1,0 +1,35 @@
+#app {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+html,
+body,
+#app {
+  @apply h-full;
+}
+
+/* ANIMATION: group-fade */
+.group-fade-move {
+  @apply transition-all duration-400 ease-in-out;
+}
+.group-fade-leave-active {
+  @apply absolute right-0;
+}
+.group-fade-enter-active,
+.group-fade-leave-active {
+  @apply transition-all duration-400 ease-in-out;
+}
+.group-fade-enter-from,
+.group-fade-leave-to {
+  @apply opacity-0;
+}
+
+/* ANIMATION: fade */
+.fade-enter-active,
+.fade-leave-active {
+  @apply transition-opacity duration-200 ease-in-out;
+}
+.fade-enter-from,
+.fade-leave-to {
+  @apply opacity-0;
+}

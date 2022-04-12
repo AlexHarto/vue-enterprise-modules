@@ -1,0 +1,34 @@
+export default {
+  header: {
+    app: 'App',
+    language: 'Language',
+    language_en: 'English',
+    language_es: 'Español',
+  },
+  home: {
+    title: 'Home',
+    presentation: {
+      title: 'Welcome to App',
+      intro1: 'Thank you for choosing our application!',
+      intro2: 'Please, let us know if you see something that can be improved.',
+      salutation: 'We hope you enjoy our application!',
+    },
+  },
+  about: {
+    title: 'About',
+  },
+  notifications: {
+    notification1: {
+      title: 'Congratulations!',
+      message1: 'You made it!',
+      message2: 'Enjoy our service!',
+    },
+    notification2: {
+      title: 'Hi!',
+      message: 'Welcome back to our service!',
+    },
+  },
+  errors: {
+    generic: 'Something wrong happened.Please, try again later.',
+  },
+};
