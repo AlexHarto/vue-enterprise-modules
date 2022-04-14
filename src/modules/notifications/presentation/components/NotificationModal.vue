@@ -12,7 +12,7 @@
     data-test="notification"
   >
     <header class="flex items-center justify-between mb-2 -mt-2 font-semibold">
-      <div v-if="notification.title">
+      <div v-if="notification.title" data-test="notification-title">
         {{ notification.title }}
       </div>
       <div
@@ -35,7 +35,7 @@
           :icon="notification.type"
         />
       </div>
-      <div class="w-full">
+      <div class="w-full" data-test="notification-message">
         {{ notification.message }}
         <slot :name="`content_${notification.id}`"></slot>
       </div>

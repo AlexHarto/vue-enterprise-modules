@@ -1,5 +1,8 @@
 <template>
-  <div class="absolute flex flex-col top-4 right-4">
+  <div
+    class="absolute flex flex-col top-4 right-4"
+    data-test="notifications-container"
+  >
     <transition-group name="group-fade" tag="div">
       <NotificationModal
         v-for="notification in activeNotifications"

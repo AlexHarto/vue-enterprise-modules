@@ -1,5 +1,13 @@
 import useNotifications from './infra/composables/Notifications';
-import { NotificationType } from './infra/types/Notification';
+import {
+  NotificationType,
+  type Notification,
+} from './infra/types/Notification';
 import NotificationsContainer from './presentation/components/NotificationsContainer.vue';
 
-export { useNotifications, NotificationType, NotificationsContainer };
+export {
+  useNotifications,
+  Notification,
+  NotificationType,
+  NotificationsContainer,
+};

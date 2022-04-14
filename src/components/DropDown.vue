@@ -1,7 +1,7 @@
 <template>
   <div ref="dropdowncontainer" class="relative">
     <button
-      :id="`dropdown${id}`"
+      :id="`dropdown_${id}`"
       data-dropdown-toggle="dropdown"
       class="flex items-center mb-0.5 min-w-11"
       type="button"
@@ -20,6 +20,7 @@
     <transition name="fade" mode="out-in">
       <div
         v-if="optionsVisible"
+        data-test="options"
         class="absolute z-10 top-8 right-0 min-w-24 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700"
       >
         <ul
@@ -65,12 +66,19 @@ const dropdowncontainer = ref<HTMLDivElement>();
 const optionsVisible = ref(false);
 
 const toggleDropdown = () => {
+  // console.log(dropdowncontainer.value?.childNodes[1]);
   optionsVisible.value = !optionsVisible.value;
 };
 
 const clickOutside = (event: Event) => {
   if (dropdowncontainer.value && event && event.composedPath) {
-    if (!event.composedPath().includes(dropdowncontainer.value)) {
+    // if (!event.composedPath().includes(dropdowncontainer.value)) {
+    if (
+      !(
+        event.composedPath().includes(dropdowncontainer.value.childNodes[0]) ||
+        event.composedPath().includes(dropdowncontainer.value.childNodes[1])
+      )
+    ) {
       optionsVisible.value = false;
     }
   }

@@ -18,11 +18,15 @@ describe('MainHeader', () => {
       },
     },
   });
-  it('renders properly', () => {
+
+  it('Renders properly', () => {
     expect(wrapper.exists()).toBeTruthy();
     expect(wrapper.find('[data-test="logo"]').text()).toContain(
       t('header.app')
     );
+  });
+
+  it('Shows the menu items', () => {
     const menuItems = wrapper.vm.menuItems;
     const allMenuItems = wrapper.findAll('[data-test="menu-item"]');
     expect(allMenuItems.length).toBe(menuItems.length);
