@@ -3,7 +3,7 @@
     :class="['flex flex-col mt-0.5 rounded retro-section', (data.type as string).toLowerCase()]"
   >
     <h2
-      class="flex items-center justify-between text-xl font-bold retro-section-title"
+      class="flex items-center justify-between text-xl font-bold rounded-t retro-section-title"
     >
       <div class="p-4 tracking-wide">{{ data.title }}</div>
       <div class="flex">
