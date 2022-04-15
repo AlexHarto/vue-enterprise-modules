@@ -17,6 +17,15 @@ export default {
   about: {
     title: 'About',
   },
+  retro: {
+    titles: {
+      continue: 'Cosas que deberíamos continuar haciendo...',
+      stop: 'Cosas que habría que dejar de hacer...',
+      try: 'Nuevas cosas que podríamos intentar hacer...',
+      kudos: 'Agradecimientos...',
+    },
+    add_button: 'Añadir',
+  },
   notifications: {
     notification1: {
       title: '¡Enhorabuena!',

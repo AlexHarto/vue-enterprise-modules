@@ -5,12 +5,12 @@
     <h2
       class="flex items-center justify-between text-xl font-bold rounded-t retro-section-title"
     >
-      <div class="p-4 tracking-wide">{{ data.title }}</div>
+      <div class="p-4 tracking-wide">{{ t(data.title) }}</div>
       <div class="flex">
         <button
           :class="[
             'p-1.5 mr-4 border border-white border-opacity-70 rounded transition-colors',
-            isChecks
+            isChecksActive
               ? 'text-black bg-white bg-opacity-90 hover:(text-black bg-white bg-opacity-70)'
               : 'text-white hover:(bg-white bg-opacity-40)',
           ]"
@@ -21,7 +21,7 @@
         <button
           :class="[
             'p-1.5 mr-4 border border-white border-opacity-70 rounded transition-colors',
-            isSorted
+            isSortedActive
               ? 'text-black bg-white bg-opacity-90 hover:(text-black bg-white bg-opacity-70)'
               : 'text-white hover:(bg-white bg-opacity-40)',
           ]"
@@ -44,7 +44,7 @@
           >
             <RetroSectionItem
               :message="message"
-              :checks="isChecks"
+              :checks="isChecksActive"
             ></RetroSectionItem>
           </li>
         </transition-group>
@@ -57,9 +57,9 @@
           class="w-full px-4 py-2 transition-colors rounded"
         />
         <button
-          class="w-1/6 px-4 py-2 transition-colors border-2 border-transparent rounded focus:(border-black ring-1 ring-white)"
+          class="w-26 px-4 py-2 transition-colors border-2 border-transparent rounded focus:(border-black ring-1 ring-white)"
         >
-          Add
+          {{ t('retro.add_button') }}
         </button>
       </form>
     </div>
@@ -68,26 +68,68 @@
 
 <script setup lang="ts">
 import SvgIcon from '@/components/SvgIcon.vue';
-import { computed } from '@vue/reactivity';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 import type { RetroSectionData } from '../../infra/types/Section';
 import RetroSectionItem from './RetroSectionItem.vue';
 
-const props = defineProps<{ data: RetroSectionData }>();
+const emits = defineEmits(['update:global-checks', 'update:global-sort']);
+
+const props = defineProps<{
+  data: RetroSectionData;
+  globalChecks: boolean;
+  globalSort: boolean;
+}>();
+
+const { t } = useI18n();
 
 const newMessageText = ref('');
 
 const isChecks = ref(false);
+const isChecksLocalPriority = ref(false);
+const isChecksActive = computed(
+  () =>
+    (isChecksLocalPriority.value && isChecks.value) ||
+    (!isChecksLocalPriority.value && (isChecks.value || props.globalChecks))
+);
 
 const isSorted = ref(false);
+const isSortedLocalPriority = ref(false);
+const isSortedActive = computed(
+  () =>
+    (isSortedLocalPriority.value && isSorted.value) ||
+    (!isSortedLocalPriority.value && (isSorted.value || props.globalSort))
+);
 
 const sortedMessages = computed(() => props.data.messages);
 
-const toggleChecks = () => {
+const toggleChecks = (e: MouseEvent) => {
+  if (e.shiftKey) {
+    isChecksLocalPriority.value = false;
+    if (isChecks.value && !props.globalChecks) {
+      isChecks.value = props.globalChecks;
+    } else if (!isChecks.value && props.globalChecks) {
+      isChecks.value = !props.globalChecks;
+    }
+    emits('update:global-checks', !isChecks.value);
+  } else {
+    isChecksLocalPriority.value = true;
+  }
   isChecks.value = !isChecks.value;
 };
 
-const toggleSorted = () => {
+const toggleSorted = (e: MouseEvent) => {
+  if (e.shiftKey) {
+    isSortedLocalPriority.value = false;
+    if (isSorted.value && !props.globalSort) {
+      isSorted.value = props.globalSort;
+    } else if (!isSorted.value && props.globalSort) {
+      isSorted.value = !props.globalSort;
+    }
+    emits('update:global-sort', !isSorted.value);
+  } else {
+    isSortedLocalPriority.value = true;
+  }
   isSorted.value = !isSorted.value;
 };
 </script>
@@ -95,50 +137,6 @@ const toggleSorted = () => {
 <style scoped>
 .flip-list-move {
   transition: transform 1s;
-}
-.try {
-  --text-color: white;
-  --bg-color: hsl(170, 70%, 37%);
-  --border-color: hsl(170, 50%, 77%);
-  --message-border-color: hsl(170, 39%, 67%);
-  --input-text-color: black;
-  --input-bg-color: var(--border-color);
-  --input-placeholder-color: hsl(215, 14%, 34%);
-  --button-text-color: white;
-  --button-bg-color: hsl(170, 70%, 27%);
-}
-.stop {
-  --text-color: white;
-  --bg-color: hsl(10, 70%, 37%);
-  --border-color: hsl(10, 50%, 77%);
-  --message-border-color: hsl(10, 39%, 67%);
-  --input-text-color: black;
-  --input-bg-color: var(--border-color);
-  --input-placeholder-color: hsl(215, 14%, 34%);
-  --button-text-color: white;
-  --button-bg-color: hsl(10, 70%, 27%);
-}
-.continue {
-  --text-color: white;
-  --bg-color: hsl(80, 70%, 37%);
-  --border-color: hsl(80, 50%, 77%);
-  --message-border-color: hsl(80, 39%, 67%);
-  --input-text-color: black;
-  --input-bg-color: var(--border-color);
-  --input-placeholder-color: hsl(215, 14%, 34%);
-  --button-text-color: white;
-  --button-bg-color: hsl(80, 70%, 27%);
-}
-.kudos {
-  --text-color: white;
-  --bg-color: hsl(245, 58%, 51%);
-  --border-color: hsl(245, 96%, 89%);
-  --message-border-color: hsl(245, 89%, 74%);
-  --input-text-color: black;
-  --input-bg-color: var(--border-color);
-  --input-placeholder-color: hsl(245, 14%, 34%);
-  --button-text-color: white;
-  --button-bg-color: hsl(245, 84%, 67%);
 }
 .retro-section {
   color: var(--text-color);

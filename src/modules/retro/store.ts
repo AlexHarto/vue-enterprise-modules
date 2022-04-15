@@ -6,8 +6,8 @@ export const useRetroStore = defineStore('retroStore', {
     return {
       sections: [
         {
-          title: 'Things we should continue doing...',
           type: RetroType.CONTINUE,
+          title: 'retro.titles.continue',
           messages: [
             {
               label: 'We are a great team',
@@ -18,11 +18,11 @@ export const useRetroStore = defineStore('retroStore', {
           ],
         },
         {
-          title: 'Things we should stop doing...',
           type: RetroType.STOP,
+          title: 'retro.titles.stop',
           messages: [
             {
-              label: 'So many meetings...',
+              label: 'Too many meetings...',
             },
             {
               label: 'No time for coding :-[',
@@ -30,8 +30,8 @@ export const useRetroStore = defineStore('retroStore', {
           ],
         },
         {
-          title: 'May be we could try...',
           type: RetroType.TRY,
+          title: 'retro.titles.try',
           messages: [
             {
               label: 'Morning excersises O_o',
@@ -42,8 +42,8 @@ export const useRetroStore = defineStore('retroStore', {
           ],
         },
         {
-          title: 'Kudos...',
           type: RetroType.KUDOS,
+          title: 'retro.titles.kudos',
           messages: [
             {
               label: 'Thank you all!!!',

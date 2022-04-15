@@ -8,6 +8,52 @@ body,
   @apply h-full;
 }
 
+/* VARIABLES */
+.try {
+  --text-color: white;
+  --bg-color: hsl(170, 70%, 37%);
+  --border-color: hsl(170, 50%, 77%);
+  --message-border-color: hsl(170, 39%, 67%);
+  --input-text-color: black;
+  --input-bg-color: var(--border-color);
+  --input-placeholder-color: hsl(215, 14%, 34%);
+  --button-text-color: white;
+  --button-bg-color: hsl(170, 70%, 27%);
+}
+.stop {
+  --text-color: white;
+  --bg-color: hsl(10, 70%, 37%);
+  --border-color: hsl(10, 50%, 77%);
+  --message-border-color: hsl(10, 39%, 67%);
+  --input-text-color: black;
+  --input-bg-color: var(--border-color);
+  --input-placeholder-color: hsl(215, 14%, 34%);
+  --button-text-color: white;
+  --button-bg-color: hsl(10, 70%, 27%);
+}
+.continue {
+  --text-color: white;
+  --bg-color: hsl(80, 70%, 37%);
+  --border-color: hsl(80, 50%, 77%);
+  --message-border-color: hsl(80, 39%, 67%);
+  --input-text-color: black;
+  --input-bg-color: var(--border-color);
+  --input-placeholder-color: hsl(215, 14%, 34%);
+  --button-text-color: white;
+  --button-bg-color: hsl(80, 70%, 27%);
+}
+.kudos {
+  --text-color: white;
+  --bg-color: hsl(245, 58%, 51%);
+  --border-color: hsl(245, 80%, 85%);
+  --message-border-color: hsl(245, 89%, 74%);
+  --input-text-color: black;
+  --input-bg-color: var(--border-color);
+  --input-placeholder-color: hsl(245, 14%, 34%);
+  --button-text-color: white;
+  --button-bg-color: hsl(245, 84%, 67%);
+}
+
 /* ANIMATION: group-fade */
 .group-fade-move {
   @apply transition-all ease-in-out duration-400;

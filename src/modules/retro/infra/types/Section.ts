@@ -13,7 +13,7 @@ export interface RetroSectionMessage {
 }
 
 export interface RetroSectionData {
-  title: string;
   type: RetroType;
+  title: string;
   messages?: RetroSectionMessage[];
 }
