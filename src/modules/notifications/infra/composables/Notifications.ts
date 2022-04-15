@@ -14,7 +14,7 @@ const useNotifications = (
     if (foundIndex < 0) {
       activeNotifications.push(notification);
       if (notification.closeAfterMs) {
-        notification.closeAfterMsTimeout = setTimeout(() => {
+        notification._closeAfterMsTimeoutId = setTimeout(() => {
           removeNotification(notification.id);
         }, notification.closeAfterMs);
       }
@@ -27,8 +27,8 @@ const useNotifications = (
     const foundIndex = activeNotifications.findIndex((n) => n.id === id);
     if (foundIndex > -1) {
       const notification = activeNotifications[foundIndex];
-      if (notification.closeAfterMsTimeout) {
-        clearTimeout(notification.closeAfterMsTimeout);
+      if (notification._closeAfterMsTimeoutId) {
+        clearTimeout(notification._closeAfterMsTimeoutId as number);
       }
       activeNotifications.splice(foundIndex, 1);
     } else if (!options.silent) {

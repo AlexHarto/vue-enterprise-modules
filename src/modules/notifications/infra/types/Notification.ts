@@ -13,5 +13,5 @@ export interface Notification {
   customIcon?: string;
   closable?: boolean;
   closeAfterMs?: number;
-  closeAfterMsTimeout?: NodeJS.Timeout;
+  _closeAfterMsTimeoutId?: unknown; // Internal use
 }

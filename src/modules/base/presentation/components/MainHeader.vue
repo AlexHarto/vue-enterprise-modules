@@ -10,7 +10,7 @@
         <RouterLink
           v-for="menuItem in menuItems"
           :key="menuItem.routeName"
-          :to="{ name: menuItem.routeName }"
+          :to="{ path: getRoutePath(menuItem.routeName) }"
           data-test="router-link"
         >
           <div class="px-2.5 py-1.5" data-test="menu-item">
@@ -19,7 +19,7 @@
           <div
             :class="[
               'transition-colors duration-300 ease-in-out',
-              currentPageName === menuItem.routeName
+              currentPath === getRoutePath(menuItem.routeName)
                 ? 'selected-underline'
                 : 'unselected-underline delay-75',
             ]"
@@ -32,6 +32,7 @@
 </template>
 
 <script setup lang="ts">
+import { getRoutePath } from '@/router';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { RouterLink, useRouter } from 'vue-router';
@@ -53,8 +54,8 @@ const menuItems = [
   },
 ];
 
-const currentPageName = computed(() => {
-  return router.currentRoute.value.name;
+const currentPath = computed(() => {
+  return router.currentRoute.value.path;
 });
 </script>
 

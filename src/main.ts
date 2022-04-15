@@ -2,6 +2,7 @@ import App from '@/App.vue';
 import en from '@/locales/en';
 import es from '@/locales/es';
 import base from '@/modules/base';
+import retro from '@/modules/retro';
 import router from '@/router';
 import { createPinia } from 'pinia';
 import 'virtual:windi.css';
@@ -22,7 +23,8 @@ app.use(i18n);
 
 app.use(createPinia());
 
-base.registerModule(router);
+base.registerModule();
+retro.registerModule(base.routeNames.BASE_HOME);
 
 app.use(router);
 app.mount('#app');

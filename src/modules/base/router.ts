@@ -1,5 +1,4 @@
-import type { Router, RouteRecordName, RouteRecordRaw } from 'vue-router';
-
+import type { RouteRecordRaw } from 'vue-router';
 /**
  * Route names: Add module name as prefix to make them unique
  */
@@ -32,24 +31,3 @@ export const routes: Array<RouteRecordRaw> = [
     ],
   },
 ];
-
-export const registerModule = (
-  router: Router,
-  parentName: RouteRecordName | undefined = undefined
-) => {
-  routes.forEach((route) => {
-    if (parentName) {
-      router.addRoute(parentName, route);
-    } else {
-      router.addRoute(route);
-    }
-  });
-};
-
-export const unregisterModule = (router: Router) => {
-  routes.forEach((route) => {
-    if (route.name) {
-      router.removeRoute(route.name);
-    }
-  });
-};
