@@ -1,6 +1,6 @@
 export default {
   header: {
-    app: 'App',
+    app: 'Retro',
     language: 'Language',
     language_en: 'English',
     language_es: 'Español',
@@ -8,7 +8,7 @@ export default {
   home: {
     title: 'Home',
     presentation: {
-      title: 'Welcome to App',
+      title: 'Welcome to Retro',
       intro1: 'Thank you for choosing our application!',
       intro2: 'Please, let us know if you see something that can be improved.',
       salutation: 'We hope you enjoy our application!',
