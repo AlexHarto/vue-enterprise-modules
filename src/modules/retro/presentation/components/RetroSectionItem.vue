@@ -2,7 +2,7 @@
   <div class="flex items-center">
     <button
       v-if="checks"
-      class="mr-2 w-5 h-5 text-white border border-white border-opacity-75 rounded transition-colors hover:(text-black bg-white bg-opacity-75)"
+      class="mr-2 w-5 h-5 border border-opacity-75 rounded transition-colors checkbox"
       @click="toggleChecked"
     >
       <SvgIcon
@@ -14,16 +14,18 @@
     <div class="flex-grow">{{ message.label }}</div>
     <button @click="toggleLiked">
       <transition :name="liked ? 'grow-fade' : 'fade'" mode="out-in">
-        <SvgIcon
-          v-if="liked"
-          icon="heart-filled"
-          class="w-6 h-6 transition-all transform opacity-100"
-        ></SvgIcon>
-        <SvgIcon
-          v-else
-          icon="heart"
-          class="w-6 h-6 transition-all transform opacity-70 hover:opacity-100"
-        ></SvgIcon>
+        <button v-if="liked" class="flex-center">
+          <SvgIcon
+            icon="heart-filled"
+            class="w-6 h-6 transition-all transform opacity-100"
+          ></SvgIcon>
+        </button>
+        <button v-else class="flex-center">
+          <SvgIcon
+            icon="heart"
+            class="w-6 h-6 transition-all transform opacity-100 heart-icon"
+          ></SvgIcon>
+        </button>
       </transition>
     </button>
     <span class="pl-2 text-right min-w-4">{{ numLikes }}</span>
@@ -46,16 +48,23 @@ const numLikes = ref(0);
 
 const toggleLiked = () => {
   liked.value = !liked.value;
-  setTimeout(
-    () => {
-      numLikes.value += liked.value ? 1 : -1;
-    },
-    liked.value ? 350 : 250
-  );
+  numLikes.value += liked.value ? 1 : -1;
 };
 const toggleChecked = () => {
   isChecked.value = !isChecked.value;
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+@media (hover: hover) and (pointer: fine) {
+  .checkbox:hover {
+    @apply text-black bg-white bg-opacity-75;
+  }
+  .heart-icon {
+    @apply opacity-70;
+  }
+  .heart-icon:hover {
+    @apply opacity-100;
+  }
+}
+</style>

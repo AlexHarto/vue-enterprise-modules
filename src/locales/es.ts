@@ -24,6 +24,9 @@ export default {
       try: 'Nuevas cosas que podríamos intentar hacer...',
       kudos: 'Agradecimientos...',
     },
+    input: {
+      placeholder: 'Escribe aquí...',
+    },
     add_button: 'Añadir',
   },
   notifications: {

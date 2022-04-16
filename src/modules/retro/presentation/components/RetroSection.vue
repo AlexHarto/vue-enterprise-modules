@@ -3,28 +3,18 @@
     :class="['flex flex-col mt-0.5 rounded retro-section', (data.type as string).toLowerCase()]"
   >
     <h2
-      class="flex items-center justify-between text-xl font-bold rounded-t retro-section-title"
+      class="sm:(flex items-center) p-4 text-xl font-bold rounded-t retro-section-title"
     >
-      <div class="p-4 tracking-wide">{{ t(data.title) }}</div>
-      <div class="flex">
+      <div class="tracking-wide">{{ t(data.title) }}</div>
+      <div class="flex gap-4 mt-2 sm:mt-0 justify-end ml-auto">
         <button
-          :class="[
-            'p-1.5 mr-4 border border-white border-opacity-70 rounded transition-colors',
-            isChecksActive
-              ? 'text-black bg-white bg-opacity-90 hover:(text-black bg-white bg-opacity-70)'
-              : 'text-white hover:(bg-white bg-opacity-40)',
-          ]"
+          :class="['icon-button', { 'icon-button--active': isChecksActive }]"
           @click="toggleChecks"
         >
           <SvgIcon icon="check" class="w-6 h-6"></SvgIcon>
         </button>
         <button
-          :class="[
-            'p-1.5 mr-4 border border-white border-opacity-70 rounded transition-colors',
-            isSortedActive
-              ? 'text-black bg-white bg-opacity-90 hover:(text-black bg-white bg-opacity-70)'
-              : 'text-white hover:(bg-white bg-opacity-40)',
-          ]"
+          :class="['icon-button', { 'icon-button--active': isSortedActive }]"
           @click="toggleSorted"
         >
           <SvgIcon
@@ -49,15 +39,18 @@
           </li>
         </transition-group>
       </div>
-      <form class="flex gap-2 mt-4 retro-section-form" @submit.prevent>
+      <form
+        class="flex flex-col sm:flex-row gap-2 mt-4 retro-section-form"
+        @submit.prevent
+      >
         <input
           v-model="newMessageText"
           type="text"
-          placeholder="Type here..."
-          class="w-full px-4 py-2 transition-colors rounded"
+          :placeholder="t('retro.input.placeholder')"
+          class="w-full px-4 py-2 transition-colors rounded border-2 border-transparent interactive focus:(border-black ring-1 ring-white)"
         />
         <button
-          class="w-26 px-4 py-2 transition-colors border-2 border-transparent rounded focus:(border-black ring-1 ring-white)"
+          class="sm:(w-26) px-4 py-2 transition-colors border-2 border-transparent rounded interactive focus:(border-black ring-1 ring-white)"
         >
           {{ t('retro.add_button') }}
         </button>
@@ -153,7 +146,7 @@ const toggleSorted = (e: MouseEvent) => {
   input {
     color: var(--input-text-color);
     background-color: var(--input-bg-color);
-    @apply focus:(text-black bg-white bg-opacity-75) hover:(text-black bg-white bg-opacity-75);
+    @apply focus:(text-black bg-white bg-opacity-75);
   }
   input::placeholder {
     color: var(--input-placeholder-color);
@@ -161,7 +154,27 @@ const toggleSorted = (e: MouseEvent) => {
   button {
     color: var(--button-text-color);
     background-color: var(--button-bg-color);
-    @apply hover:(text-black bg-white bg-opacity-75);
+  }
+}
+
+.icon-button {
+  @apply p-1.5 border text-white border-white border-opacity-70 rounded transition-colors;
+}
+.icon-button--active {
+  @apply text-black bg-white bg-opacity-90;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .icon-button:hover {
+    @apply bg-white bg-opacity-40;
+  }
+  .icon-button--active:hover {
+    @apply text-black bg-white bg-opacity-70;
+  }
+  input.interactive:hover,
+  button.interactive:hover,
+  .interactive:hover {
+    @apply text-black bg-white bg-opacity-75;
   }
 }
 </style>

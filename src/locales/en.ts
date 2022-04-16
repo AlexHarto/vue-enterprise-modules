@@ -24,6 +24,9 @@ export default {
       try: 'New things we could try...',
       kudos: 'Kudos...',
     },
+    input: {
+      placeholder: 'Type something here...',
+    },
     add_button: 'Add',
   },
   notifications: {

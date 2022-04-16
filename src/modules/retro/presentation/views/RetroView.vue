@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-2 gap-6 mt-6">
+  <div class="grid lg:grid-cols-2 gap-6 my-6">
     <RetroSection
       v-for="(section, sectionIndex) in sections"
       :key="`section_${sectionIndex}`"

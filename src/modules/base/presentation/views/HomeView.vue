@@ -1,7 +1,7 @@
 <template>
   <div class="relative">
     <transition name="fade-up">
-      <div v-show="toastVisible" class="max-h-40">
+      <div v-show="toastVisible" class="max-h-60">
         <div class="p-4 rounded bg-info-bg text-info-text border-info-border">
           <header
             class="flex items-center justify-between mb-2 -mt-2 font-semibold"

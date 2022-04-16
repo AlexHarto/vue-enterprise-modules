@@ -8,6 +8,11 @@ body,
   @apply h-full;
 }
 
+/* UTILITIES */
+.flex-center {
+  @apply flex items-center justify-center;
+}
+
 /* VARIABLES */
 .try {
   --text-color: white;
