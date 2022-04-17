@@ -13,11 +13,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { storeToRefs } from 'pinia';
+import { onMounted, ref } from 'vue';
 import { useRetroStore } from '../../store';
 import RetroSection from '../components/RetroSection.vue';
 
-const { sections } = useRetroStore();
+const store = useRetroStore();
+const { sections } = storeToRefs(store);
+const { addMockData } = store;
 
 const globalChecks = ref(false);
 const globalSort = ref(false);
@@ -29,6 +32,11 @@ const updateGlobalChecks = (val: boolean) => {
 const updateGlobalSort = (val: boolean) => {
   globalSort.value = val;
 };
+
+// TODO: Remove mock data
+onMounted(() => {
+  addMockData();
+});
 </script>
 
 <style scoped></style>

@@ -6,14 +6,16 @@ export enum RetroType {
 }
 
 export interface RetroSectionMessage {
+  id: string;
+  authorId: string;
   label: string;
+  userLikedIt: boolean;
   likes?: number;
-  unlinkes?: number;
   comments?: string[];
 }
 
 export interface RetroSectionData {
   type: RetroType;
   title: string;
-  messages?: RetroSectionMessage[];
+  messages: RetroSectionMessage[];
 }

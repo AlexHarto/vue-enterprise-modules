@@ -25,18 +25,16 @@
       </div>
     </h2>
     <div class="flex flex-col flex-grow px-4 pb-4 retro-section-content">
-      <div v-if="data.messages" class="flex-grow my-2">
-        <transition-group name="flip-list" tag="ul">
-          <li
-            v-for="(message, messageIndex) in sortedMessages"
+      <div v-if="data.messages" class="flex-grow my-2 relative">
+        <transition-group name="group-fade" tag="div" class="relative">
+          <RetroSectionItem
+            v-for="(message, messageIndex) in messages"
             :key="`message_${messageIndex}`"
+            :type="data.type"
+            :message="message"
+            :checks="isChecksActive"
             class="py-1 my-2 border-b border-opacity-70 retro-section-message"
-          >
-            <RetroSectionItem
-              :message="message"
-              :checks="isChecksActive"
-            ></RetroSectionItem>
-          </li>
+          ></RetroSectionItem>
         </transition-group>
       </div>
       <form
@@ -44,13 +42,15 @@
         @submit.prevent
       >
         <input
-          v-model="newMessageText"
+          ref="newMessageInputRef"
+          v-model="newMessage"
           type="text"
           :placeholder="t('retro.input.placeholder')"
           class="w-full px-4 py-2 transition-colors rounded border-2 border-transparent interactive focus:(border-black ring-1 ring-white)"
         />
         <button
           class="sm:(w-26) px-4 py-2 transition-colors border-2 border-transparent rounded interactive focus:(border-black ring-1 ring-white)"
+          @click="addNewMessage"
         >
           {{ t('retro.add_button') }}
         </button>
@@ -61,9 +61,13 @@
 
 <script setup lang="ts">
 import SvgIcon from '@/components/SvgIcon.vue';
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import type { RetroSectionData } from '../../infra/types/Section';
+import type {
+  RetroSectionData,
+  RetroSectionMessage,
+} from '../../infra/types/Section';
+import { useRetroStore } from '../../store';
 import RetroSectionItem from './RetroSectionItem.vue';
 
 const emits = defineEmits(['update:global-checks', 'update:global-sort']);
@@ -75,9 +79,13 @@ const props = defineProps<{
 }>();
 
 const { t } = useI18n();
+const { addMessage } = useRetroStore();
 
-const newMessageText = ref('');
-
+const newMessage = ref('');
+const newMessageInputRef = ref<HTMLInputElement>();
+// Message list
+const messages = ref<RetroSectionMessage[]>();
+// Checks
 const isChecks = ref(false);
 const isChecksLocalPriority = ref(false);
 const isChecksActive = computed(
@@ -85,7 +93,7 @@ const isChecksActive = computed(
     (isChecksLocalPriority.value && isChecks.value) ||
     (!isChecksLocalPriority.value && (isChecks.value || props.globalChecks))
 );
-
+// Sorted
 const isSorted = ref(false);
 const isSortedLocalPriority = ref(false);
 const isSortedActive = computed(
@@ -93,8 +101,6 @@ const isSortedActive = computed(
     (isSortedLocalPriority.value && isSorted.value) ||
     (!isSortedLocalPriority.value && (isSorted.value || props.globalSort))
 );
-
-const sortedMessages = computed(() => props.data.messages);
 
 const toggleChecks = (e: MouseEvent) => {
   if (e.shiftKey) {
@@ -125,12 +131,24 @@ const toggleSorted = (e: MouseEvent) => {
   }
   isSorted.value = !isSorted.value;
 };
+
+const addNewMessage = async () => {
+  if (newMessage.value) {
+    addMessage(props.data.type, newMessage.value);
+    newMessage.value = '';
+    newMessageInputRef.value?.focus();
+  }
+};
+
+watch([props.data.messages, isSortedActive], () => {
+  messages.value = [...props.data.messages];
+  if (isSortedActive.value) {
+    messages.value.sort((a, b) => (b.likes || 0) - (a.likes || 0));
+  }
+});
 </script>
 
 <style scoped>
-.flip-list-move {
-  transition: transform 1s;
-}
 .retro-section {
   color: var(--text-color);
   background-color: var(--bg-color);

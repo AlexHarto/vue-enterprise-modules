@@ -8,49 +8,67 @@ export const useRetroStore = defineStore('retroStore', {
         {
           type: RetroType.CONTINUE,
           title: 'retro.titles.continue',
-          messages: [
-            {
-              label: 'We are a great team',
-            },
-            {
-              label: 'Always available',
-            },
-          ],
+          messages: [],
         },
         {
           type: RetroType.STOP,
           title: 'retro.titles.stop',
-          messages: [
-            {
-              label: 'Too many meetings...',
-            },
-            {
-              label: 'No time for coding :-[',
-            },
-          ],
+          messages: [],
         },
         {
           type: RetroType.TRY,
           title: 'retro.titles.try',
-          messages: [
-            {
-              label: 'Morning excersises O_o',
-            },
-            {
-              label: "A component's library",
-            },
-          ],
+          messages: [],
         },
         {
           type: RetroType.KUDOS,
           title: 'retro.titles.kudos',
-          messages: [
-            {
-              label: 'Thank you all!!!',
-            },
-          ],
+          messages: [],
         },
       ] as RetroSectionData[],
+      mockDataAdded: false,
     };
+  },
+  actions: {
+    addMockData() {
+      if (!this.mockDataAdded) {
+        this.addMessage(RetroType.CONTINUE, 'We are a great team', '0');
+        this.addMessage(RetroType.CONTINUE, 'Always available', '0');
+        this.addMessage(RetroType.STOP, 'Too many meetings...', '0');
+        this.addMessage(RetroType.STOP, 'No time for coding :-[', '0');
+        this.addMessage(RetroType.TRY, 'Morning excersises O_o', '0');
+        this.addMessage(RetroType.TRY, "A component's library", '0');
+        this.addMessage(RetroType.KUDOS, 'Thank you all!!!', '0');
+        this.mockDataAdded = true;
+      }
+    },
+    // TODO: Add current userId as the default value for authorId
+    addMessage(type: RetroType, label: string, authorId = '0') {
+      const section = this.sections.find((s) => s.type === type);
+      if (section) {
+        const id = `${type}_${section.messages.length}`;
+        section.messages.push({ id, authorId, label, userLikedIt: false });
+      }
+    },
+    editMessage(type: RetroType, id: string, label: string) {
+      const section = this.sections.find((s) => s.type === type);
+      if (section) {
+        const message = section.messages.find((m) => m.id === id);
+        if (message) {
+          message.label = label;
+        }
+      }
+    },
+    changeMessageLikes(type: RetroType, id: string, amount = 1) {
+      const section = this.sections.find((s) => s.type === type);
+      if (section) {
+        const message = section.messages.find((m) => m.id === id);
+        if (message) {
+          const likes = message.likes || 0;
+          message.likes = likes + amount;
+          message.userLikedIt = amount > 0;
+        }
+      }
+    },
   },
 });
