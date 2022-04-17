@@ -29,6 +29,17 @@ export const useRetroStore = defineStore('retroStore', {
       mockDataAdded: false,
     };
   },
+  getters: {
+    sortedMessages: (state) => (type: RetroType) => {
+      const section = state.sections.find((s) => s.type === type);
+      if (section) {
+        return [...section.messages].sort(
+          (a, b) => (b.likes || 0) - (a.likes || 0)
+        );
+      }
+      return [];
+    },
+  },
   actions: {
     addMockData() {
       if (!this.mockDataAdded) {

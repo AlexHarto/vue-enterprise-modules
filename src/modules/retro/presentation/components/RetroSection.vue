@@ -61,12 +61,9 @@
 
 <script setup lang="ts">
 import SvgIcon from '@/components/SvgIcon.vue';
-import { computed, ref, watch } from 'vue';
+import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import type {
-  RetroSectionData,
-  RetroSectionMessage,
-} from '../../infra/types/Section';
+import type { RetroSectionData } from '../../infra/types/Section';
 import { useRetroStore } from '../../store';
 import RetroSectionItem from './RetroSectionItem.vue';
 
@@ -79,12 +76,10 @@ const props = defineProps<{
 }>();
 
 const { t } = useI18n();
-const { addMessage } = useRetroStore();
+const { addMessage, sortedMessages } = useRetroStore();
 
 const newMessage = ref('');
 const newMessageInputRef = ref<HTMLInputElement>();
-// Message list
-const messages = ref<RetroSectionMessage[]>();
 // Checks
 const isChecks = ref(false);
 const isChecksLocalPriority = ref(false);
@@ -100,6 +95,10 @@ const isSortedActive = computed(
   () =>
     (isSortedLocalPriority.value && isSorted.value) ||
     (!isSortedLocalPriority.value && (isSorted.value || props.globalSort))
+);
+// Message list
+const messages = computed(() =>
+  isSortedActive.value ? sortedMessages(props.data.type) : props.data.messages
 );
 
 const toggleChecks = (e: MouseEvent) => {
@@ -139,13 +138,6 @@ const addNewMessage = async () => {
     newMessageInputRef.value?.focus();
   }
 };
-
-watch([props.data.messages, isSortedActive], () => {
-  messages.value = [...props.data.messages];
-  if (isSortedActive.value) {
-    messages.value.sort((a, b) => (b.likes || 0) - (a.likes || 0));
-  }
-});
 </script>
 
 <style scoped>
