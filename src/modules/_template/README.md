@@ -12,7 +12,7 @@ This folder structure is flexible and you can organize the content according to 
 
 Our recommendation is to keep consistency between modules so you can easily find things.
 
-That's why we recommend separating the module content into two main folders, **below** and **presentation**. If one of your modules gets large, you could have multiple presentation and infra folders, keeping the main structure and making it easier to locate code.
+That's why we recommend separating the module content into two main folders, **infra** and **presentation**. If one of your modules gets large, you could have multiple presentation and infra folders, keeping the main structure and making it easier to locate code.
 
 ### infra folder
 
