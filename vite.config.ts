@@ -1,6 +1,5 @@
 import vueI18n from '@intlify/vite-plugin-vue-i18n';
 import vue from '@vitejs/plugin-vue';
-import vueJsx from '@vitejs/plugin-vue-jsx';
 import path from 'path';
 import { fileURLToPath, URL } from 'url';
 import { defineConfig } from 'vite';
@@ -11,7 +10,6 @@ export default defineConfig({
   plugins: [
     vue(),
     WindiCSS(),
-    vueJsx(),
     vueI18n({
       // if you want to use Vue I18n Legacy API, you need to set `compositionOnly: false`
       // compositionOnly: false,
