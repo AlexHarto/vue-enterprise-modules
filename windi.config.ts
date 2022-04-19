@@ -14,19 +14,19 @@ export default defineConfig({
       },
       colors: {
         info: {
-          bg: '#d1ecf1',
-          text: '#0c5460',
-          border: '#bee5eb',
+          bg: '#D0E2F1',
+          text: '#020F1B',
+          border: '#B6D3EC',
         },
         warning: {
-          bg: '#fff3cd',
-          text: '#856404',
-          border: '#ffeeba',
+          bg: '#FFF2DB',
+          text: '#2A1B00',
+          border: '#F0DFC1',
         },
         error: {
-          bg: '#f8d7da',
-          text: '#721c24',
-          border: '#f5c6cb',
+          bg: '#FFDCD9',
+          text: '#2A0300',
+          border: '#F0C4C1',
         },
       },
     },

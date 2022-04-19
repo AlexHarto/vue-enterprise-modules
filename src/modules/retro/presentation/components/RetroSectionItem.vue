@@ -1,47 +1,50 @@
 <template>
-  <div class="flex items-center">
-    <button
-      v-if="checks"
-      class="mr-2 w-5 h-5 border border-opacity-75 rounded transition-colors checkbox"
-      @click="toggleChecked"
-    >
-      <SvgIcon
-        v-if="isChecked"
-        icon="check"
-        class="w-5 h-5 p-0.5 transform -translate-x-0.2 -translate-y-0.2"
-      ></SvgIcon>
-    </button>
-    <div v-if="editing" class="flex-grow mr-4">
-      <input
-        ref="labelInputRef"
-        v-model="newLabel"
-        type="text"
-        class="bg-transparent w-full"
-      />
-    </div>
-    <div v-else class="flex-grow cursor-text" role="button" @click="editMode">
-      {{ message.label }}
-    </div>
-    <div class="flex-center">
-      <transition
-        :name="message.userLikedIt ? 'grow-fade' : 'fade'"
-        mode="out-in"
+  <div>
+    <div class="flex items-center">
+      <button
+        v-if="checks"
+        class="w-5 h-5 mr-2 transition-colors border border-opacity-75 rounded checkbox"
+        @click="toggleChecked"
       >
-        <button v-if="message.userLikedIt" @click="toggleLiked">
-          <SvgIcon
-            icon="heart-filled"
-            class="w-6 h-6 transition-all transform opacity-100"
-          ></SvgIcon>
-        </button>
-        <button v-else @click="toggleLiked">
-          <SvgIcon
-            icon="heart"
-            class="w-6 h-6 transition-all transform opacity-100 heart-icon"
-          ></SvgIcon>
-        </button>
-      </transition>
+        <SvgIcon
+          v-if="isChecked"
+          icon="check"
+          class="w-5 h-5 p-0.5 transform -translate-x-0.2 -translate-y-0.2"
+        ></SvgIcon>
+      </button>
+      <div v-if="editing" class="flex-grow mr-4">
+        <input
+          ref="labelInputRef"
+          v-model="newLabel"
+          type="text"
+          class="w-full bg-transparent"
+        />
+      </div>
+      <div v-else class="flex-grow cursor-text" role="button" @click="editMode">
+        {{ message.label }}
+      </div>
+      <div class="flex-center">
+        <transition
+          :name="message.userLikedIt ? 'grow-fade' : 'fade'"
+          mode="out-in"
+        >
+          <button v-if="message.userLikedIt" @click="toggleLiked">
+            <SvgIcon
+              icon="heart-filled"
+              class="w-6 h-6 transition-all transform opacity-100"
+            ></SvgIcon>
+          </button>
+          <button v-else @click="toggleLiked">
+            <SvgIcon
+              icon="heart"
+              class="w-6 h-6 transition-all transform opacity-100 heart-icon"
+            ></SvgIcon>
+          </button>
+        </transition>
+      </div>
+      <span class="pl-2 text-right min-w-4">{{ numLikes }}</span>
     </div>
-    <span class="pl-2 text-right min-w-4">{{ numLikes }}</span>
+    <div class="my-2 bg-white bg-opacity-50 h-1px"></div>
   </div>
 </template>
 

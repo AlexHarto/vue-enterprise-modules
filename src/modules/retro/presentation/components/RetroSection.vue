@@ -6,7 +6,7 @@
       class="sm:(flex items-center) p-4 text-xl font-bold rounded-t retro-section-title"
     >
       <div class="tracking-wide">{{ t(data.title) }}</div>
-      <div class="flex gap-4 mt-2 sm:mt-0 justify-end ml-auto">
+      <div class="flex justify-end gap-4 mt-2 ml-auto sm:mt-0">
         <button
           :class="['icon-button', { 'icon-button--active': isChecksActive }]"
           @click="toggleChecks"
@@ -25,7 +25,7 @@
       </div>
     </h2>
     <div class="flex flex-col flex-grow px-4 pb-4 retro-section-content">
-      <div v-if="data.messages" class="flex-grow my-2 relative">
+      <div v-if="data.messages" class="relative flex-grow my-2">
         <transition-group name="group-fade" tag="div" class="relative">
           <RetroSectionItem
             v-for="(message, messageIndex) in messages"
@@ -33,12 +33,12 @@
             :type="data.type"
             :message="message"
             :checks="isChecksActive"
-            class="py-1 my-2 border-b border-opacity-70 retro-section-message"
+            class="retro-section-message"
           ></RetroSectionItem>
         </transition-group>
       </div>
       <form
-        class="flex flex-col sm:flex-row gap-2 mt-4 retro-section-form"
+        class="flex flex-col gap-2 mt-4 sm:flex-row retro-section-form"
         @submit.prevent
       >
         <input
@@ -46,13 +46,12 @@
           v-model="newMessage"
           type="text"
           :placeholder="t('retro.input.placeholder')"
-          class="w-full px-4 py-2 transition-colors rounded border-2 border-transparent interactive focus:(border-black ring-1 ring-white)"
+          class="w-full px-4 py-2 rounded interactive"
         />
-        <button
-          class="sm:(w-26) px-4 py-2 transition-colors border-2 border-transparent rounded interactive focus:(border-black ring-1 ring-white)"
-          @click="addNewMessage"
-        >
-          {{ t('retro.add_button') }}
+        <button class="sm:(w-26) rounded" @click="addNewMessage">
+          <div class="w-full h-full px-4 py-2 rounded interactive">
+            {{ t('retro.add_button') }}
+          </div>
         </button>
       </form>
     </div>
@@ -142,19 +141,17 @@ const addNewMessage = async () => {
 
 <style scoped>
 .retro-section {
-  color: var(--text-color);
+  color: var(--light-text-color);
   background-color: var(--bg-color);
   border-color: var(--border-color);
 }
 .retro-section-title {
+  color: var(--dark-text-color);
   background-color: var(--button-bg-color);
-}
-.retro-section-message {
-  border-color: var(--message-border-color);
 }
 .retro-section-form {
   input {
-    color: var(--input-text-color);
+    color: var(--light-text-color);
     background-color: var(--input-bg-color);
     @apply focus:(text-black bg-white bg-opacity-75);
   }
@@ -162,7 +159,7 @@ const addNewMessage = async () => {
     color: var(--input-placeholder-color);
   }
   button {
-    color: var(--button-text-color);
+    color: var(--dark-text-color);
     background-color: var(--button-bg-color);
   }
 }
@@ -173,7 +170,9 @@ const addNewMessage = async () => {
 .icon-button--active {
   @apply text-black bg-white bg-opacity-90;
 }
-
+.interactive {
+  @apply transition-colors border border-transparent;
+}
 @media (hover: hover) and (pointer: fine) {
   .icon-button:hover {
     @apply bg-white bg-opacity-40;
@@ -181,10 +180,13 @@ const addNewMessage = async () => {
   .icon-button--active:hover {
     @apply text-black bg-white bg-opacity-70;
   }
-  input.interactive:hover,
-  button.interactive:hover,
   .interactive:hover {
-    @apply text-black bg-white bg-opacity-75;
+    /* border-color: var(--button-bg-color); */
+    @apply bg-white border-white bg-opacity-30;
+  }
+
+  button:active .interactive {
+    @apply text-black;
   }
 }
 </style>

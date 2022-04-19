@@ -8,55 +8,38 @@ body,
   @apply h-full;
 }
 
-/* UTILITIES */
-.flex-center {
-  @apply flex items-center justify-center;
+/* MAIN VARIABLES */
+.retro-section {
+  --dark-text-color: white;
+  --light-text-color: black;
+  --input-placeholder-color: hsl(215, 14%, 34%);
+  --bg-color-sl: 45%, 75%;
+  --border-color-sl: 50%, 85%;
+  --button-bg-color-sl: 50%, 33%;
+  /* Section */
+  --bg-color: hsl(var(--section-color-hue), var(--bg-color-sl));
+  --border-color: hsl(var(--section-color-hue), var(--border-color-sl));
+  --input-bg-color: var(--border-color);
+  --button-bg-color: hsl(var(--section-color-hue), var(--button-bg-color-sl));
 }
 
 /* VARIABLES */
-.try {
-  --text-color: white;
-  --bg-color: hsl(170, 70%, 37%);
-  --border-color: hsl(170, 50%, 77%);
-  --message-border-color: hsl(170, 39%, 67%);
-  --input-text-color: black;
-  --input-bg-color: var(--border-color);
-  --input-placeholder-color: hsl(215, 14%, 34%);
-  --button-text-color: white;
-  --button-bg-color: hsl(170, 70%, 27%);
+.retro-section.continue {
+  --section-color-hue: 79;
 }
-.stop {
-  --text-color: white;
-  --bg-color: hsl(10, 70%, 37%);
-  --border-color: hsl(10, 50%, 77%);
-  --message-border-color: hsl(10, 39%, 67%);
-  --input-text-color: black;
-  --input-bg-color: var(--border-color);
-  --input-placeholder-color: hsl(215, 14%, 34%);
-  --button-text-color: white;
-  --button-bg-color: hsl(10, 70%, 27%);
+.retro-section.stop {
+  --section-color-hue: 5;
 }
-.continue {
-  --text-color: white;
-  --bg-color: hsl(80, 70%, 37%);
-  --border-color: hsl(80, 50%, 77%);
-  --message-border-color: hsl(80, 39%, 67%);
-  --input-text-color: black;
-  --input-bg-color: var(--border-color);
-  --input-placeholder-color: hsl(215, 14%, 34%);
-  --button-text-color: white;
-  --button-bg-color: hsl(80, 70%, 27%);
+.retro-section.try {
+  --section-color-hue: 39; /* 152; */
 }
-.kudos {
-  --text-color: white;
-  --bg-color: hsl(245, 58%, 51%);
-  --border-color: hsl(245, 80%, 85%);
-  --message-border-color: hsl(245, 89%, 74%);
-  --input-text-color: black;
-  --input-bg-color: var(--border-color);
-  --input-placeholder-color: hsl(245, 14%, 34%);
-  --button-text-color: white;
-  --button-bg-color: hsl(245, 84%, 67%);
+.retro-section.kudos {
+  --section-color-hue: 208;
+}
+
+/* UTILITIES */
+.flex-center {
+  @apply flex items-center justify-center;
 }
 
 /* ANIMATION: group-fade */
