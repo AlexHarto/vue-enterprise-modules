@@ -34,7 +34,7 @@ notifications.addNotification({
 
 notifications.addNotification({
   id: 'notification2',
-  type: NotificationType.WARNING,
+  type: NotificationType.ERROR,
   title: t('notifications.notification2.title'),
   message: t('notifications.notification2.message'),
   icon: true,
