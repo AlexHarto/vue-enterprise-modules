@@ -21,9 +21,9 @@ import {
 
 const { t } = useI18n();
 
-const notifications = useNotifications();
+const { addNotification } = useNotifications();
 
-notifications.addNotification({
+addNotification({
   id: 'notification1',
   type: NotificationType.INFO,
   title: t('notifications.notification1.title'),
@@ -32,7 +32,7 @@ notifications.addNotification({
   closeAfterMs: 2000,
 });
 
-notifications.addNotification({
+addNotification({
   id: 'notification2',
   type: NotificationType.ERROR,
   title: t('notifications.notification2.title'),
