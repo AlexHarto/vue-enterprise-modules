@@ -52,7 +52,7 @@ const clickHandler = (e: MouseEvent) => {
   @apply focus:(text-secondary-text-focus border-secondary-border-focus);
 }
 .btn[active='true'] .btn-label {
-  @apply bg-base-light text-primary-text;
+  @apply bg-base-light text-base-dark;
   @apply hover:bg-opacity-80;
 }
 .btn[outline] {
@@ -66,8 +66,8 @@ const clickHandler = (e: MouseEvent) => {
 }
 
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .btn:not([outline]):active .btn-label {
-    @apply bg-base-light bg-opacity-100;
+  .btn:active .btn-label {
+    @apply bg-base-light text-base-dark;
   }
   .btn:hover .btn-label {
     @apply bg-base-light bg-opacity-40;
