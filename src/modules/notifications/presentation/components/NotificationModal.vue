@@ -20,7 +20,7 @@
         data-test="notification-close"
         @click="removeNotification(notification.id)"
       >
-        <SvgIcon
+        <BasIcon
           icon="close"
           class="w-4 h-4 transition-all cursor-pointer stroke-2 hover:stroke-3 hover:scale-105"
           data-test="notification-close-icon"
@@ -29,7 +29,7 @@
     </header>
     <section class="flex items-center">
       <div v-if="notification.icon" class="mr-2">
-        <SvgIcon
+        <BasIcon
           class="w-8 h-8"
           data-test="notification-icon"
           :icon="notification.type"
@@ -44,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import SvgIcon from '@/components/SvgIcon.vue';
+import BasIcon from '@/components/BasIcon.vue';
 import { NotificationType, useNotifications } from '../..';
 import type { Notification } from '../../infra/types/Notification';
 

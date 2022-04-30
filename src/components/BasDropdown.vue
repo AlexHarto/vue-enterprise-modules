@@ -9,13 +9,13 @@
     >
       <span v-if="label">{{ label }}</span>
       <slot></slot>
-      <SvgIcon
+      <BasIcon
         icon="chevron-down"
         :class="[
           'ml-1.5 w-4 h-4 transition-transform',
           { 'transform rotate-180': optionsVisible },
         ]"
-      ></SvgIcon>
+      ></BasIcon>
     </button>
     <transition name="fade" mode="out-in">
       <div
@@ -45,20 +45,20 @@
 </template>
 
 <script setup lang="ts">
-import type { DropDownOption } from '@/infra/types/DropDownOption';
+import type { DropdownOption } from '@/infra/types/DropdownOption';
 import { ref, watch } from 'vue';
-import SvgIcon from './SvgIcon.vue';
+import BasIcon from './BasIcon.vue';
 
 withDefaults(
   defineProps<{
     id?: string;
     label?: string;
-    options?: DropDownOption[];
+    options?: DropdownOption[];
   }>(),
   {
     id: 'default',
     label: '',
-    options: () => [] as DropDownOption[],
+    options: () => [] as DropdownOption[],
   }
 );
 
@@ -84,7 +84,7 @@ const clickOutside = (event: Event) => {
   }
 };
 
-const optionClick = (option: DropDownOption) => {
+const optionClick = (option: DropdownOption) => {
   optionsVisible.value = false;
   if (option.onClick) {
     option.onClick();

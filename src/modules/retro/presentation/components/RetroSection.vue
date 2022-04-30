@@ -7,21 +7,25 @@
     >
       <div class="tracking-wide">{{ t(data.title) }}</div>
       <div class="flex justify-end gap-4 mt-2 ml-auto sm:mt-0">
-        <button
-          :class="['icon-button', { 'icon-button--active': isChecksActive }]"
+        <BasButton
+          class="bg-section-accent border-base-light interactive"
+          outline
+          switch
+          :active="isChecksActive"
           @click="toggleChecks"
-        >
-          <SvgIcon icon="check" class="w-6 h-6"></SvgIcon>
-        </button>
-        <button
-          :class="['icon-button', { 'icon-button--active': isSortedActive }]"
+          ><BasIcon icon="check" class="w-6 h-6"></BasIcon
+        ></BasButton>
+        <BasButton
+          class="bg-section-accent border-base-light interactive"
+          outline
+          switch
+          :active="isSortedActive"
           @click="toggleSorted"
-        >
-          <SvgIcon
+          ><BasIcon
             icon="sort-desc"
-            class="w-6 h-6 transform translate-y-0.5"
-          ></SvgIcon>
-        </button>
+            class="w-6 h-6 transform translate-y-0.5 translate-x-0.5"
+          ></BasIcon
+        ></BasButton>
       </div>
     </h2>
     <div class="flex flex-col flex-grow px-4 pb-4 retro-section-content">
@@ -38,30 +42,31 @@
         </transition-group>
       </div>
       <form
-        class="flex flex-col gap-2 mt-4 sm:flex-row retro-section-form"
+        class="flex flex-col gap-2 sm:flex-row retro-section-form"
         @submit.prevent
       >
-        <input
+        <BasInput
           ref="newMessageInputRef"
           v-model="newMessage"
-          type="text"
           :placeholder="t('retro.input.placeholder')"
-          class="w-full px-4 py-2 rounded interactive"
-        />
-        <button class="sm:(w-26) rounded" @click="addNewMessage">
-          <div class="w-full h-full px-4 py-2 rounded interactive">
-            {{ t('retro.add_button') }}
-          </div>
-        </button>
+          class="w-full interactive"
+        ></BasInput>
+        <BasButton
+          :label="t('retro.add_button')"
+          class="bg-section-accent interactive"
+          @click="addNewMessage"
+        ></BasButton>
       </form>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import SvgIcon from '@/components/SvgIcon.vue';
+import BasIcon from '@/components/BasIcon.vue';
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import BasButton from '../../../../components/BasButton.vue';
+import BasInput from '../../../../components/BasInput.vue';
 import type { RetroSectionData } from '../../infra/types/Section';
 import { useRetroStore } from '../../store';
 import RetroSectionItem from './RetroSectionItem.vue';
@@ -141,52 +146,9 @@ const addNewMessage = async () => {
 
 <style scoped>
 .retro-section {
-  color: var(--light-text-color);
-  background-color: var(--bg-color);
-  border-color: var(--border-color);
+  @apply text-primary-text bg-section-bg border-section-border;
 }
 .retro-section-title {
-  color: var(--dark-text-color);
-  background-color: var(--button-bg-color);
-}
-.retro-section-form {
-  input {
-    color: var(--light-text-color);
-    background-color: var(--input-bg-color);
-    @apply focus:(text-black bg-white bg-opacity-75);
-  }
-  input::placeholder {
-    color: var(--input-placeholder-color);
-  }
-  button {
-    color: var(--dark-text-color);
-    background-color: var(--button-bg-color);
-  }
-}
-
-.icon-button {
-  @apply p-1.5 border text-white border-white border-opacity-70 rounded transition-colors;
-}
-.icon-button--active {
-  @apply text-black bg-white bg-opacity-90;
-}
-.interactive {
-  @apply transition-colors border border-transparent;
-}
-@media (hover: hover) and (pointer: fine) {
-  .icon-button:hover {
-    @apply bg-white bg-opacity-40;
-  }
-  .icon-button--active:hover {
-    @apply text-black bg-white bg-opacity-70;
-  }
-  .interactive:hover {
-    /* border-color: var(--button-bg-color); */
-    @apply bg-white border-white bg-opacity-30;
-  }
-
-  button:active .interactive {
-    @apply text-black;
-  }
+  @apply text-secondary-text bg-section-accent;
 }
 </style>

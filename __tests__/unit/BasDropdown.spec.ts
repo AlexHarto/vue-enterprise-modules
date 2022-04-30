@@ -1,5 +1,5 @@
-import DropDown from '@/components/DropDown.vue';
-import type { DropDownOption } from '@/infra/types/DropDownOption';
+import BasDropdown from '@/components/BasDropdown.vue';
+import type { DropdownOption } from '@/infra/types/DropdownOption';
 import { mount } from '@vue/test-utils';
 import { describe, expect, it } from 'vitest';
 
@@ -8,8 +8,8 @@ const optionClicked = (i: number) => {
   message = `Option ${i} clicked`;
 };
 
-describe('DropDown', () => {
-  const wrapper = mount(DropDown, {
+describe('BasDropdown', () => {
+  const wrapper = mount(BasDropdown, {
     global: {
       stubs: {
         transition: false,
@@ -47,7 +47,7 @@ describe('DropDown', () => {
   });
 
   it('Shows options when clicked', async () => {
-    const propOptions: DropDownOption[] = [
+    const propOptions: DropdownOption[] = [
       {
         label: 'Option 0',
         onClick: () => optionClicked(0),
@@ -84,7 +84,7 @@ describe('DropDown', () => {
 
   // TODO: Test click outside
   // it('Hides options when click outside', async () => {
-  //   const propOptions: DropDownOption[] = [
+  //   const propOptions: DropdownOption[] = [
   //     {
   //       label: 'Option 1',
   //     },

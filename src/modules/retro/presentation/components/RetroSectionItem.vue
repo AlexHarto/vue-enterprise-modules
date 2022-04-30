@@ -1,26 +1,29 @@
 <template>
   <div>
     <div class="flex items-center">
-      <button
-        v-if="checks"
-        class="w-5 h-5 mr-2 transition-colors border border-opacity-75 rounded checkbox"
-        @click="toggleChecked"
-      >
-        <SvgIcon
-          v-if="isChecked"
-          icon="check"
-          class="w-5 h-5 p-0.5 transform -translate-x-0.2 -translate-y-0.2"
-        ></SvgIcon>
-      </button>
+      <transition name="fade" mode="out-in">
+        <BasCheckbox
+          v-if="checks"
+          v-model="isChecked"
+          name="checkbox"
+          class="mr-2"
+          @update:model-value="setChecked"
+        ></BasCheckbox>
+      </transition>
       <div v-if="editing" class="flex-grow mr-4">
         <input
           ref="labelInputRef"
           v-model="newLabel"
           type="text"
-          class="w-full bg-transparent"
+          class="w-full p-1 bg-transparent"
         />
       </div>
-      <div v-else class="flex-grow cursor-text" role="button" @click="editMode">
+      <div
+        v-else
+        class="flex-grow p-1 cursor-text"
+        role="button"
+        @click="editMode"
+      >
         {{ message.label }}
       </div>
       <div class="flex-center">
@@ -29,28 +32,29 @@
           mode="out-in"
         >
           <button v-if="message.userLikedIt" @click="toggleLiked">
-            <SvgIcon
+            <BasIcon
               icon="heart-filled"
-              class="w-6 h-6 transition-all transform opacity-100"
-            ></SvgIcon>
+              class="w-6 h-6 transition-all transform opacity-100 interactive"
+            ></BasIcon>
           </button>
           <button v-else @click="toggleLiked">
-            <SvgIcon
+            <BasIcon
               icon="heart"
-              class="w-6 h-6 transition-all transform opacity-100 heart-icon"
-            ></SvgIcon>
+              class="w-6 h-6 transition-all transform opacity-100 interactive heart-icon"
+            ></BasIcon>
           </button>
         </transition>
       </div>
       <span class="pl-2 text-right min-w-4">{{ numLikes }}</span>
     </div>
-    <div class="my-2 bg-white bg-opacity-50 h-1px"></div>
+    <div class="my-1 border-t-2 border-opacity-25 border-section-accent"></div>
   </div>
 </template>
 
 <script setup lang="ts">
-import SvgIcon from '@/components/SvgIcon.vue';
+import BasIcon from '@/components/BasIcon.vue';
 import { computed, nextTick, ref } from 'vue';
+import BasCheckbox from '../../../../components/BasCheckbox.vue';
 import type { RetroSectionMessage, RetroType } from '../../infra/types/Section';
 import { useRetroStore } from '../../store';
 
@@ -85,16 +89,13 @@ const toggleLiked = () => {
   const amount = props.message.userLikedIt ? -1 : 1;
   changeMessageLikes(props.type, props.message.id, amount);
 };
-const toggleChecked = () => {
-  isChecked.value = !isChecked.value;
+const setChecked = (newValue: boolean) => {
+  isChecked.value = newValue;
 };
 </script>
 
 <style scoped>
 @media (hover: hover) and (pointer: fine) {
-  .checkbox:hover {
-    @apply text-black bg-white bg-opacity-75;
-  }
   .heart-icon {
     @apply opacity-70;
   }

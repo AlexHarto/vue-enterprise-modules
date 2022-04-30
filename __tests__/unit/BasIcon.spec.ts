@@ -1,13 +1,14 @@
-import { describe, it, expect } from 'vitest';
+import BasIcon from '@/components/BasIcon.vue';
 import { mount } from '@vue/test-utils';
-import SvgIcon from '@/components/SvgIcon.vue';
+import { describe, expect, it } from 'vitest';
 
-describe('SvgIcon', () => {
+describe('BasIcon', () => {
   // Icons to check:
   const icons = ['close', 'error', 'info', 'warning'];
+  const path = import.meta.env.VITE_ICONS_PATH || './icons/';
 
   it('renders properly', async () => {
-    const wrapper = mount(SvgIcon, {
+    const wrapper = mount(BasIcon, {
       props: {
         icon: 'close',
       },
@@ -18,7 +19,7 @@ describe('SvgIcon', () => {
 
   for (const icon of icons) {
     it(`Contains svg with use for ${icon}.svg`, async () => {
-      const wrapper = mount(SvgIcon, {
+      const wrapper = mount(BasIcon, {
         props: {
           icon,
         },
@@ -27,7 +28,7 @@ describe('SvgIcon', () => {
       expect(wrapper.find('svg').exists()).toBeTruthy();
       expect(wrapper.find('use').exists()).toBeTruthy();
       expect(wrapper.find('use').html()).toMatch(
-        `xlink:href="/assets/icons/${icon}.svg#${icon}"`
+        `href="${path}${icon}.svg#${icon}"`
       );
     });
   }

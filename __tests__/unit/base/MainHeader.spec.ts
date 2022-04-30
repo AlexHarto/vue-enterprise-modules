@@ -1,19 +1,27 @@
-import { describe, it, expect } from 'vitest';
-import { mount } from '@vue/test-utils';
 import MainHeader from '@/modules/base/presentation/components/MainHeader.vue';
-
+import { routes } from '@/modules/base/router';
+import { createTestingPinia } from '@pinia/testing';
+import { mount, RouterLinkStub } from '@vue/test-utils';
+import { describe, expect, it, vi } from 'vitest';
+import { createRouter, createWebHistory } from 'vue-router';
 import { i18n, t } from '../../utils/i18n';
-import router from '@/router';
-import base from '@/modules/base';
-
-base.registerModule(router);
 
 describe('MainHeader', () => {
+  const mockRouter = createRouter({
+    history: createWebHistory(),
+    routes: routes,
+  });
   const wrapper = mount(MainHeader, {
     global: {
-      plugins: [i18n, router],
+      plugins: [
+        createTestingPinia({
+          createSpy: vi.fn,
+        }),
+        i18n,
+        mockRouter,
+      ],
       stubs: {
-        RouterLink: false,
+        RouterLink: RouterLinkStub,
         transition: false,
       },
     },
@@ -25,13 +33,12 @@ describe('MainHeader', () => {
       t('header.app')
     );
   });
-
   it('Shows the menu items', () => {
     const menuItems = wrapper.vm.menuItems;
     const allMenuItems = wrapper.findAll('[data-test="menu-item"]');
     expect(allMenuItems.length).toBe(menuItems.length);
     for (let i = 0; i < menuItems.length; i++) {
-      expect(allMenuItems.at(i)?.text()).toContain(menuItems[i].title);
+      expect(allMenuItems.at(i)?.text()).toContain(t(menuItems[i].label));
     }
   });
 });

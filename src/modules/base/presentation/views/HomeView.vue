@@ -14,7 +14,7 @@
               </h1>
             </div>
             <div data-test="toast-close" @click="removeToast">
-              <SvgIcon
+              <BasIcon
                 icon="close"
                 class="w-4 h-4 transition-all cursor-pointer stroke-2 hover:stroke-3 hover:scale-105"
                 data-test="notification-close-icon"
@@ -38,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import SvgIcon from '@/components/SvgIcon.vue';
+import BasIcon from '@/components/BasIcon.vue';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { RouterView } from 'vue-router';

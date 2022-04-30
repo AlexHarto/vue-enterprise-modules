@@ -1,5 +1,41 @@
 import { defineConfig } from 'windicss/helpers';
 
+const withOpacityValue = (variable: string) => {
+  return ({ opacityValue }) => {
+    if (opacityValue === undefined) {
+      return `hsl(var(${variable}))`;
+    }
+    return `hsl(var(${variable}) / ${opacityValue})`;
+  };
+};
+
+const buildSet = (
+  variable: string,
+  variant: string | undefined = undefined
+) => {
+  const variantWithDash = variant ? '-' + variant : '';
+  return {
+    [`bg${variantWithDash}`]: withOpacityValue(
+      `--color-${variable}-bg${variantWithDash}`
+    ),
+    [`text${variantWithDash}`]: withOpacityValue(
+      `--color-${variable}-text${variantWithDash}`
+    ),
+    [`border${variantWithDash}`]: withOpacityValue(
+      `--color-${variable}-border${variantWithDash}`
+    ),
+  };
+};
+
+const buildFullSet = (variable: string) => {
+  return {
+    ...buildSet(variable),
+    ...buildSet(variable, 'hover'),
+    ...buildSet(variable, 'focus'),
+    ...buildSet(variable, 'active'),
+  };
+};
+
 export default defineConfig({
   extract: {
     // accepts globs and file paths relative to project root
@@ -13,20 +49,26 @@ export default defineConfig({
         sans: ['Roboto', 'sans-serif'],
       },
       colors: {
-        info: {
-          bg: '#D0E2F1',
-          text: '#020F1B',
-          border: '#B6D3EC',
+        base: {
+          light: ({ opacityValue }) =>
+            `hsl(var(--color-light) / ${opacityValue})`,
+          dark: ({ opacityValue }) =>
+            `hsl(var(--color-dark) / ${opacityValue})`,
         },
-        warning: {
-          bg: '#FFF2DB',
-          text: '#2A1B00',
-          border: '#F0DFC1',
-        },
-        error: {
-          bg: '#FFDCD9',
-          text: '#2A0300',
-          border: '#F0C4C1',
+        info: buildSet('info'),
+        warning: buildSet('warning'),
+        error: buildSet('error'),
+        primary: buildFullSet('primary'),
+        secondary: buildFullSet('secondary'),
+        section: {
+          bg: ({ opacityValue }) =>
+            `hsl(var(--color-hue) var(--color-section-bg-sl) / ${opacityValue})`,
+          accent: ({ opacityValue }) =>
+            `hsl(var(--color-hue) var(--color-section-accent-sl) / ${opacityValue})`,
+          text: ({ opacityValue }) =>
+            `hsl(var(--color-hue) var(--color-section-text-sl) / ${opacityValue})`,
+          border: ({ opacityValue }) =>
+            `hsl(var(--color-hue) var(--color-section-border-sl) / ${opacityValue})`,
         },
       },
     },

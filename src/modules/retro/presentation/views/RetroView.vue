@@ -20,6 +20,7 @@ import RetroSection from '../components/RetroSection.vue';
 
 const store = useRetroStore();
 const { sections } = storeToRefs(store);
+// TODO: Remove mock data
 const { addMockData } = store;
 
 const globalChecks = ref(false);

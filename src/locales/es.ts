@@ -6,7 +6,7 @@ export default {
     language_es: 'Español',
   },
   home: {
-    title: 'Home',
+    menu_label: 'Home',
     presentation: {
       title: 'Bienvenido a App',
       intro1: 'Gracias por utilizar nuestra applicatión!',
@@ -15,7 +15,18 @@ export default {
     },
   },
   about: {
-    title: 'About',
+    menu_label: 'About',
+  },
+  auth: {
+    login: {
+      menu_label: 'Login',
+    },
+    signup: {
+      menu_label: 'SignUp',
+    },
+    logout: {
+      menu_label: 'Logout',
+    },
   },
   retro: {
     titles: {
