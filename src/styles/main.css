@@ -69,19 +69,15 @@ body,
 
 /* VARIABLES */
 .retro-section.continue {
-  --section-color-hue: 79;
   --color-hue: 79;
 }
 .retro-section.stop {
-  --section-color-hue: 5;
   --color-hue: 5;
 }
 .retro-section.try {
-  --section-color-hue: 39; /* 152; */
   --color-hue: 39; /* 152; */
 }
 .retro-section.kudos {
-  --section-color-hue: 208;
   --color-hue: 208;
 }
 
