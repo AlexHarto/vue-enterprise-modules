@@ -52,9 +52,9 @@
 </template>
 
 <script setup lang="ts">
+import BasCheckbox from '@/components/BasCheckbox.vue';
 import BasIcon from '@/components/BasIcon.vue';
 import { computed, nextTick, ref } from 'vue';
-import BasCheckbox from '../../../../components/BasCheckbox.vue';
 import type { RetroSectionMessage, RetroType } from '../../infra/types/Section';
 import { useRetroStore } from '../../store';
 

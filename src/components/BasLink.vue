@@ -1,5 +1,10 @@
 <template>
+  <RouterLink v-if="routeName" :to="{ name: routeName }" class="interactive">
+    {{ label || href }}
+    <slot></slot>
+  </RouterLink>
   <a
+    v-else
     :href="href"
     :target="newWindow ? '_blank' : '_self'"
     rel="noreferrer"
@@ -11,9 +16,12 @@
 </template>
 
 <script setup lang="ts">
+import { RouterLink } from 'vue-router';
+
 defineProps<{
   label?: string;
-  href: string;
+  href?: string;
+  routeName?: string;
   newWindow?: boolean;
 }>();
 </script>
