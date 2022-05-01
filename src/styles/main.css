@@ -67,47 +67,6 @@ body,
   --color-section-border-sl: 50% 85%;
 }
 
-/* MAIN VARIABLES */
-:root {
-  --tw-bg-opacity: 1;
-  --input-placeholder-color: hsla(215, 14%, 34%, var(--tw-bg-opacity));
-  /* --bg-color-sl: 45%, 75%;
-  --border-color-sl: 50%, 85%; */
-  --button-bg-color-sl: 50%, 33%;
-  --bg-color: hsla(0, 0%, 100%, var(--tw-bg-opacity));
-  --border-color: hsla(0, 0%, 75%, var(--tw-bg-opacity));
-  --input-bg-color: hsla(220, 13%, 91%, var(--tw-bg-opacity));
-  --button-bg-color: hsla(220, 13%, 20%, var(--tw-bg-opacity));
-}
-.retro-section {
-  --color-section-bg: hsla(
-    var(--section-color-hue),
-    var(--bg-color-sl),
-    var(--tw-bg-opacity)
-  );
-  --text-color: hsla(
-    var(--section-color-hue),
-    var(--border-color-sl),
-    var(--tw-bg-opacity)
-  );
-  --border-color: hsla(
-    var(--section-color-hue),
-    var(--border-color-sl),
-    var(--tw-bg-opacity)
-  );
-  --input-bg-color: hsla(
-    0,
-    0%,
-    75%,
-    var(--tw-bg-opacity)
-  ); /*var(--border-color);*/
-  --button-bg-color: hsla(
-    var(--section-color-hue),
-    var(--button-bg-color-sl),
-    var(--tw-bg-opacity)
-  );
-}
-
 /* VARIABLES */
 .retro-section.continue {
   --section-color-hue: 79;

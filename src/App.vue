@@ -1,7 +1,7 @@
 <template>
   <div class="relative w-screen h-screen">
     <RouterView />
-    <NotificationsContainer>
+    <NotificationsContainer class="mt-16">
       <template #notification1>
         <p>{{ t('notifications.notification1.message1') }}</p>
         <p>{{ t('notifications.notification1.message2') }}</p>

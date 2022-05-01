@@ -13,14 +13,18 @@
     <p>Type the name of the room and share it with your colleages.</p>
     <p class="mt-2">The room will be available for 4 hours.</p>
     <form class="flex items-end gap-2 mt-6" @submit.prevent>
-      <BasInput
-        name="room"
-        label="Name of the room:"
-        label-class="block mb-1 text-sm"
-        placeholder="Type here..."
-        class="w-full max-w-56"
-      ></BasInput>
-      <BasButton label="Create room" class="max-h-max bg-base-dark"></BasButton>
+      <div class="w-full max-w-[500px]">
+        <BasInput
+          name="room"
+          label="Name of the room:"
+          label-class="block mb-1 text-sm"
+          placeholder="Type here..."
+        ></BasInput>
+      </div>
+      <BasButton
+        label="Create room"
+        class="bg-opacity-90 max-h-max bg-base-dark"
+      ></BasButton>
     </form>
     <div v-if="roomCreated" class="mt-6">
       <p>Room created!!! Here is the link for the room:</p>

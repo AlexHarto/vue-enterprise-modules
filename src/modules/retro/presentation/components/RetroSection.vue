@@ -1,5 +1,6 @@
 <template>
   <div
+    :id="`section_${data.type}`"
     :class="['flex flex-col mt-0.5 rounded retro-section', (data.type as string).toLowerCase()]"
   >
     <h2
@@ -13,6 +14,7 @@
           switch
           :active="isChecksActive"
           @click="toggleChecks"
+          @shift-click="shiftToggleChecks"
           ><BasIcon icon="check" class="w-6 h-6"></BasIcon
         ></BasButton>
         <BasButton
@@ -21,6 +23,7 @@
           switch
           :active="isSortedActive"
           @click="toggleSorted"
+          @shift-click="shiftToggleSorted"
           ><BasIcon
             icon="sort-desc"
             class="w-6 h-6 transform translate-y-0.5 translate-x-0.5"
@@ -49,10 +52,13 @@
           ref="newMessageInputRef"
           v-model="newMessage"
           :placeholder="t('retro.input.placeholder')"
+          :name="`new_message_${data.type}`"
+          :hsl-border-color="hslBorderColor"
           class="w-full interactive"
         ></BasInput>
         <BasButton
           :label="t('retro.add_button')"
+          :hsl-border-color="hslBorderColor"
           class="bg-section-accent interactive"
           @click="addNewMessage"
         ></BasButton>
@@ -62,11 +68,11 @@
 </template>
 
 <script setup lang="ts">
+import BasButton from '@/components/BasButton.vue';
 import BasIcon from '@/components/BasIcon.vue';
-import { computed, ref } from 'vue';
+import BasInput from '@/components/BasInput.vue';
+import { computed, onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import BasButton from '../../../../components/BasButton.vue';
-import BasInput from '../../../../components/BasInput.vue';
 import type { RetroSectionData } from '../../infra/types/Section';
 import { useRetroStore } from '../../store';
 import RetroSectionItem from './RetroSectionItem.vue';
@@ -84,6 +90,7 @@ const { addMessage, sortedMessages } = useRetroStore();
 
 const newMessage = ref('');
 const newMessageInputRef = ref<HTMLInputElement>();
+const hslBorderColor = ref('0 0% 25%');
 // Checks
 const isChecks = ref(false);
 const isChecksLocalPriority = ref(false);
@@ -105,34 +112,36 @@ const messages = computed(() =>
   isSortedActive.value ? sortedMessages(props.data.type) : props.data.messages
 );
 
-const toggleChecks = (e: MouseEvent) => {
-  if (e.shiftKey) {
-    isChecksLocalPriority.value = false;
-    if (isChecks.value && !props.globalChecks) {
-      isChecks.value = props.globalChecks;
-    } else if (!isChecks.value && props.globalChecks) {
-      isChecks.value = !props.globalChecks;
-    }
-    emits('update:global-checks', !isChecks.value);
-  } else {
-    isChecksLocalPriority.value = true;
+const toggleSorted = (e: MouseEvent) => {
+  isSortedLocalPriority.value = true;
+  isSorted.value = !isSorted.value;
+};
+
+const shiftToggleSorted = (e: MouseEvent) => {
+  isSortedLocalPriority.value = false;
+  if (isSorted.value && !props.globalSort) {
+    isSorted.value = props.globalSort;
+  } else if (!isSorted.value && props.globalSort) {
+    isSorted.value = !props.globalSort;
   }
+  emits('update:global-sort', !isSorted.value);
+  isSorted.value = !isSorted.value;
+};
+
+const toggleChecks = (e: MouseEvent) => {
+  isChecksLocalPriority.value = true;
   isChecks.value = !isChecks.value;
 };
 
-const toggleSorted = (e: MouseEvent) => {
-  if (e.shiftKey) {
-    isSortedLocalPriority.value = false;
-    if (isSorted.value && !props.globalSort) {
-      isSorted.value = props.globalSort;
-    } else if (!isSorted.value && props.globalSort) {
-      isSorted.value = !props.globalSort;
-    }
-    emits('update:global-sort', !isSorted.value);
-  } else {
-    isSortedLocalPriority.value = true;
+const shiftToggleChecks = (e: MouseEvent) => {
+  isChecksLocalPriority.value = false;
+  if (isChecks.value && !props.globalChecks) {
+    isChecks.value = props.globalChecks;
+  } else if (!isChecks.value && props.globalChecks) {
+    isChecks.value = !props.globalChecks;
   }
-  isSorted.value = !isSorted.value;
+  emits('update:global-checks', !isChecks.value);
+  isChecks.value = !isChecks.value;
 };
 
 const addNewMessage = async () => {
@@ -142,6 +151,19 @@ const addNewMessage = async () => {
     newMessageInputRef.value?.focus();
   }
 };
+
+onMounted(() => {
+  const el = document.querySelector(`#section_${props.data.type}`);
+  if (el) {
+    const h = getComputedStyle(el).getPropertyValue('--color-hue');
+    const sl = getComputedStyle(el).getPropertyValue(
+      '--color-section-accent-sl'
+    );
+    hslBorderColor.value = `${h}${sl}`;
+  } else {
+    hslBorderColor.value = '0 0% 25%';
+  }
+});
 </script>
 
 <style scoped>

@@ -30,8 +30,6 @@ base.registerModule();
 auth.registerModule(base.routeNames.BASE_ROOT);
 // Add Login and SignUp to the main menu
 base.addMenuItem('auth.login.menu_label', auth.routeNames.AUTH_LOGIN, true);
-base.addMenuItem('auth.signup.menu_label', auth.routeNames.AUTH_SIGNUP, true);
-base.addMenuItem('auth.logout.menu_label', auth.routeNames.AUTH_LOGOUT, false);
 
 // Register Retro module inside HOME
 retro.registerModule(base.routeNames.BASE_HOME);

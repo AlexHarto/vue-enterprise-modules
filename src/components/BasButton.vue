@@ -17,10 +17,17 @@ import { ref } from 'vue';
  */
 const emits = defineEmits(['click', 'shiftClick']);
 
-const props = defineProps<{
-  label?: string;
-  switch?: boolean;
-}>();
+const props = withDefaults(
+  defineProps<{
+    label?: string;
+    switch?: boolean;
+    hslBorderColor?: string;
+  }>(),
+  {
+    label: '',
+    hslBorderColor: '0 0% 25%',
+  }
+);
 
 const isActive = ref(false);
 
@@ -42,13 +49,14 @@ const clickHandler = (e: MouseEvent) => {
 
 <style scoped>
 .btn {
+  --color-secondary-border: v-bind(hslBorderColor);
   @apply rounded border-2 outline-primary-text;
 }
 .btn-label {
   @apply flex items-center justify-center rounded-sm whitespace-nowrap;
 }
 .btn:not([outline]) {
-  @apply text-secondary-text border-secondary-bg;
+  @apply text-secondary-text border-secondary-border;
   @apply focus:(text-secondary-text-focus border-secondary-border-focus);
 }
 .btn[active='true'] .btn-label {
@@ -72,17 +80,5 @@ const clickHandler = (e: MouseEvent) => {
   .btn:hover .btn-label {
     @apply bg-base-light bg-opacity-40;
   }
-  /* .btn[outline] .btn-label {
-    @apply hover:(border-primary-border-hover);
-    @apply active:(border-primary-border-active);
-  } */
-  /* .btn:not([outline]) {
-    @apply hover:(text-secondary-text-hover border-secondary-border-hover);
-    @apply active:(text-secondary-text-active border-secondary-border-active);
-  }
-  .btn[outline] .btn-label {
-    @apply hover:(border-primary-border-hover);
-    @apply active:(border-primary-border-active);
-  } */
 }
 </style>
