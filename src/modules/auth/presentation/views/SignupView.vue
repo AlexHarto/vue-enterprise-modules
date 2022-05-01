@@ -38,7 +38,7 @@
       <p>{{ t('auth.common.advantages_registered') }}</p>
       <p class="mt-2">
         {{ t('auth.common.learn_more') }}
-        <BasLink :route-name="baseRouteNames.BASE_ABOUT">{{
+        <BasLink :route-name="baseRouteNames.BASE_ROOMS">{{
           t('auth.common.here')
         }}</BasLink
         >.

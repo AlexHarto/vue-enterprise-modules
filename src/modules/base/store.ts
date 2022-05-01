@@ -12,8 +12,8 @@ export const useMainMenuStore = defineStore('mainMenuStore', {
           isVisible: true,
         },
         {
-          routeName: routeNames.BASE_ABOUT,
-          label: 'about.menu_label',
+          routeName: routeNames.BASE_ROOMS,
+          label: 'rooms.menu_label',
           isVisible: true,
         },
       ] as MenuItem[],

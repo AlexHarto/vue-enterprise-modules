@@ -14,8 +14,8 @@ export default {
       salutation: 'We hope you enjoy our application!',
     },
   },
-  about: {
-    menu_label: 'About',
+  rooms: {
+    menu_label: 'Rooms',
   },
   auth: {
     login: {
