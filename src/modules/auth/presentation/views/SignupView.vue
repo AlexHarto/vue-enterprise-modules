@@ -1,39 +1,47 @@
 <template>
   <div class="grid gap-4 mx-auto max-w-[300px]">
-    <h2 class="text-xl font-bold">Sign up</h2>
+    <h2 class="text-xl font-bold">{{ t('auth.signup.title') }}</h2>
     <p class="p-4 my-2 text-center rounded bg-warning-bg">
-      Already registered?
-      <BasLink :route-name="routeNames.AUTH_LOGIN" label="Login"></BasLink>
+      {{ t('auth.common.already_registered') }}
+      <BasLink
+        :route-name="routeNames.AUTH_LOGIN"
+        :label="t('auth.login.title')"
+      ></BasLink>
     </p>
     <form class="grid gap-4" @submit.prevent="handleSubmit">
       <BasInput
         v-model="email"
         name="email"
         type="email"
-        label="Email:"
+        :label="t('auth.form.email')"
         label-class="text-sm"
       ></BasInput>
       <BasInput
         v-model="password"
         name="password"
         type="password"
-        label="Password:"
+        :label="t('auth.form.password')"
         label-class="text-sm"
       ></BasInput>
       <BasInput
         v-model="passwordConfirmation"
         name="passwordConfirmation"
         type="password"
-        label="Confirm password:"
+        :label="t('auth.form.confirm_password')"
         label-class="text-sm"
       ></BasInput>
-      <BasButton class="ml-auto bg-secondary-bg">Sign up</BasButton>
+      <BasButton class="ml-auto bg-secondary-bg">
+        {{ t('auth.form.submit') }}
+      </BasButton>
     </form>
     <div class="my-4 text-center">
-      <p>Do you want to know more about the advantages of having an account?</p>
+      <p>{{ t('auth.common.advantages_registered') }}</p>
       <p class="mt-2">
-        Learn more about it
-        <BasLink :route-name="baseRouteNames.BASE_ABOUT">here</BasLink>.
+        {{ t('auth.common.learn_more') }}
+        <BasLink :route-name="baseRouteNames.BASE_ABOUT">{{
+          t('auth.common.here')
+        }}</BasLink
+        >.
       </p>
     </div>
   </div>
@@ -45,7 +53,10 @@ import BasInput from '@/components/BasInput.vue';
 import BasLink from '@/components/BasLink.vue';
 import { routeNames as baseRouteNames } from '@/modules/base/router';
 import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { routeNames } from '../../router';
+
+const { t } = useI18n();
 
 const email = ref('');
 const password = ref('');

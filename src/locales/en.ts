@@ -20,12 +20,28 @@ export default {
   auth: {
     login: {
       menu_label: 'Login',
+      title: 'Login',
     },
     signup: {
       menu_label: 'SignUp',
+      title: 'Signup',
     },
     logout: {
       menu_label: 'Logout',
+    },
+    form: {
+      email: 'Email',
+      password: 'Password',
+      confirm_password: 'Confirm password',
+      submit: 'Submit',
+    },
+    common: {
+      new_to_service: 'New to this service?',
+      already_registered: 'Already registered?',
+      advantages_registered:
+        'Do you want to know more about the advantages of having an account?',
+      learn_more: 'Learn more about it',
+      here: 'here',
     },
   },
   retro: {

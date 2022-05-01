@@ -20,12 +20,28 @@ export default {
   auth: {
     login: {
       menu_label: 'Login',
+      title: 'Login',
     },
     signup: {
       menu_label: 'SignUp',
+      title: 'Signup',
     },
     logout: {
       menu_label: 'Logout',
+    },
+    form: {
+      email: 'Email',
+      password: 'Contraseña',
+      confirm_password: 'Repetir contraseña',
+      submit: 'Enviar',
+    },
+    common: {
+      new_to_service: '¿Aún no tienes una cuenta?',
+      already_registered: '¿Ya estás registrado?',
+      advantages_registered:
+        '¿Quieres conocer las ventajas que supone tener una cuenta?',
+      learn_more: 'Aprende más sobre ello',
+      here: 'aquí',
     },
   },
   retro: {

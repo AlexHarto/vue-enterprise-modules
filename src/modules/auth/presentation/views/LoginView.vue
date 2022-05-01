@@ -1,12 +1,12 @@
 <template>
   <div class="grid gap-4 mx-auto max-w-[300px]">
-    <h2 class="text-xl font-bold">Login</h2>
+    <h2 class="text-xl font-bold">{{ t('auth.login.title') }}</h2>
     <div class="p-4 my-2 text-center rounded bg-warning-bg">
       <p>
-        New to this service?
+        {{ t('auth.common.new_to_service') }}
         <BasLink
           :route-name="routeNames.AUTH_SIGNUP"
-          label="Sign up!"
+          :label="t('auth.signup.title') + '!'"
         ></BasLink>
       </p>
     </div>
@@ -25,7 +25,9 @@
         label="Password:"
         label-class="text-sm"
       ></BasInput>
-      <BasButton class="ml-auto bg-secondary-bg">Login</BasButton>
+      <BasButton class="ml-auto bg-secondary-bg">
+        {{ t('auth.login.title') }}
+      </BasButton>
     </form>
   </div>
 </template>
@@ -35,7 +37,10 @@ import BasButton from '@/components/BasButton.vue';
 import BasInput from '@/components/BasInput.vue';
 import BasLink from '@/components/BasLink.vue';
 import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { routeNames } from '../../router';
+
+const { t } = useI18n();
 
 const email = ref('');
 const password = ref('');
