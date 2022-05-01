@@ -1,39 +1,34 @@
 <template>
   <div>
-    <h1 class="mb-4 text-xl font-bold">Create a Retro room</h1>
-    <p>
-      Registered users will see here the previous rooms and some usefull
-      statistics to measure the mood of the team.
-    </p>
-    <p class="mt-2">
-      If you are not registered, you can still create a room, but it will be
-      temporary and automatically removed after 4 hours of inactivity.
-    </p>
-    <h2 class="mt-6 mb-4 text-lg font-semibold">Create a new room</h2>
-    <p>Type the name of the room and share it with your colleages.</p>
-    <p class="mt-2">The room will be available for 4 hours.</p>
+    <h1 class="mb-4 text-xl font-bold">{{ t('rooms.create.title') }}</h1>
+    <p>{{ t('rooms.create.advantages') }}</p>
+    <p class="mt-2">{{ t('rooms.create.unregistered') }}</p>
+    <h2 class="mt-6 mb-4 text-lg font-semibold">
+      {{ t('rooms.create.create_new_room') }}
+    </h2>
+    <p>{{ t('rooms.create.name_share_intro') }}</p>
     <form class="flex items-end gap-2 mt-6" @submit.prevent>
       <div class="w-full max-w-[500px]">
         <BasInput
           v-model="roomName"
           name="room"
-          label="Name of the room:"
           label-class="block mb-1 text-sm"
+          :label="t('rooms.create.name_of_the_room')"
         ></BasInput>
       </div>
       <BasButton
-        label="Create room"
         class="bg-opacity-90 max-h-max bg-base-dark"
+        :label="t('rooms.create.create_room')"
       ></BasButton>
     </form>
     <div v-if="roomCreated" class="mt-6">
-      <p>Room created!!! Here is the link for the room:</p>
+      <p>{{ t('rooms.create.room_created') }}</p>
       <div class="flex items-center gap-2 mt-4">
         <BasLink new-window :href="roomLink"></BasLink>
         <BasButton
           outline
-          label="Copy link"
           class="max-h-max border-base-dark"
+          :label="t('rooms.create.copy_link')"
           @click="copyToClipboard"
         ></BasButton>
       </div>
@@ -43,13 +38,13 @@
 
 <script setup lang="ts">
 import BasButton from '@/components/BasButton.vue';
-// import { useI18n } from 'vue-i18n';
 import BasInput from '@/components/BasInput.vue';
 import BasLink from '@/components/BasLink.vue';
 import { NotificationType, useNotifications } from '@/modules/notifications';
 import { ref } from 'vue';
-// const { t } = useI18n();
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 const { addNotification } = useNotifications();
 
 const roomName = ref('');
@@ -65,8 +60,8 @@ const copyToClipboard = async () => {
       id: 'roomLinkClipboardSuccess',
       type: NotificationType.INFO,
       icon: true,
-      title: 'Link copied!',
-      message: 'Great! You have the link of the room on your clipboard.',
+      title: t('rooms.notifications.clipboard_success.title'),
+      message: t('rooms.notifications.clipboard_success.message'),
       closable: true,
       closeAfterMs: 5000,
     });
@@ -76,9 +71,8 @@ const copyToClipboard = async () => {
       id: 'roomLinkClipboardError',
       type: NotificationType.ERROR,
       icon: true,
-      title: 'Something wrong happened',
-      message:
-        'Oh oh. Looks like the room link cannot be copied to your clipboard. Please, do it manually by right-clicking the link and choosing "Copy link address".',
+      title: t('rooms.notifications.clipboard_error.title'),
+      message: t('rooms.notifications.clipboard_error.message'),
       closable: true,
     });
   }

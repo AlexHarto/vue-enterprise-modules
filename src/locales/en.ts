@@ -16,6 +16,32 @@ export default {
   },
   rooms: {
     menu_label: 'Rooms',
+    create: {
+      title: 'Create a Retro room',
+      advantages:
+        "Registered users will see here the previous rooms and some usefull statistics to measure the mood's evolution of the team.",
+      unregistered:
+        'If you are not registered, you can still create a room, but it will be temporary and automatically removed after 4 hours of inactivity.',
+      create_new_room: 'Create a new room',
+      name_share_intro:
+        'Type the name of the room and share it with your colleages.',
+      name_of_the_room: 'Name of the room:',
+      create_room: 'Create room',
+      room_created:
+        'Congratulations!! Room created!! Here is the link for the room:',
+      copy_link: 'Copy link',
+    },
+    notifications: {
+      clipboard_success: {
+        title: 'Link copied!',
+        message: 'Great! You have the link of the room on your clipboard.',
+      },
+      clipboard_error: {
+        title: 'Something wrong happened',
+        message:
+          'Oh oh. Looks like the room link cannot be copied to your clipboard. Please, do it manually by right-clicking the link and choosing "Copy link address".',
+      },
+    },
   },
   auth: {
     login: {

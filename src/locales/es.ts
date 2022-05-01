@@ -15,7 +15,34 @@ export default {
     },
   },
   rooms: {
-    menu_label: 'Rooms',
+    menu_label: 'Sesiones',
+    create: {
+      title: 'Crear una sesión Retro',
+      advantages:
+        'Los usuarios registrados podrán ver aquí las sesiones anteriores y algunas estatísticas interesantes para medir la evolución del estado de ánimo del equipo.',
+      unregistered:
+        'Puedes crear una sesión temporal aunque no estés registrado. Los datos de la sesión se borrarán automáticamente después de 4 horas de inactividad.',
+      create_new_room: 'Crear una nueva sesión',
+      name_share_intro:
+        'Escribe el nombre de la sesión y comparte el enlace con tus colegas.',
+      name_of_the_room: 'Nombre de la sesión:',
+      create_room: 'Crear sesión',
+      room_created:
+        '¡¡Enhorabuena!! ¡Sesión creada! Aquí está en enlace para la sesión:',
+      copy_link: 'Copiar enlace',
+    },
+    notifications: {
+      clipboard_success: {
+        title: '¡Enlace copiado!',
+        message:
+          '¡Genial! Ya tienes el enlace de la sesión en tu clipboard y sólo tienes que pegar el enlace.',
+      },
+      clipboard_error: {
+        title: 'Algo ha pasado',
+        message:
+          'Vaya, parece que el enlace de la sesión no ha podido ser copiado. Por favor, hazlo manualmente haciendo click con el botón derecho sobre el enlace y eligiendo la opción "Copiar dirección del enlace".',
+      },
+    },
   },
   auth: {
     login: {
