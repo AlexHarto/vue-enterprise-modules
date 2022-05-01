@@ -1,5 +1,5 @@
 <template>
-  <BasDropdown id="language" :options="languageOptions" class="ml-5">
+  <BasDropdown id="language" :options="languageOptions" class="ml-2">
     <span class="uppercase">{{ locale }}</span>
   </BasDropdown>
 </template>
