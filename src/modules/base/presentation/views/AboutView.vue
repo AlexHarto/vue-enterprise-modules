@@ -15,10 +15,10 @@
     <form class="flex items-end gap-2 mt-6" @submit.prevent>
       <div class="w-full max-w-[500px]">
         <BasInput
+          v-model="roomName"
           name="room"
           label="Name of the room:"
           label-class="block mb-1 text-sm"
-          placeholder="Type here..."
         ></BasInput>
       </div>
       <BasButton
@@ -52,6 +52,7 @@ import { ref } from 'vue';
 
 const { addNotification } = useNotifications();
 
+const roomName = ref('');
 const roomCreated = ref(true);
 const roomLink = ref('https://localhost:3000');
 const clipboardSuccess = ref(false);
