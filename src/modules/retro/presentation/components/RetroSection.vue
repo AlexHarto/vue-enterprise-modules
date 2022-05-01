@@ -112,12 +112,12 @@ const messages = computed(() =>
   isSortedActive.value ? sortedMessages(props.data.type) : props.data.messages
 );
 
-const toggleSorted = (e: MouseEvent) => {
+const toggleSorted = () => {
   isSortedLocalPriority.value = true;
   isSorted.value = !isSorted.value;
 };
 
-const shiftToggleSorted = (e: MouseEvent) => {
+const shiftToggleSorted = () => {
   isSortedLocalPriority.value = false;
   if (isSorted.value && !props.globalSort) {
     isSorted.value = props.globalSort;
@@ -128,12 +128,12 @@ const shiftToggleSorted = (e: MouseEvent) => {
   isSorted.value = !isSorted.value;
 };
 
-const toggleChecks = (e: MouseEvent) => {
+const toggleChecks = () => {
   isChecksLocalPriority.value = true;
   isChecks.value = !isChecks.value;
 };
 
-const shiftToggleChecks = (e: MouseEvent) => {
+const shiftToggleChecks = () => {
   isChecksLocalPriority.value = false;
   if (isChecks.value && !props.globalChecks) {
     isChecks.value = props.globalChecks;
