@@ -1,84 +1,104 @@
+import { db } from '@/infra/firebase/config';
+import { doc, getDoc } from 'firebase/firestore';
 import { defineStore } from 'pinia';
-import { RetroType, type RetroSectionData } from './infra/types/Section';
+import {
+  RetroType,
+  type RetroSectionData,
+  type RetroSectionMessage,
+} from './infra/types/Section';
 
 export const useRetroStore = defineStore('retroStore', {
   state: () => {
     return {
+      userIndex: -1,
       sections: [
         {
           type: RetroType.CONTINUE,
+          name: 'continue',
           title: 'retro.titles.continue',
-          messages: [],
         },
         {
           type: RetroType.STOP,
+          name: 'stop',
           title: 'retro.titles.stop',
-          messages: [],
         },
         {
           type: RetroType.TRY,
+          name: 'try',
           title: 'retro.titles.try',
-          messages: [],
         },
         {
           type: RetroType.KUDOS,
+          name: 'kudos',
           title: 'retro.titles.kudos',
-          messages: [],
         },
       ] as RetroSectionData[],
-      mockDataAdded: false,
+      messages: [] as RetroSectionMessage[],
+      dataAdded: false,
     };
   },
   getters: {
     sortedMessages: (state) => (type: RetroType) => {
-      const section = state.sections.find((s) => s.type === type);
-      if (section) {
-        return [...section.messages].sort(
-          (a, b) => (b.likes || 0) - (a.likes || 0)
+      const sectionMessages = state.messages.filter((m) => m.type === type);
+      if (sectionMessages) {
+        return [...sectionMessages].sort(
+          (a, b) => (b.likes.length || 0) - (a.likes.length || 0)
         );
       }
       return [];
     },
   },
   actions: {
-    addMockData() {
-      if (!this.mockDataAdded) {
-        this.addMessage(RetroType.CONTINUE, 'We are a great team', '0');
-        this.addMessage(RetroType.CONTINUE, 'Always available', '0');
-        this.addMessage(RetroType.STOP, 'Too many meetings...', '0');
-        this.addMessage(RetroType.STOP, 'No time for coding :-[', '0');
-        this.addMessage(RetroType.TRY, 'Morning excersises O_o', '0');
-        this.addMessage(RetroType.TRY, "A component's library", '0');
-        this.addMessage(RetroType.KUDOS, 'Thank you all!!!', '0');
-        this.mockDataAdded = true;
-      }
-    },
-    // TODO: Add current userId as the default value for authorId
-    addMessage(type: RetroType, label: string, authorId = '0') {
-      const section = this.sections.find((s) => s.type === type);
-      if (section) {
-        const id = `${type}_${section.messages.length}`;
-        section.messages.push({ id, authorId, label, userLikedIt: false });
-      }
-    },
-    editMessage(type: RetroType, id: string, label: string) {
-      const section = this.sections.find((s) => s.type === type);
-      if (section) {
-        const message = section.messages.find((m) => m.id === id);
-        if (message) {
-          message.label = label;
+    loadRoomData(roomId: string) {
+      if (!this.dataAdded) {
+        try {
+          const colRef = doc(db, 'rooms', roomId);
+          getDoc(colRef)
+            .then((doc) => {
+              const data = doc.data();
+              if (data && data.messages) {
+                for (let i = 0; i < data.messages.length; i++) {
+                  this.messages.push({ index: i, ...data.messages[i] });
+                }
+              }
+            })
+            .finally(() => {
+              this.dataAdded = true;
+            });
+        } catch (error) {
+          // TODO: Complete logic
+          console.log('No room found with that id');
         }
       }
     },
-    changeMessageLikes(type: RetroType, id: string, amount = 1) {
-      const section = this.sections.find((s) => s.type === type);
-      if (section) {
-        const message = section.messages.find((m) => m.id === id);
-        if (message) {
-          const likes = message.likes || 0;
-          message.likes = likes + amount;
-          message.userLikedIt = amount > 0;
-        }
+    updateMessage(modifiedMessage: RetroSectionMessage) {
+      const message = this.messages.find(
+        (m) => m.index === modifiedMessage.index
+      );
+      Object.assign(message, modifiedMessage);
+      // TODO: Update message in the database
+    },
+    addNewMessage(message: RetroSectionMessage) {
+      this.messages.push(message);
+    },
+    editMessage(modifiedMessage: RetroSectionMessage) {
+      if (modifiedMessage.author === this.userIndex) {
+        this.updateMessage(modifiedMessage);
+      }
+    },
+    addLikeToMessage(message: RetroSectionMessage) {
+      if (message.likes.indexOf(this.userIndex) < 0) {
+        const modifiedMessage = { ...message };
+        modifiedMessage.likes.push(this.userIndex);
+        this.updateMessage(modifiedMessage);
+      }
+    },
+    removeLikeFromMessage(message: RetroSectionMessage) {
+      const i = message.likes.indexOf(this.userIndex);
+      if (i > -1) {
+        const modifiedMessage = { ...message };
+        modifiedMessage.likes.splice(i, 1);
+        this.updateMessage(modifiedMessage);
       }
     },
   },

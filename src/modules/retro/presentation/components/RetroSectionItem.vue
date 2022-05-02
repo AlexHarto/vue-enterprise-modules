@@ -27,11 +27,8 @@
         {{ message.label }}
       </div>
       <div class="flex-center">
-        <transition
-          :name="message.userLikedIt ? 'grow-fade' : 'fade'"
-          mode="out-in"
-        >
-          <button v-if="message.userLikedIt" @click="toggleLiked">
+        <transition :name="userLikesIt ? 'grow-fade' : 'fade'" mode="out-in">
+          <button v-if="userLikesIt" @click="toggleLiked">
             <BasIcon
               icon="heart-filled"
               class="w-6 h-6 transition-all transform opacity-100 interactive"
@@ -55,39 +52,49 @@
 import BasCheckbox from '@/components/BasCheckbox.vue';
 import BasIcon from '@/components/BasIcon.vue';
 import { computed, nextTick, ref } from 'vue';
-import type { RetroSectionMessage, RetroType } from '../../infra/types/Section';
+import type { RetroSectionMessage } from '../../infra/types/Section';
 import { useRetroStore } from '../../store';
 
 const props = defineProps<{
-  type: RetroType;
   message: RetroSectionMessage;
   checks: boolean;
 }>();
 
-const { editMessage, changeMessageLikes } = useRetroStore();
+const { userIndex, editMessage, addLikeToMessage, removeLikeFromMessage } =
+  useRetroStore();
 
 const editing = ref(false);
 const labelInputRef = ref<HTMLInputElement>();
 
+const userLikesIt = computed(() => props.message.likes.includes(userIndex));
+
 const newLabel = computed({
   get: () => props.message.label,
-  set: (v: string) => {
-    editMessage(props.type, props.message.id, v);
+  set: (newLabel: string) => {
+    editMessage({
+      ...props.message,
+      label: newLabel,
+    });
   },
 });
 
 const editMode = async () => {
-  editing.value = true;
-  await nextTick();
-  labelInputRef.value?.focus();
+  if (userIndex === props.message.author) {
+    editing.value = true;
+    await nextTick();
+    labelInputRef.value?.focus();
+  }
 };
 
 const isChecked = ref(false);
-const numLikes = computed(() => props.message.likes || 0);
+const numLikes = computed(() => props.message.likes.length || 0);
 
 const toggleLiked = () => {
-  const amount = props.message.userLikedIt ? -1 : 1;
-  changeMessageLikes(props.type, props.message.id, amount);
+  if (userLikesIt.value) {
+    removeLikeFromMessage(props.message);
+  } else {
+    addLikeToMessage(props.message);
+  }
 };
 const setChecked = (newValue: boolean) => {
   isChecked.value = newValue;

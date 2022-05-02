@@ -1,7 +1,7 @@
 <template>
   <div
     :id="`section_${data.type}`"
-    :class="['flex flex-col mt-0.5 rounded retro-section', (data.type as string).toLowerCase()]"
+    :class="['flex flex-col mt-0.5 rounded retro-section', data.name]"
   >
     <h2
       class="sm:(flex items-center) p-4 text-xl font-bold rounded-t retro-section-title"
@@ -32,12 +32,11 @@
       </div>
     </h2>
     <div class="flex flex-col flex-grow px-4 pb-4 retro-section-content">
-      <div v-if="data.messages" class="relative flex-grow my-2">
+      <div v-if="orderedMessages" class="relative flex-grow my-2">
         <transition-group name="group-fade" tag="div" class="relative">
           <RetroSectionItem
-            v-for="(message, messageIndex) in messages"
-            :key="`message_${messageIndex}`"
-            :type="data.type"
+            v-for="message in orderedMessages"
+            :key="`message_${message.type}_${message.index}`"
             :message="message"
             :checks="isChecksActive"
             class="retro-section-message"
@@ -49,8 +48,8 @@
         @submit.prevent
       >
         <BasInput
-          ref="newMessageInputRef"
-          v-model="newMessage"
+          ref="newLabelInputRef"
+          v-model="newLabel"
           :placeholder="t('retro.input.placeholder')"
           :name="`new_message_${data.type}`"
           :hsl-border-color="hslBorderColor"
@@ -60,7 +59,7 @@
           :label="t('retro.add_button')"
           :hsl-border-color="hslBorderColor"
           class="bg-section-accent interactive"
-          @click="addNewMessage"
+          @click="addClickHandler"
         ></BasButton>
       </form>
     </div>
@@ -73,7 +72,10 @@ import BasIcon from '@/components/BasIcon.vue';
 import BasInput from '@/components/BasInput.vue';
 import { computed, onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import type { RetroSectionData } from '../../infra/types/Section';
+import type {
+  RetroSectionData,
+  RetroSectionMessage,
+} from '../../infra/types/Section';
 import { useRetroStore } from '../../store';
 import RetroSectionItem from './RetroSectionItem.vue';
 
@@ -86,10 +88,10 @@ const props = defineProps<{
 }>();
 
 const { t } = useI18n();
-const { addMessage, sortedMessages } = useRetroStore();
+const { userIndex, addNewMessage, sortedMessages, messages } = useRetroStore();
 
-const newMessage = ref('');
-const newMessageInputRef = ref<HTMLInputElement>();
+const newLabel = ref('');
+const newLabelInputRef = ref<HTMLInputElement>();
 const hslBorderColor = ref('0 0% 25%');
 // Checks
 const isChecks = ref(false);
@@ -108,8 +110,13 @@ const isSortedActive = computed(
     (!isSortedLocalPriority.value && (isSorted.value || props.globalSort))
 );
 // Message list
-const messages = computed(() =>
-  isSortedActive.value ? sortedMessages(props.data.type) : props.data.messages
+const filteredMessages = computed(() =>
+  messages.filter((m) => m.type === props.data.type)
+);
+const orderedMessages = computed(() =>
+  isSortedActive.value
+    ? sortedMessages(props.data.type)
+    : filteredMessages.value
 );
 
 const toggleSorted = () => {
@@ -144,11 +151,18 @@ const shiftToggleChecks = () => {
   isChecks.value = !isChecks.value;
 };
 
-const addNewMessage = async () => {
-  if (newMessage.value) {
-    addMessage(props.data.type, newMessage.value);
-    newMessage.value = '';
-    newMessageInputRef.value?.focus();
+const addClickHandler = async () => {
+  if (newLabel.value) {
+    const newMessage: RetroSectionMessage = {
+      type: props.data.type,
+      index: -1,
+      author: userIndex,
+      label: newLabel.value,
+      likes: [],
+    };
+    addNewMessage(newMessage);
+    newLabel.value = '';
+    newLabelInputRef.value?.querySelector('input')?.focus();
   }
 };
 

@@ -1,21 +1,21 @@
 export enum RetroType {
-  CONTINUE = 'CONTINUE',
-  STOP = 'STOP',
-  TRY = 'TRY',
-  KUDOS = 'KUDOS',
+  CONTINUE,
+  STOP,
+  TRY,
+  KUDOS,
 }
 
 export interface RetroSectionMessage {
-  id: string;
-  authorId: string;
+  index: number;
+  type: RetroType;
+  author: number;
   label: string;
-  userLikedIt: boolean;
-  likes?: number;
+  likes: number[];
   comments?: string[];
 }
 
 export interface RetroSectionData {
   type: RetroType;
+  name: string;
   title: string;
-  messages: RetroSectionMessage[];
 }

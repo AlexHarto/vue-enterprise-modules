@@ -20,8 +20,7 @@ import RetroSection from '../components/RetroSection.vue';
 
 const store = useRetroStore();
 const { sections } = storeToRefs(store);
-// TODO: Remove mock data
-const { addMockData } = store;
+const { loadRoomData } = store;
 
 const globalChecks = ref(false);
 const globalSort = ref(false);
@@ -36,8 +35,6 @@ const updateGlobalSort = (val: boolean) => {
 
 // TODO: Remove mock data
 onMounted(() => {
-  addMockData();
+  loadRoomData('O2JgLQvYsTRPNT58yAkS');
 });
 </script>
-
-<style scoped></style>
