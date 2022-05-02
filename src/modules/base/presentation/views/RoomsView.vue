@@ -8,7 +8,7 @@
     </h2>
     <p>{{ t('rooms.create.name_share_intro') }}</p>
     <form class="flex items-end gap-2 mt-6" @submit.prevent>
-      <div class="w-full max-w-[500px]">
+      <div class="w-full max-w-[300px]">
         <BasInput
           v-model="roomName"
           name="room"
@@ -19,6 +19,7 @@
       <BasButton
         class="bg-opacity-90 max-h-max bg-base-dark"
         :label="t('rooms.create.create_room')"
+        @click="createRoom"
       ></BasButton>
     </form>
     <div v-if="roomCreated" class="mt-6">
@@ -48,9 +49,13 @@ const { t } = useI18n();
 const { addNotification } = useNotifications();
 
 const roomName = ref('');
-const roomCreated = ref(true);
-const roomLink = ref('https://localhost:3000');
+const roomCreated = ref(false);
+const roomLink = ref('https://localhost:3000/rooms?id=51a8sa9');
 const clipboardSuccess = ref(false);
+
+const createRoom = () => {
+  roomCreated.value = true;
+};
 
 const copyToClipboard = async () => {
   try {

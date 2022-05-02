@@ -10,10 +10,10 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
-    "firebase": "^9.6.11",
+    "firebase": "^9.7.0",
     "pinia": "^2.0.13",
     "vue": "^3.2.33",
-    "vue-i18n": "^9.1.9",
+    "vue-i18n": "^9.1.10",
     "vue-router": "^4.0.14"
   },
   "devDependencies": {
