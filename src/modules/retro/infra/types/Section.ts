@@ -6,11 +6,11 @@ export enum RetroType {
 }
 
 export interface RetroSectionMessage {
-  index: number;
+  id?: string;
   type: RetroType;
-  author: number;
+  author: string;
   label: string;
-  likes: number[];
+  likes: string[];
   comments?: string[];
 }
 

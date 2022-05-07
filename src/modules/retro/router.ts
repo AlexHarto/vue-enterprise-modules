@@ -11,7 +11,7 @@ const RetroView = () => import('./presentation/views/RetroView.vue');
 
 export const routes: Array<RouteRecordRaw> = [
   {
-    path: '',
+    path: ':id',
     name: routeNames.RETRO_ROOT,
     component: RetroView,
   },

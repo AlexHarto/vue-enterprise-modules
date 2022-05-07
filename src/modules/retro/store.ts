@@ -1,6 +1,15 @@
 import { db } from '@/infra/firebase/config';
-import { doc, getDoc } from 'firebase/firestore';
+import {
+  addDoc,
+  arrayRemove,
+  arrayUnion,
+  collection,
+  doc,
+  onSnapshot,
+  updateDoc,
+} from '@firebase/firestore';
 import { defineStore } from 'pinia';
+import { watchEffect } from 'vue';
 import {
   RetroType,
   type RetroSectionData,
@@ -10,7 +19,8 @@ import {
 export const useRetroStore = defineStore('retroStore', {
   state: () => {
     return {
-      userIndex: -1,
+      roomId: '',
+      userId: self.crypto.randomUUID(),
       sections: [
         {
           type: RetroType.CONTINUE,
@@ -50,55 +60,63 @@ export const useRetroStore = defineStore('retroStore', {
   },
   actions: {
     loadRoomData(roomId: string) {
+      if (roomId !== this.roomId) {
+        this.roomId = roomId;
+        this.dataAdded = false;
+      }
       if (!this.dataAdded) {
         try {
-          const colRef = doc(db, 'rooms', roomId);
-          getDoc(colRef)
-            .then((doc) => {
-              const data = doc.data();
-              if (data && data.messages) {
-                for (let i = 0; i < data.messages.length; i++) {
-                  this.messages.push({ index: i, ...data.messages[i] });
-                }
-              }
-            })
-            .finally(() => {
-              this.dataAdded = true;
-            });
+          const colRef = collection(db, this.roomId);
+          // Subscription for the snapshot
+          const unsubscribe = onSnapshot(colRef, (snapshot) => {
+            this.messages.length = 0;
+            for (const doc of snapshot.docs) {
+              const message = {
+                id: doc.id,
+                ...doc.data(),
+              } as RetroSectionMessage;
+              this.messages.push(message);
+            }
+            this.dataAdded = true;
+          });
+          // Unsubscribe when the invoker components unmounts
+          watchEffect((onInvalidate) => {
+            onInvalidate(() => unsubscribe());
+          });
         } catch (error) {
           // TODO: Complete logic
-          console.log('No room found with that id');
+          console.log(`Room with id='${roomId}' was not found.`);
         }
       }
     },
-    updateMessage(modifiedMessage: RetroSectionMessage) {
-      const message = this.messages.find(
-        (m) => m.index === modifiedMessage.index
-      );
-      Object.assign(message, modifiedMessage);
-      // TODO: Update message in the database
+    async updateMessage(id: string, obj: Partial<unknown>) {
+      const docRef = doc(db, this.roomId, id);
+      await updateDoc(docRef, obj);
     },
-    addNewMessage(message: RetroSectionMessage) {
-      this.messages.push(message);
+    async addNewMessage(type: RetroType, label: string) {
+      const message: RetroSectionMessage = {
+        type,
+        author: this.userId,
+        label,
+        likes: [],
+      };
+      const colRef = collection(db, this.roomId);
+      const docRef = await addDoc(colRef, message);
+      message.id = docRef.id;
     },
-    editMessage(modifiedMessage: RetroSectionMessage) {
-      if (modifiedMessage.author === this.userIndex) {
-        this.updateMessage(modifiedMessage);
+    editMessage(id: string, label: string) {
+      this.updateMessage(id, { label });
+    },
+    addLikeToMessage(id: string) {
+      const message = this.messages.find((m) => m.id === id);
+      if (message && message.likes.indexOf(this.userId) < 0) {
+        this.updateMessage(id, { likes: arrayUnion(this.userId) });
       }
     },
-    addLikeToMessage(message: RetroSectionMessage) {
-      if (message.likes.indexOf(this.userIndex) < 0) {
-        const modifiedMessage = { ...message };
-        modifiedMessage.likes.push(this.userIndex);
-        this.updateMessage(modifiedMessage);
-      }
-    },
-    removeLikeFromMessage(message: RetroSectionMessage) {
-      const i = message.likes.indexOf(this.userIndex);
-      if (i > -1) {
-        const modifiedMessage = { ...message };
-        modifiedMessage.likes.splice(i, 1);
-        this.updateMessage(modifiedMessage);
+    removeLikeFromMessage(id: string) {
+      const message = this.messages.find((m) => m.id === id);
+      if (message && message.likes.indexOf(this.userId) > -1) {
+        this.updateMessage(id, { likes: arrayRemove(this.userId) });
       }
     },
   },

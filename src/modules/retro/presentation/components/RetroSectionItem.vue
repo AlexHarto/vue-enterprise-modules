@@ -12,7 +12,6 @@
       </transition>
       <div v-if="editing" class="flex-grow mr-4">
         <input
-          ref="labelInputRef"
           v-model="newLabel"
           type="text"
           class="w-full p-1 bg-transparent"
@@ -27,7 +26,7 @@
         {{ message.label }}
       </div>
       <div class="flex-center">
-        <transition :name="userLikesIt ? 'grow-fade' : 'fade'" mode="out-in">
+        <transition name="fade" mode="out-in">
           <button v-if="userLikesIt" @click="toggleLiked">
             <BasIcon
               icon="heart-filled"
@@ -60,29 +59,25 @@ const props = defineProps<{
   checks: boolean;
 }>();
 
-const { userIndex, editMessage, addLikeToMessage, removeLikeFromMessage } =
+const { userId, editMessage, addLikeToMessage, removeLikeFromMessage } =
   useRetroStore();
 
 const editing = ref(false);
-const labelInputRef = ref<HTMLInputElement>();
 
-const userLikesIt = computed(() => props.message.likes.includes(userIndex));
+const userLikesIt = computed(() => props.message.likes.includes(userId));
+const messageId = computed(() => props.message.id || '-1');
 
 const newLabel = computed({
   get: () => props.message.label,
   set: (newLabel: string) => {
-    editMessage({
-      ...props.message,
-      label: newLabel,
-    });
+    editMessage(messageId.value, newLabel);
   },
 });
 
 const editMode = async () => {
-  if (userIndex === props.message.author) {
+  if (userId === props.message.author) {
     editing.value = true;
     await nextTick();
-    labelInputRef.value?.focus();
   }
 };
 
@@ -91,9 +86,9 @@ const numLikes = computed(() => props.message.likes.length || 0);
 
 const toggleLiked = () => {
   if (userLikesIt.value) {
-    removeLikeFromMessage(props.message);
+    removeLikeFromMessage(messageId.value);
   } else {
-    addLikeToMessage(props.message);
+    addLikeToMessage(messageId.value);
   }
 };
 const setChecked = (newValue: boolean) => {

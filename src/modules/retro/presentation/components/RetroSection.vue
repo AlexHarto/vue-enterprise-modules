@@ -36,7 +36,7 @@
         <transition-group name="group-fade" tag="div" class="relative">
           <RetroSectionItem
             v-for="message in orderedMessages"
-            :key="`message_${message.type}_${message.index}`"
+            :key="`message_${message.type}_${message.id}`"
             :message="message"
             :checks="isChecksActive"
             class="retro-section-message"
@@ -48,7 +48,6 @@
         @submit.prevent
       >
         <BasInput
-          ref="newLabelInputRef"
           v-model="newLabel"
           :placeholder="t('retro.input.placeholder')"
           :name="`new_message_${data.type}`"
@@ -72,10 +71,7 @@ import BasIcon from '@/components/BasIcon.vue';
 import BasInput from '@/components/BasInput.vue';
 import { computed, onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import type {
-  RetroSectionData,
-  RetroSectionMessage,
-} from '../../infra/types/Section';
+import type { RetroSectionData } from '../../infra/types/Section';
 import { useRetroStore } from '../../store';
 import RetroSectionItem from './RetroSectionItem.vue';
 
@@ -88,10 +84,9 @@ const props = defineProps<{
 }>();
 
 const { t } = useI18n();
-const { userIndex, addNewMessage, sortedMessages, messages } = useRetroStore();
+const { addNewMessage, sortedMessages, messages } = useRetroStore();
 
 const newLabel = ref('');
-const newLabelInputRef = ref<HTMLInputElement>();
 const hslBorderColor = ref('0 0% 25%');
 // Checks
 const isChecks = ref(false);
@@ -153,16 +148,8 @@ const shiftToggleChecks = () => {
 
 const addClickHandler = async () => {
   if (newLabel.value) {
-    const newMessage: RetroSectionMessage = {
-      type: props.data.type,
-      index: -1,
-      author: userIndex,
-      label: newLabel.value,
-      likes: [],
-    };
-    addNewMessage(newMessage);
+    addNewMessage(props.data.type, newLabel.value);
     newLabel.value = '';
-    newLabelInputRef.value?.querySelector('input')?.focus();
   }
 };
 
