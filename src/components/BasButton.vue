@@ -50,20 +50,23 @@ const clickHandler = (e: MouseEvent) => {
 <style scoped>
 .btn {
   --color-secondary-border: v-bind(hslBorderColor);
-  @apply rounded border-2 outline-primary-text;
+  @apply rounded outline-primary-text;
 }
 .btn-label {
-  @apply flex items-center justify-center rounded-sm whitespace-nowrap;
+  @apply flex items-center justify-center rounded whitespace-nowrap border-2;
 }
 .btn:not([outline]) {
-  @apply text-secondary-text border-secondary-border;
-  @apply focus:(text-secondary-text-focus border-secondary-border-focus);
+  @apply text-secondary-text;
+  @apply focus:(text-secondary-text-focus);
+}
+.btn:not([outline]) .btn-label {
+  @apply border-secondary-border;
+  @apply focus:(border-secondary-border-focus);
 }
 .btn[active='true'] .btn-label {
   @apply bg-base-light text-base-dark;
-  @apply hover:bg-opacity-80;
 }
-.btn[outline] {
+.btn[outline] .btn-label {
   @apply focus:(border-primary-border-focus);
 }
 .btn:not([outline]) .btn-label {
@@ -74,11 +77,14 @@ const clickHandler = (e: MouseEvent) => {
 }
 
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .btn:active .btn-label {
-    @apply bg-base-light text-base-dark;
+  .btn[active='true']:hover .btn-label {
+    @apply bg-opacity-90;
   }
-  .btn:hover .btn-label {
-    @apply bg-base-light bg-opacity-40;
+  .btn:not([active='true']):hover .btn-label {
+    @apply bg-base-light bg-opacity-20;
+  }
+  .btn:hover:active .btn-label {
+    @apply bg-opacity-0;
   }
 }
 </style>
