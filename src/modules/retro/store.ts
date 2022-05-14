@@ -48,12 +48,21 @@ export const useRetroStore = defineStore('retroStore', {
     };
   },
   getters: {
-    sortedMessages: (state) => (type: RetroType) => {
+    sortedMessagesByLikes: (state) => (type: RetroType) => {
       const sectionMessages = state.messages.filter((m) => m.type === type);
       if (sectionMessages) {
-        return [...sectionMessages].sort(
-          (a, b) => (b.likes.length || 0) - (a.likes.length || 0)
-        );
+        return [...sectionMessages].sort((a, b) => {
+          if ((b.likes.length || 0) > (a.likes.length || 0)) return 1;
+          if ((b.likes.length || 0) < (a.likes.length || 0)) return -1;
+          return a.index - b.index;
+        });
+      }
+      return [];
+    },
+    sortedMessagesByIndex: (state) => (type: RetroType) => {
+      const sectionMessages = state.messages.filter((m) => m.type === type);
+      if (sectionMessages) {
+        return [...sectionMessages].sort((a, b) => a.index - b.index);
       }
       return [];
     },
@@ -95,6 +104,7 @@ export const useRetroStore = defineStore('retroStore', {
     },
     async addNewMessage(type: RetroType, label: string) {
       const message: RetroSectionMessage = {
+        index: this.messages.length,
         type,
         author: this.userId,
         label,

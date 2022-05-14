@@ -7,6 +7,7 @@ export enum RetroType {
 
 export interface RetroSectionMessage {
   id?: string;
+  index: number;
   type: RetroType;
   author: string;
   label: string;

@@ -84,7 +84,8 @@ const props = defineProps<{
 }>();
 
 const { t } = useI18n();
-const { addNewMessage, sortedMessages, messages } = useRetroStore();
+const { addNewMessage, sortedMessagesByIndex, sortedMessagesByLikes } =
+  useRetroStore();
 
 const newLabel = ref('');
 const hslBorderColor = ref('0 0% 25%');
@@ -105,12 +106,10 @@ const isSortedActive = computed(
     (!isSortedLocalPriority.value && (isSorted.value || props.globalSort))
 );
 // Message list
-const filteredMessages = computed(() =>
-  messages.filter((m) => m.type === props.data.type)
-);
+const filteredMessages = computed(() => sortedMessagesByIndex(props.data.type));
 const orderedMessages = computed(() =>
   isSortedActive.value
-    ? sortedMessages(props.data.type)
+    ? sortedMessagesByLikes(props.data.type)
     : filteredMessages.value
 );
 
