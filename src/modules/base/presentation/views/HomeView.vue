@@ -1,54 +1,89 @@
 <template>
   <div class="relative">
-    <transition name="fade-up">
-      <div v-show="toastVisible" class="max-h-60">
-        <div
-          class="p-4 border rounded bg-warning-bg text-warning-text border-warning-border"
-        >
-          <header
-            class="flex items-center justify-between mb-2 -mt-2 font-semibold"
-          >
-            <div data-test="toast-title">
-              <h1 class="mb-4 text-lg font-bold">
-                {{ t('home.presentation.title') }}
-              </h1>
-            </div>
-            <div data-test="toast-close" @click="removeToast">
-              <BasIcon
-                icon="close"
-                class="w-4 h-4 transition-all cursor-pointer stroke-2 hover:stroke-3 hover:scale-105"
-                data-test="notification-close-icon"
-              />
-            </div>
-          </header>
-          <section class="flex items-center">
-            <div class="w-full" data-test="notification-message">
-              <p>
-                {{ t('home.presentation.intro1') }}
-                {{ t('home.presentation.intro2') }}
-              </p>
-              <p class="mt-4">{{ t('home.presentation.salutation') }}</p>
-            </div>
-          </section>
-        </div>
-      </div>
-    </transition>
+    <h1 class="mb-2 text-xl font-bold">{{ t('home.presentation.title') }}</h1>
+    <p>
+      {{ t('home.presentation.text') }}
+    </p>
+    <form
+      class="my-8 mx-auto border-2 p-6 rounded w-1/4 min-w-80 grid gap-4 border-primary-bg"
+      @submit.prevent
+    >
+      <h2 class="pb-1 mb-2 text-lg font-bold border-b-2 border-primary-bg">
+        {{ t('home.join_session.title') }}
+      </h2>
+      <BasInput
+        v-model="sessionCode"
+        name="sessionCode"
+        :label="t('home.join_session.code')"
+        :placeholder="t('home.join_session.code_placeholder')"
+      ></BasInput>
+      <BasInput
+        v-model="userName"
+        name="userName"
+        :label="t('home.join_session.name')"
+        :placeholder="t('home.join_session.name_placeholder')"
+      ></BasInput>
+      <BasButton
+        class="ml-auto mt-2 w-min bg-secondary-bg"
+        @click="joinSessionClickHandler"
+      >
+        {{ t('home.join_session.submit') }}
+      </BasButton>
+    </form>
+    <h2 class="text-lg font-bold">{{ t('home.create_session.title') }}</h2>
+    <p class="mt-2">
+      {{ t('home.create_session.text1') }}
+    </p>
+    <p class="mt-2">
+      {{ t('home.create_session.text2') }}
+      <RouterLink :to="{ name: authRouteNames.AUTH_LOGIN }">
+        {{ t('auth.login.title') }}
+      </RouterLink>
+      <a href="" class="underline"></a>
+      {{ t('home.create_session.text3') }}
+      <RouterLink :to="{ name: authRouteNames.AUTH_SIGNUP }">
+        {{ t('auth.signup.title') }}
+      </RouterLink>
+      {{ t('home.create_session.text4') }}
+    </p>
+    <h2 class="mt-8 text-lg font-bold">{{ t('home.disclaimer.title') }}</h2>
+    <p class="mt-2">
+      {{ t('home.disclaimer.text1') }}
+    </p>
+    <p class="mt-2">
+      {{ t('home.disclaimer.text2') }}
+      <a
+        href="https://github.com/AlexHarto/vue-enterprise-modules"
+        target="_blank"
+        class="underline"
+      >
+        {{ t('home.disclaimer.text3') }}
+      </a>
+      {{ t('home.disclaimer.text4') }}
+    </p>
+
+    <p class="mt-8 mb-8">
+      {{ t('home.salutation') }}
+    </p>
     <RouterView />
   </div>
 </template>
 
 <script setup lang="ts">
-import BasIcon from '@/components/BasIcon.vue';
+import BasButton from '@/components/BasButton.vue';
+import BasInput from '@/components/BasInput.vue';
+import { authRouteNames } from '@/modules/auth';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { RouterView } from 'vue-router';
+import { RouterLink, RouterView } from 'vue-router';
 
 const { t } = useI18n();
 
-const toastVisible = ref(true);
+const sessionCode = ref('');
+const userName = ref('');
 
-const removeToast = () => {
-  toastVisible.value = false;
+const joinSessionClickHandler = () => {
+  // Join session
 };
 </script>
 

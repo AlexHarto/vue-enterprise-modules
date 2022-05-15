@@ -63,6 +63,7 @@ const cValue = computed({
   }
 }
 input::placeholder {
+  @apply opacity-75;
   color: var(--input-placeholder-color);
 }
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {

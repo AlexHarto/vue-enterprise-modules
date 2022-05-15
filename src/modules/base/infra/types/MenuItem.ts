@@ -1,5 +1,5 @@
 export interface MenuItem {
-  routeName: string;
   label: string;
+  routeName: string;
   isVisible: boolean;
 }

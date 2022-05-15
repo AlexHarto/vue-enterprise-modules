@@ -12,7 +12,14 @@ const addMenuItem = (
 ) => {
   const store = useMainMenuStore();
   const { addItemToMainMenu } = store;
-  addItemToMainMenu({ label, routeName, isVisible });
+
+  addItemToMainMenu({
+    label,
+    routeName,
+    isVisible: typeof isVisible === 'boolean' ? isVisible : isVisible.value,
+  });
 };
 
-export default { registerModule, unregisterModule, routeNames, addMenuItem };
+export { routeNames as baseRouteNames };
+
+export default { registerModule, unregisterModule, addMenuItem };

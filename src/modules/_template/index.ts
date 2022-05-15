@@ -2,7 +2,7 @@
  * This is the entry point of your module.
  * Expose the variables you want to share.
  * Mandatories: registerModule, unregisterModule
- * Recommended: routeNames (for nested modules)
+ * Recommended: moduleRouteNames (for nested modules). Change 'module' for your module name
  */
 
 /*
@@ -11,7 +11,9 @@ import { routeNames, routes } from './router';
 
 const { registerModule, unregisterModule } = useModules(routes);
 
-export default { registerModule, unregisterModule, routeNames };
+export { routeNames as moduleRouteNames }
+
+export default { registerModule, unregisterModule };
 */
 
 // REMOVE THIS LINE:

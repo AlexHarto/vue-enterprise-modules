@@ -11,11 +11,6 @@ export const useMainMenuStore = defineStore('mainMenuStore', {
           label: 'home.menu_label',
           isVisible: true,
         },
-        {
-          routeName: routeNames.BASE_ROOMS,
-          label: 'rooms.menu_label',
-          isVisible: true,
-        },
       ] as MenuItem[],
     };
   },

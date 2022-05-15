@@ -3,4 +3,6 @@ import { routeNames, routes } from './router';
 
 const { registerModule, unregisterModule } = useModules(routes);
 
-export default { registerModule, unregisterModule, routeNames };
+export { routeNames as authRouteNames };
+
+export default { registerModule, unregisterModule };

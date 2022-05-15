@@ -9,39 +9,36 @@ export default {
     menu_label: 'Home',
     presentation: {
       title: 'Welcome to Retro',
-      intro1: 'Thank you for choosing our application!',
-      intro2: 'Please, let us know if you see something that can be improved.',
-      salutation: 'We hope you enjoy our application!',
+      text: 'Retro is an application to make retrospectives. To join an existing session, please paste the session code and type your name.',
     },
-  },
-  rooms: {
-    menu_label: 'Rooms',
-    create: {
-      title: 'Create a Retro room',
-      advantages:
-        "Registered users will see here the previous rooms and some usefull statistics to measure the mood's evolution of the team.",
-      unregistered:
-        'If you are not registered, you can still create a room, but it will be temporary and automatically removed after 4 hours of inactivity.',
-      create_new_room: 'Create a new room',
-      name_share_intro:
-        'Type the name of the room and share it with your colleages.',
-      name_of_the_room: 'Name of the room:',
-      create_room: 'Create room',
-      room_created:
-        'Congratulations!! Room created!! Here is the link for the room:',
-      copy_link: 'Copy link',
+    disclaimer: {
+      title: 'Disclaimer',
+      text1:
+        'The purpose of this application is to serve as an example for a Vue Enterprise project, the data is stored in my Firebase account, so it is not recommended to use this URL to include private information.',
+      text2: 'If you like how the application works, you can',
+      text3: 'download the project',
+      text4:
+        ', create your own Firebase account or similar service and use it securely in your company.',
     },
-    notifications: {
-      clipboard_success: {
-        title: 'Link copied!',
-        message: 'Great! You have the link of the room on your clipboard.',
-      },
-      clipboard_error: {
-        title: 'Something wrong happened',
-        message:
-          'Oh oh. Looks like the room link cannot be copied to your clipboard. Please, do it manually by right-clicking the link and choosing "Copy link address".',
-      },
+    join_session: {
+      title: 'Join existing session',
+      code: 'Session code',
+      code_placeholder: 'Paste the session code here',
+      name: 'Your name',
+      name_placeholder: 'Type your name',
+      submit: 'Join session',
     },
+    create_session: {
+      title: 'Create new session',
+      text1: 'You need an account to create a new session.',
+      text2: 'Click on',
+      text3: 'if you are already registered, or',
+      text4: 'if you want to create a new account.',
+    },
+    about: {
+      title: 'About Retro',
+    },
+    salutation: 'Enjoy our application!',
   },
   auth: {
     login: {
