@@ -132,6 +132,16 @@ body,
   @apply opacity-0;
 }
 
+/* ANIMATION: fast-fade */
+.fast-fade-enter-active,
+.fast-fade-leave-active {
+  @apply transition-opacity duration-100 ease-in-out;
+}
+.fast-fade-enter-from,
+.fast-fade-leave-to {
+  @apply opacity-0;
+}
+
 /* ANIMATION: grow-fade */
 .grow-fade-enter-active,
 .grow-fade-leave-active {

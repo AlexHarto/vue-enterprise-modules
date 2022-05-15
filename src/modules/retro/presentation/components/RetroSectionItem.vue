@@ -26,17 +26,14 @@
         {{ message.label }}
       </div>
       <div class="flex-center">
-        <transition name="fade" mode="out-in">
+        <transition name="fast-fade" mode="out-in">
           <button v-if="userLikesIt" @click="toggleLiked">
-            <BasIcon
-              icon="heart-filled"
-              class="w-6 h-6 transition-all transform opacity-100 interactive"
-            ></BasIcon>
+            <BasIcon icon="heart-filled" class="w-6 h-6 interactive"></BasIcon>
           </button>
           <button v-else @click="toggleLiked">
             <BasIcon
               icon="heart"
-              class="w-6 h-6 transition-all transform opacity-100 interactive heart-icon"
+              class="w-6 h-6 interactive heart-icon"
             ></BasIcon>
           </button>
         </transition>
