@@ -1,9 +1,4 @@
 <template>
-  <!-- <BasButton
-    label="Change my name"
-    class="max-h-max bg-base-dark"
-    @click="openModal"
-  ></BasButton> -->
   <transition name="fade" mode="out-in">
     <div v-if="store.dataAdded" class="grid lg:grid-cols-2 gap-6 my-6">
       <RetroSection
@@ -72,8 +67,8 @@ const updateGlobalSort = (val: boolean) => {
 const userIdFormSubmitHandler = () => {
   if (userId.value) {
     store.userId = encodeURI(userId.value);
-    if (route.params.id) {
-      loadRoomData(route.params.id as string);
+    if (route.params.roomId) {
+      loadRoomData(route.params.roomId as string);
       isRoomLoading.value = true;
     }
   }

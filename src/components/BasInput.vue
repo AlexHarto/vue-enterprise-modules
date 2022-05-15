@@ -52,10 +52,14 @@ const cValue = computed({
 <style scoped>
 .input-wrapper {
   --color-primary-border: v-bind(hslBorderColor);
-  @apply bg-primary-bg border-2 border-primary-border text-primary-text bg-opacity-75;
+  @apply bg-primary-bg text-primary-text bg-opacity-75 border-none;
 }
 .input-wrapper.interactive {
   @apply hover:(text-primary-text-hover bg-opacity-100);
+}
+input {
+  @apply border-2 border-primary-border border-opacity-75;
+  @apply hover:border-opacity-80;
 }
 @media (prefers-reduced-motion: no-preference) {
   input {
