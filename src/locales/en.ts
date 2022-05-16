@@ -41,10 +41,12 @@ export default {
     login: {
       menu_label: 'Login',
       title: 'Login',
+      new_to_service: 'New to this service?',
     },
     signup: {
       menu_label: 'SignUp',
       title: 'Signup',
+      already_registered: 'Already registered?',
     },
     logout: {
       menu_label: 'Logout',
@@ -54,14 +56,6 @@ export default {
       password: 'Password',
       confirm_password: 'Confirm password',
       submit: 'Submit',
-    },
-    common: {
-      new_to_service: 'New to this service?',
-      already_registered: 'Already registered?',
-      advantages_registered:
-        'Do you want to know more about the advantages of having an account?',
-      learn_more: 'Learn more about it',
-      here: 'here',
     },
   },
   retro: {

@@ -41,10 +41,12 @@ export default {
     login: {
       menu_label: 'Login',
       title: 'Login',
+      new_to_service: '¿Aún no tienes una cuenta?',
     },
     signup: {
       menu_label: 'SignUp',
       title: 'Signup',
+      already_registered: '¿Ya estás registrado?',
     },
     logout: {
       menu_label: 'Logout',
@@ -54,14 +56,6 @@ export default {
       password: 'Contraseña',
       confirm_password: 'Repetir contraseña',
       submit: 'Enviar',
-    },
-    common: {
-      new_to_service: '¿Aún no tienes una cuenta?',
-      already_registered: '¿Ya estás registrado?',
-      advantages_registered:
-        '¿Quieres conocer las ventajas que supone tener una cuenta?',
-      learn_more: 'Aprende más sobre ello',
-      here: 'aquí',
     },
   },
   retro: {

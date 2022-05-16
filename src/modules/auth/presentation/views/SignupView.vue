@@ -2,7 +2,7 @@
   <div class="grid gap-4 mx-auto max-w-[300px]">
     <h2 class="text-xl font-bold">{{ t('auth.signup.title') }}</h2>
     <p class="p-4 my-2 text-center rounded bg-warning-bg">
-      {{ t('auth.common.already_registered') }}
+      {{ t('auth.signup.already_registered') }}
       <BasLink
         :route-name="routeNames.AUTH_LOGIN"
         :label="t('auth.login.title')"
@@ -34,16 +34,6 @@
         {{ t('auth.form.submit') }}
       </BasButton>
     </form>
-    <div class="my-4 text-center">
-      <p>{{ t('auth.common.advantages_registered') }}</p>
-      <p class="mt-2">
-        {{ t('auth.common.learn_more') }}
-        <BasLink :route-name="baseRouteNames.BASE_ROOMS">{{
-          t('auth.common.here')
-        }}</BasLink
-        >.
-      </p>
-    </div>
   </div>
 </template>
 
@@ -51,7 +41,6 @@
 import BasButton from '@/components/BasButton.vue';
 import BasInput from '@/components/BasInput.vue';
 import BasLink from '@/components/BasLink.vue';
-import { routeNames as baseRouteNames } from '@/modules/base/router';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { routeNames } from '../../router';

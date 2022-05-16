@@ -3,7 +3,7 @@
     <h2 class="text-xl font-bold">{{ t('auth.login.title') }}</h2>
     <div class="p-4 my-2 text-center rounded bg-warning-bg">
       <p>
-        {{ t('auth.common.new_to_service') }}
+        {{ t('auth.login.new_to_service') }}
         <BasLink
           :route-name="routeNames.AUTH_SIGNUP"
           :label="t('auth.signup.title') + '!'"
