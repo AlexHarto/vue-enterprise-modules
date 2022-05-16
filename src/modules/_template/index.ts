@@ -1,6 +1,6 @@
 /**
  * This is the entry point of your module.
- * Expose the variables you want to share.
+ * Expose anything you want to share.
  * Mandatories: registerModule, unregisterModule
  * Recommended: moduleRouteNames (for nested modules). Change 'module' for your module name
  */

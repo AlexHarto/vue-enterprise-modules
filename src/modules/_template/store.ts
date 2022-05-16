@@ -16,3 +16,6 @@ export const useModuleNameStore = defineStore('moduleNameStore', {
   },
 });
 */
+
+// REMOVE THIS LINE:
+export default {};

@@ -30,6 +30,8 @@ Remember to **avoid loading content from other modules**. They should be isolate
 
 If you need to share content between modules or reuse components, use generic folders at the root of the project (assets, components, composables, utils, etc.), and develop them as generic, as if they were part of a library of reusable components and utilities, ready to use in other projects.
 
-You can also use Pinia to share content between modules or even exposed composables, but always keeping reusability in mind.
+Although, if you still need to use a component or anything from another module, export it in the **index.ts** file at the root of the module.
+
+You can also use Pinia to share content between modules or even exposed composables, always keeping isolation and reusability in mind.
 
 _A good programmer writes less, but more readable and reusable code._

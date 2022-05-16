@@ -38,3 +38,6 @@ export const routes: Array<RouteRecordRaw> = [
   },
 ];
 */
+
+// REMOVE THIS LINE:
+export default {};
