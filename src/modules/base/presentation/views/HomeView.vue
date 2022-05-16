@@ -28,7 +28,7 @@
       <p class="mt-1">
         {{ t('home.create_session.text2') }}
         <RouterLink :to="{ name: authRouteNames.AUTH_LOGIN }" class="underline">
-          {{ t('auth.login.title') }}
+          {{ t('auth.login.menu_label') }}
         </RouterLink>
         <a href="" class="underline"></a>
         {{ t('home.create_session.text3') }}
@@ -36,7 +36,7 @@
           :to="{ name: authRouteNames.AUTH_SIGNUP }"
           class="underline"
         >
-          {{ t('auth.signup.title') }}
+          {{ t('auth.signup.menu_label') }}
         </RouterLink>
         {{ t('home.create_session.text4') }}
       </p>

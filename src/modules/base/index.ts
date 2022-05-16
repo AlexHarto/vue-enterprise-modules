@@ -8,7 +8,7 @@ const { registerModule, unregisterModule } = useModules(routes);
 const addMenuItem = (
   label: string,
   routeName: string,
-  isVisible: boolean | Ref<boolean>
+  isVisible: boolean | Ref<boolean> = true
 ) => {
   const store = useMainMenuStore();
   const { addItemToMainMenu } = store;
