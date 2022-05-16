@@ -90,6 +90,9 @@ body,
 .flex-center {
   @apply flex items-center justify-center;
 }
+.danger {
+  @apply text-red-700;
+}
 
 /* ANIMATION: group-fade */
 .group-fade-move {

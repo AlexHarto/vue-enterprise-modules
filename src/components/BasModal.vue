@@ -1,6 +1,11 @@
 <template>
   <dialog id="modalDialog" class="dialog">
-    <h2 v-if="title" class="text-lg font-semibold mb-2">{{ title }}</h2>
+    <h2
+      v-if="title"
+      class="text-lg font-semibold mb-4 text-center border-b-2 pb-0.5 border-primary-bg"
+    >
+      {{ title }}
+    </h2>
     <slot name="message"></slot>
     <slot></slot>
   </dialog>

@@ -4,6 +4,7 @@ import {
   arrayRemove,
   arrayUnion,
   collection,
+  deleteDoc,
   doc,
   onSnapshot,
   updateDoc,
@@ -20,7 +21,7 @@ export const useRetroStore = defineStore('retroStore', {
   state: () => {
     return {
       roomId: '',
-      userId: self.crypto.randomUUID(),
+      userId: '',
       sections: [
         {
           type: RetroType.CONTINUE,
@@ -45,6 +46,7 @@ export const useRetroStore = defineStore('retroStore', {
       ] as RetroSectionData[],
       messages: [] as RetroSectionMessage[],
       dataAdded: false,
+      showControls: false,
     };
   },
   getters: {
@@ -96,6 +98,18 @@ export const useRetroStore = defineStore('retroStore', {
           // TODO: Complete logic
           console.log(`Room with id='${roomId}' was not found.`);
         }
+      }
+    },
+    async deleteRoom() {
+      try {
+        for (const message of this.messages) {
+          if (message.id) {
+            const docRef = doc(db, this.roomId, message.id);
+            deleteDoc(docRef);
+          }
+        }
+      } catch (error) {
+        console.log(`Room with id='${this.roomId}' could not be deleted`);
       }
     },
     async updateMessage(id: string, obj: Partial<unknown>) {

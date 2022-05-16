@@ -8,15 +8,18 @@
     >
       <div class="tracking-wide">{{ t(data.title) }}</div>
       <div class="flex justify-end gap-4 mt-2 ml-auto sm:mt-0">
-        <BasButton
-          class="bg-section-accent border-base-light interactive"
-          outline
-          switch
-          :active="isChecksActive"
-          @click="toggleChecks"
-          @shift-click="shiftToggleChecks"
-          ><BasIcon icon="check" class="w-6 h-6"></BasIcon
-        ></BasButton>
+        <transition name="fade" mode="out-in">
+          <BasButton
+            v-if="store.showControls"
+            class="bg-section-accent border-base-light interactive"
+            outline
+            switch
+            :active="isChecksActive"
+            @click="toggleChecks"
+            @shift-click="shiftToggleChecks"
+            ><BasIcon icon="check" class="w-6 h-6"></BasIcon
+          ></BasButton>
+        </transition>
         <BasButton
           class="bg-section-accent border-base-light interactive"
           outline
@@ -45,7 +48,7 @@
       </div>
       <form
         class="flex flex-col gap-2 sm:flex-row retro-section-form"
-        @submit.prevent
+        @submit.prevent="addClickHandler"
       >
         <BasInput
           v-model="newLabel"
@@ -55,11 +58,11 @@
           class="w-full interactive"
         ></BasInput>
         <BasButton
-          :label="t('retro.add_button')"
           :hsl-border-color="hslBorderColor"
           class="bg-section-accent interactive"
-          @click="addClickHandler"
-        ></BasButton>
+        >
+          {{ t('retro.add_button') }}
+        </BasButton>
       </form>
     </div>
   </div>
@@ -84,8 +87,7 @@ const props = defineProps<{
 }>();
 
 const { t } = useI18n();
-const { addNewMessage, sortedMessagesByIndex, sortedMessagesByLikes } =
-  useRetroStore();
+const store = useRetroStore();
 
 const newLabel = ref('');
 const hslBorderColor = ref('0 0% 25%');
@@ -106,10 +108,12 @@ const isSortedActive = computed(
     (!isSortedLocalPriority.value && (isSorted.value || props.globalSort))
 );
 // Message list
-const filteredMessages = computed(() => sortedMessagesByIndex(props.data.type));
+const filteredMessages = computed(() =>
+  store.sortedMessagesByIndex(props.data.type)
+);
 const orderedMessages = computed(() =>
   isSortedActive.value
-    ? sortedMessagesByLikes(props.data.type)
+    ? store.sortedMessagesByLikes(props.data.type)
     : filteredMessages.value
 );
 
@@ -147,7 +151,7 @@ const shiftToggleChecks = () => {
 
 const addClickHandler = async () => {
   if (newLabel.value) {
-    addNewMessage(props.data.type, newLabel.value);
+    store.addNewMessage(props.data.type, newLabel.value);
     newLabel.value = '';
   }
 };
