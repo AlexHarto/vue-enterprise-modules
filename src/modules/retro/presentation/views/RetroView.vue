@@ -15,6 +15,7 @@
       {{ t('retro.loading') }}
     </div>
   </transition>
+  <!-- TODO: Add the possibility to change userName -->
   <div v-if="retroStore.roomId" class="flex">
     <BasButton outline class="w-min" @click="toggleControlsClickHandler">
       <!-- TODO: Add translations -->
