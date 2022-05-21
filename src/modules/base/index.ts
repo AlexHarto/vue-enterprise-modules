@@ -10,8 +10,7 @@ const addMenuItem = (
   routeName: string,
   isVisible: boolean | Ref<boolean> = true
 ) => {
-  const store = useMainMenuStore();
-  const { addItemToMainMenu } = store;
+  const { addItemToMainMenu } = useMainMenuStore();
 
   addItemToMainMenu({
     label,
@@ -20,6 +19,17 @@ const addMenuItem = (
   });
 };
 
+const removeMenuItem = (routeName: string) => {
+  const { removeItemFromMainMenu } = useMainMenuStore();
+
+  removeItemFromMainMenu(routeName);
+};
+
 export { routeNames as baseRouteNames };
 
-export default { registerModule, unregisterModule, addMenuItem };
+export default {
+  registerModule,
+  unregisterModule,
+  addMenuItem,
+  removeMenuItem,
+};

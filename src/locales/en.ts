@@ -50,11 +50,13 @@ export default {
     },
     logout: {
       menu_label: 'Logout',
+      title: 'Logout',
     },
     form: {
-      email: 'Email',
-      password: 'Password',
-      confirm_password: 'Confirm password',
+      name: 'Name:',
+      email: 'Email:',
+      password: 'Password:',
+      confirm_password: 'Confirm password:',
       submit: 'Submit',
     },
   },

@@ -10,7 +10,7 @@
       <div class="flex justify-end gap-4 mt-2 ml-auto sm:mt-0">
         <transition name="fade" mode="out-in">
           <BasButton
-            v-if="store.showControls"
+            v-if="retroStore.showControls"
             class="bg-section-accent border-base-light interactive"
             outline
             switch
@@ -72,10 +72,10 @@
 import BasButton from '@/components/BasButton.vue';
 import BasIcon from '@/components/BasIcon.vue';
 import BasInput from '@/components/BasInput.vue';
+import type { RetroSectionData } from '@/modules/retro/infra/types/Section';
+import { useRetroStore } from '@/modules/retro/store';
 import { computed, onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import type { RetroSectionData } from '../../infra/types/Section';
-import { useRetroStore } from '../../store';
 import RetroSectionItem from './RetroSectionItem.vue';
 
 const emits = defineEmits(['update:global-checks', 'update:global-sort']);
@@ -87,7 +87,7 @@ const props = defineProps<{
 }>();
 
 const { t } = useI18n();
-const store = useRetroStore();
+const retroStore = useRetroStore();
 
 const newLabel = ref('');
 const hslBorderColor = ref('0 0% 25%');
@@ -109,11 +109,11 @@ const isSortedActive = computed(
 );
 // Message list
 const filteredMessages = computed(() =>
-  store.sortedMessagesByIndex(props.data.type)
+  retroStore.sortedMessagesByIndex(props.data.type)
 );
 const orderedMessages = computed(() =>
   isSortedActive.value
-    ? store.sortedMessagesByLikes(props.data.type)
+    ? retroStore.sortedMessagesByLikes(props.data.type)
     : filteredMessages.value
 );
 
@@ -151,7 +151,7 @@ const shiftToggleChecks = () => {
 
 const addClickHandler = async () => {
   if (newLabel.value) {
-    store.addNewMessage(props.data.type, newLabel.value);
+    retroStore.addNewMessage(props.data.type, newLabel.value);
     newLabel.value = '';
   }
 };

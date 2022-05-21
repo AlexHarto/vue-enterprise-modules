@@ -45,8 +45,8 @@ const { t } = useI18n();
 
 const router = useRouter();
 
-const store = useMainMenuStore();
-const { menuItems } = storeToRefs(store);
+const mainMenuStore = useMainMenuStore();
+const { menuItems } = storeToRefs(mainMenuStore);
 
 const currentPath = computed(() => {
   return router.currentRoute.value.path;

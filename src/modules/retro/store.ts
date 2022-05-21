@@ -1,4 +1,5 @@
 import { db } from '@/infra/firebase/config';
+import { updateUserName, userName } from '@/modules/auth';
 import {
   addDoc,
   arrayRemove,
@@ -21,7 +22,7 @@ export const useRetroStore = defineStore('retroStore', {
   state: () => {
     return {
       roomId: '',
-      userId: '',
+      unregisteredUserName: '',
       sections: [
         {
           type: RetroType.CONTINUE,
@@ -50,6 +51,9 @@ export const useRetroStore = defineStore('retroStore', {
     };
   },
   getters: {
+    userName: (state) => {
+      return userName.value || state.unregisteredUserName;
+    },
     sortedMessagesByLikes: (state) => (type: RetroType) => {
       const sectionMessages = state.messages.filter((m) => m.type === type);
       if (sectionMessages) {
@@ -70,6 +74,13 @@ export const useRetroStore = defineStore('retroStore', {
     },
   },
   actions: {
+    changeUserName(newUserName: string) {
+      if (userName.value) {
+        updateUserName(newUserName);
+      } else {
+        this.unregisteredUserName = newUserName;
+      }
+    },
     loadRoomData(roomId: string) {
       if (roomId !== this.roomId) {
         this.roomId = roomId;
@@ -120,7 +131,7 @@ export const useRetroStore = defineStore('retroStore', {
       const message: RetroSectionMessage = {
         index: this.messages.length,
         type,
-        author: this.userId,
+        author: this.userName,
         label,
         likes: [],
       };
@@ -133,14 +144,14 @@ export const useRetroStore = defineStore('retroStore', {
     },
     addLikeToMessage(id: string) {
       const message = this.messages.find((m) => m.id === id);
-      if (message && message.likes.indexOf(this.userId) < 0) {
-        this.updateMessage(id, { likes: arrayUnion(this.userId) });
+      if (message && message.likes.indexOf(this.userName) < 0) {
+        this.updateMessage(id, { likes: arrayUnion(this.userName) });
       }
     },
     removeLikeFromMessage(id: string) {
       const message = this.messages.find((m) => m.id === id);
-      if (message && message.likes.indexOf(this.userId) > -1) {
-        this.updateMessage(id, { likes: arrayRemove(this.userId) });
+      if (message && message.likes.indexOf(this.userName) > -1) {
+        this.updateMessage(id, { likes: arrayRemove(this.userName) });
       }
     },
   },

@@ -1,6 +1,6 @@
 <template>
   <transition name="fade" mode="out-in">
-    <div v-if="store.dataAdded" class="grid lg:grid-cols-2 gap-6 my-6">
+    <div v-if="retroStore.dataAdded" class="grid lg:grid-cols-2 gap-6 my-6">
       <RetroSection
         v-for="(section, sectionIndex) in sections"
         :key="`section_${sectionIndex}`"
@@ -15,23 +15,25 @@
       {{ t('retro.loading') }}
     </div>
   </transition>
-  <div v-if="store.roomId" class="flex">
+  <div v-if="retroStore.roomId" class="flex">
     <BasButton outline class="w-min" @click="toggleControlsClickHandler">
+      <!-- TODO: Add translations -->
       Toggle controls
     </BasButton>
     <transition name="fade" mode="out-in">
       <BasButton
-        v-if="store.showControls"
+        v-if="retroStore.showControls"
         outline
         class="ml-6 w-min danger"
         @click="deleteRoomClickHandler"
       >
+        <!-- TODO: Add translations -->
         Delete room
       </BasButton>
     </transition>
   </div>
   <BasModal
-    v-if="store.userId === '' || store.roomId === ''"
+    v-if="!retroStore.userName || !retroStore.roomId"
     :open="isModalOpen"
     :title="t('retro.join_session.title')"
   >
@@ -52,9 +54,8 @@ import RetroSection from '../components/RetroSection.vue';
 
 const { t } = useI18n();
 const route = useRoute();
-const store = useRetroStore();
-const { sections } = storeToRefs(store);
-const { loadRoomData } = store;
+const retroStore = useRetroStore();
+const { sections } = storeToRefs(retroStore);
 
 const globalChecks = ref(false);
 const globalSort = ref(false);
@@ -74,19 +75,19 @@ const openModal = () => {
 };
 
 const deleteRoomClickHandler = () => {
-  store.deleteRoom();
+  retroStore.deleteRoom();
 };
 
 const toggleControlsClickHandler = () => {
-  store.showControls = !store.showControls;
+  retroStore.showControls = !retroStore.showControls;
 };
 
 onMounted(() => {
   if (route.params.roomId) {
-    loadRoomData(route.params.roomId as string);
+    retroStore.loadRoomData(route.params.roomId as string);
     isRoomLoading.value = true;
   }
-  if (store.userId === '') {
+  if (!retroStore.userName) {
     openModal();
   }
 });

@@ -56,23 +56,24 @@ const props = defineProps<{
   checks: boolean;
 }>();
 
-const { userId, editMessage, addLikeToMessage, removeLikeFromMessage } =
-  useRetroStore();
+const retroStore = useRetroStore();
 
 const editing = ref(false);
 
-const userLikesIt = computed(() => props.message.likes.includes(userId));
+const userLikesIt = computed(() =>
+  props.message.likes.includes(retroStore.userName)
+);
 const messageId = computed(() => props.message.id || '-1');
 
 const newLabel = computed({
   get: () => props.message.label,
   set: (newLabel: string) => {
-    editMessage(messageId.value, newLabel);
+    retroStore.editMessage(messageId.value, newLabel);
   },
 });
 
 const editMode = async () => {
-  if (userId === props.message.author) {
+  if (retroStore.userName === props.message.author) {
     editing.value = true;
     await nextTick();
   }
@@ -83,9 +84,9 @@ const numLikes = computed(() => props.message.likes.length || 0);
 
 const toggleLiked = () => {
   if (userLikesIt.value) {
-    removeLikeFromMessage(messageId.value);
+    retroStore.removeLikeFromMessage(messageId.value);
   } else {
-    addLikeToMessage(messageId.value);
+    retroStore.addLikeToMessage(messageId.value);
   }
 };
 const setChecked = (newValue: boolean) => {

@@ -8,7 +8,7 @@ import { createPinia } from 'pinia';
 import 'virtual:windi.css';
 import { createApp } from 'vue';
 import { createI18n } from 'vue-i18n';
-import auth, { authRouteNames } from './modules/auth';
+import auth from './modules/auth';
 import './styles/main.css';
 
 const app = createApp(App);
@@ -28,9 +28,6 @@ base.registerModule();
 
 // Register Auth module
 auth.registerModule(baseRouteNames.BASE_ROOT);
-// Add Login and SignUp to the main menu
-base.addMenuItem('auth.login.menu_label', authRouteNames.AUTH_LOGIN);
-base.addMenuItem('auth.signup.menu_label', authRouteNames.AUTH_SIGNUP);
 
 // Register Retro module inside HOME
 retro.registerModule(baseRouteNames.BASE_HOME);
