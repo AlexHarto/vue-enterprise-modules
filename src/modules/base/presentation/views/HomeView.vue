@@ -55,8 +55,8 @@
           href="https://github.com/AlexHarto/vue-enterprise-modules"
           new-window
           :label="t('home.disclaimer.text3')"
-        ></BasLink>
-        {{ t('home.disclaimer.text4') }}
+        ></BasLink
+        >{{ t('home.disclaimer.text4') }}
       </p>
 
       <p class="mt-8 mb-8">
