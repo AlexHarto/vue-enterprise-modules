@@ -148,11 +148,20 @@ body,
 /* ANIMATION: grow-fade */
 .grow-fade-enter-active,
 .grow-fade-leave-active {
-  @apply transition-all duration-200 ease-out;
-  @apply transform scale-150;
+  @apply transform scale-150 transition-all duration-200 ease-out;
 }
 .grow-fade-enter-from,
 .grow-fade-leave-to {
-  @apply opacity-0;
-  @apply transform scale-100;
+  @apply opacity-0 transform scale-100;
+}
+
+/* ANIMATION: slide-down */
+.slide-down-enter-active,
+.slide-down-leave-active {
+  @apply transform transition-all duration-200 ease-in-out;
+}
+
+.slide-down-enter-from,
+.slide-down-leave-to {
+  @apply opacity-0 -translate-y-3;
 }

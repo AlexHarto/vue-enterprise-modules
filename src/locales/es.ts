@@ -1,7 +1,6 @@
 export default {
   header: {
-    app: 'App',
-    language: 'Idioma',
+    app: 'Retro',
     language_en: 'English',
     language_es: 'Español',
   },
@@ -79,6 +78,26 @@ export default {
       name: 'Nombre',
       name_placeholder: 'Escribe tu nombre',
       submit: 'Acceder a la sesión',
+    },
+    controls: {
+      title: 'Controles',
+      change_name: 'Cambia tu nombre:',
+      name_changed_to: 'Tu nuevo nombre es:',
+      apply_btn: 'Aplicar',
+      delete_session: {
+        button: 'Borrar sesión',
+        confirmation_message_0:
+          '¿Estás seguro de que quieres borrar la sesión?',
+        confirmation_message_1:
+          'Borrará todos los mensajes para todos los participantes.',
+        yes: 'Sí',
+        no: 'No',
+      },
+      advanced_controls: {
+        show: 'Mostrar',
+        hide: 'Ocultar',
+        ticks: 'marcadores',
+      },
     },
   },
   notifications: {

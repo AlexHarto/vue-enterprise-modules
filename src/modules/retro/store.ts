@@ -74,12 +74,11 @@ export const useRetroStore = defineStore('retroStore', {
     },
   },
   actions: {
-    changeUserName(newUserName: string) {
+    async changeUserName(newUserName: string) {
       if (userName.value) {
-        updateUserName(newUserName);
-      } else {
-        this.unregisteredUserName = newUserName;
+        await updateUserName(newUserName);
       }
+      this.unregisteredUserName = newUserName;
     },
     loadRoomData(roomId: string) {
       if (roomId !== this.roomId) {

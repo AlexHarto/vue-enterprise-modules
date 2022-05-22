@@ -1,7 +1,6 @@
 export default {
   header: {
     app: 'Retro',
-    language: 'Language',
     language_en: 'English',
     language_es: 'Español',
   },
@@ -81,6 +80,25 @@ export default {
       name_placeholder: 'Type your name',
       name_error: 'Your name cannot be empty.',
       submit: 'Join session',
+    },
+    controls: {
+      title: 'Controls',
+      change_name: 'Change your name:',
+      name_changed_to: 'Your new name is:',
+      apply_btn: 'Apply',
+      delete_session: {
+        button: 'Delete session',
+        confirmation_message_0: 'Are you sure you want to delete the session?',
+        confirmation_message_1:
+          'It will delete all the messages for all participants.',
+        yes: 'Yes',
+        no: 'No',
+      },
+      advanced_controls: {
+        show: 'Show',
+        hide: 'Hide',
+        ticks: 'ticks',
+      },
     },
   },
   notifications: {

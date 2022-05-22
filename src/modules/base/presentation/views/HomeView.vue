@@ -1,5 +1,5 @@
 <template>
-  <div class="relative">
+  <div>
     <div v-if="!roomId">
       <h1 class="text-xl font-bold">
         {{ t('home.presentation.title') }}
@@ -19,6 +19,7 @@
         <JoinSession></JoinSession>
       </div>
 
+      <!-- TODO: Add create new session form when user is logged in -->
       <h2 class="mt-8 text-lg font-bold">
         {{ t('home.create_session.title') }}
       </h2>

@@ -1,5 +1,5 @@
 <template>
-  <div ref="dropdowncontainer" class="relative">
+  <div ref="dropdownContainer" class="relative">
     <button
       :id="`dropdown_${id}`"
       data-dropdown-toggle="dropdown"
@@ -17,14 +17,14 @@
         ]"
       ></BasIcon>
     </button>
-    <transition name="fade" mode="out-in">
+    <transition name="slide-down" mode="out-in">
       <div
         v-if="optionsVisible"
         data-test="options"
-        class="absolute z-10 top-8 right-0 min-w-24 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700"
+        class="absolute z-10 top-8 right-0 min-w-24 bg-white rounded divide-y divide-gray-100 shadow dark:bg-base-dark"
       >
         <ul
-          class="text-sm text-gray-700 dark:text-gray-200"
+          class="text-sm text-base-dark dark:text-base-light"
           :aria-labelledby="`dropdown${id}`"
         >
           <li
@@ -33,7 +33,7 @@
           >
             <a
               :href="option.link || '#'"
-              class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              class="block transition-colors py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
               @click="optionClick(option)"
               >{{ option.label }}</a
             >
@@ -62,21 +62,19 @@ withDefaults(
   }
 );
 
-const dropdowncontainer = ref<HTMLDivElement>();
+const dropdownContainer = ref<HTMLDivElement>();
 const optionsVisible = ref(false);
 
 const toggleDropdown = () => {
-  // console.log(dropdowncontainer.value?.childNodes[1]);
   optionsVisible.value = !optionsVisible.value;
 };
 
 const clickOutside = (event: Event) => {
-  if (dropdowncontainer.value && event && event.composedPath) {
-    // if (!event.composedPath().includes(dropdowncontainer.value)) {
+  if (dropdownContainer.value && event && event.composedPath) {
     if (
       !(
-        event.composedPath().includes(dropdowncontainer.value.childNodes[0]) ||
-        event.composedPath().includes(dropdowncontainer.value.childNodes[1])
+        event.composedPath().includes(dropdownContainer.value.childNodes[0]) ||
+        event.composedPath().includes(dropdownContainer.value.childNodes[1])
       )
     ) {
       optionsVisible.value = false;
