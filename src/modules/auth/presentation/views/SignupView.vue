@@ -14,43 +14,40 @@
         name="displayName"
         type="text"
         :label="t('auth.form.name')"
-        label-class="text-sm"
       ></BasInput>
       <BasInput
         v-model="email"
         name="email"
         type="email"
         :label="t('auth.form.email')"
-        label-class="text-sm"
       ></BasInput>
       <BasInput
         v-model="password"
         name="password"
         type="password"
         :label="t('auth.form.password')"
-        label-class="text-sm"
       ></BasInput>
       <BasInput
         v-model="passwordConfirmation"
         name="passwordConfirmation"
         type="password"
         :label="t('auth.form.confirm_password')"
-        label-class="text-sm"
       ></BasInput>
       <BasButton class="ml-auto bg-secondary-bg">
         {{ t('auth.form.submit') }}
       </BasButton>
     </form>
-    <!-- TODO: Create an error list with translations -->
     <transition name="fade" mode="out-in">
-      <div v-if="!passwordsMatch" class="mt-4 danger">
-        <p>The password confirmation doesn't match.</p>
-        <p>Please, check password and try again.</p>
-      </div>
-    </transition>
-    <transition name="fade" mode="out-in">
-      <div v-if="error" class="mt-4 danger">
-        <p>{{ error }}</p>
+      <div
+        v-if="errorCode || !passwordsMatch"
+        class="p-4 my-2 text-center rounded bg-error-bg"
+      >
+        <p v-if="!passwordsMatch">
+          {{ t('errors.password_confirmation_doesnt_match') }}
+        </p>
+        <p v-else>
+          {{ t(`errors.${errorCode}`) }}
+        </p>
       </div>
     </transition>
   </div>
@@ -64,9 +61,10 @@ import { isUser } from '@/modules/auth';
 import useAuth from '@/modules/auth/infra/composables/Auth';
 import { routeNames } from '@/modules/auth/router';
 import { baseRouteNames } from '@/modules/base';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
+import { getError } from '../../infra/utils/ErrorUtils';
 
 const router = useRouter();
 const { t } = useI18n();
@@ -77,6 +75,8 @@ const email = ref('');
 const password = ref('');
 const passwordConfirmation = ref('');
 const passwordsMatch = ref(true);
+
+const errorCode = computed(() => getError(error.value));
 
 const handleSubmit = async () => {
   if (password.value !== passwordConfirmation.value) {

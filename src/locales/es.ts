@@ -112,6 +112,18 @@ export default {
     },
   },
   errors: {
-    generic: 'Ha ocurrido un error inesperado. Por favor, inténtalo más tarde.',
+    generic:
+      'Ha ocurrido un error inesperado. Por favor, inténtalo de nuevo más tarde.',
+    password_confirmation_doesnt_match:
+      'Las contraseñas no coinciden. Por favor, verifique las contraseñas e inténtelo de nuevo.',
+    'auth/email-already-in-use':
+      'El email ya está registrado. Por favor, utilice otro email o intente con Login.',
+    'auth/invalid-email':
+      'Email inválido. Por favor, compruebe el email y vuelva a intentarlo.',
+    'auth/operation-not-allowed': 'Operación no permitida.',
+    'auth/weak-password':
+      'La contraseña es muy débil. Por favor, use una contraseña más fuerte con al menos 6 caracteres.',
+    'auth/user-not-found':
+      'No tenemos registrada esa dirección de email. Por favor, verifique su email e inténtelo de nuevo o Signup.',
   },
 };

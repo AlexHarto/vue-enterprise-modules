@@ -6,13 +6,13 @@ import {
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
+  type AuthError,
 } from '@firebase/auth';
 import { ref } from 'vue';
 
 const user = ref(auth.currentUser);
 
 onAuthStateChanged(auth, (_user) => {
-  console.log('User state changed. Current is user is:', _user);
   user.value = _user;
   // Change menu items according to the user value
   // and returns if we have a user (boolean)
@@ -46,9 +46,7 @@ const useAuth = () => {
       error.value = null;
       isPending.value = false;
     } catch (catchError) {
-      const err = catchError as Error;
-      console.log(err.message);
-      error.value = err.message;
+      error.value = (catchError as AuthError).code;
       isPending.value = false;
     }
   };
@@ -65,9 +63,7 @@ const useAuth = () => {
       error.value = null;
       isPending.value = false;
     } catch (catchError) {
-      const err = catchError as Error;
-      console.log(err.message);
-      error.value = err.message;
+      error.value = (catchError as AuthError).code;
       isPending.value = false;
     }
   };

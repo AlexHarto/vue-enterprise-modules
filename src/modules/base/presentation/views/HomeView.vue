@@ -28,17 +28,15 @@
       </p>
       <p class="mt-1">
         {{ t('home.create_session.text2') }}
-        <RouterLink :to="{ name: authRouteNames.AUTH_LOGIN }" class="underline">
-          {{ t('auth.login.menu_label') }}
-        </RouterLink>
-        <a href="" class="underline"></a>
+        <BasLink
+          :route-name="authRouteNames.AUTH_LOGIN"
+          :label="t('auth.login.menu_label')"
+        ></BasLink>
         {{ t('home.create_session.text3') }}
-        <RouterLink
-          :to="{ name: authRouteNames.AUTH_SIGNUP }"
-          class="underline"
-        >
-          {{ t('auth.signup.menu_label') }}
-        </RouterLink>
+        <BasLink
+          :route-name="authRouteNames.AUTH_SIGNUP"
+          :label="t('auth.signup.menu_label')"
+        ></BasLink>
         {{ t('home.create_session.text4') }}
       </p>
       <h2 class="mt-8 text-lg font-bold">{{ t('home.disclaimer.title') }}</h2>
@@ -68,7 +66,8 @@ import { authRouteNames } from '@/modules/auth';
 import { JoinSession } from '@/modules/retro';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { RouterLink, RouterView, useRoute } from 'vue-router';
+import { RouterView, useRoute } from 'vue-router';
+import BasLink from '../../../../components/BasLink.vue';
 
 const { t } = useI18n();
 const route = useRoute();

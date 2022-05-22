@@ -1,13 +1,16 @@
 <template>
   <label class="w-full">
-    <span :class="labelClass">{{ label }}</span>
-    <div class="w-full rounded input-wrapper interactive">
+    <span class="text-sm">{{ label }}</span>
+    <div class="my-1 w-full rounded input-wrapper interactive">
       <input
         v-bind="$attrs"
         v-model="cValue"
         :name="name"
         class="w-full p-2 bg-transparent rounded"
       />
+    </div>
+    <div class="text-sm input-message">
+      <slot name="message"></slot>
     </div>
   </label>
 </template>
@@ -27,14 +30,12 @@ const emits = defineEmits(['update:modelValue']);
 const props = withDefaults(
   defineProps<{
     label?: string;
-    labelClass?: string;
     name: string;
     modelValue: string;
     hslBorderColor?: string;
   }>(),
   {
     label: undefined,
-    labelClass: undefined,
     name: '',
     modelValue: undefined,
     hslBorderColor: '0 0% 25%',

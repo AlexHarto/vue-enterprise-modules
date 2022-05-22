@@ -16,26 +16,20 @@
         name="email"
         type="email"
         label="Email:"
-        label-class="text-sm"
       ></BasInput>
       <BasInput
         v-model="password"
         name="password"
         type="password"
         label="Password:"
-        label-class="text-sm"
       ></BasInput>
       <BasButton class="ml-auto bg-secondary-bg">
         {{ t('auth.login.title') }}
       </BasButton>
     </form>
-    <!-- TODO: Create an error list with translations -->
-    <div v-if="error" class="mt-4 danger">
-      <p>Something wrong happened.</p>
-      <p>Please, check your email and password and try again.</p>
+    <div v-if="errorCode" class="p-4 my-2 text-center rounded bg-error-bg">
       <p>
-        Please, make sure that you have clicked on the confirmation link sent by
-        email.
+        {{ t(`errors.${errorCode}`) }}
       </p>
     </div>
   </div>
@@ -49,9 +43,10 @@ import { isUser } from '@/modules/auth';
 import useAuth from '@/modules/auth/infra/composables/Auth';
 import { routeNames } from '@/modules/auth/router';
 import { baseRouteNames } from '@/modules/base';
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
+import { getError } from '../../infra/utils/ErrorUtils';
 
 const router = useRouter();
 const { t } = useI18n();
@@ -59,6 +54,8 @@ const { error, login } = useAuth();
 
 const email = ref('');
 const password = ref('');
+
+const errorCode = computed(() => getError(error.value));
 
 const handleSubmit = async () => {
   await login(email.value, password.value);
