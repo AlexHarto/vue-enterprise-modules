@@ -71,13 +71,15 @@ export default {
     },
     add_button: 'Añadir',
     loading: 'Cargando datos...',
-    join_session: {
+    session: {
       title: 'Acceder a sesión',
-      code: 'Código de sesión',
+      code: 'Código de sesión:',
       code_placeholder: 'Pega aquí el código de sesión',
-      name: 'Nombre',
+      create_code_placeholder: 'Escribe aquí el nuevo código de sesión',
+      name: 'Nombre:',
       name_placeholder: 'Escribe tu nombre',
-      submit: 'Acceder a la sesión',
+      join_session_btn: 'Acceder a la sesión',
+      create_session_btn: 'Crear nueva sesión',
     },
     controls: {
       title: 'Controles',

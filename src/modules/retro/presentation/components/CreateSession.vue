@@ -1,32 +1,28 @@
 <template>
   <form
     class="w-1/4 min-w-80 grid gap-4"
-    @submit.prevent="joinSessionClickHandler"
+    @submit.prevent="createSessionClickHandler"
   >
     <BasInput
-      v-model="userName"
+      v-model="retroStore.userName"
       name="userName"
+      disabled
       :label="t('retro.session.name')"
       :placeholder="t('retro.session.name_placeholder')"
     ></BasInput>
-    <transition name="fade" mode="out-in">
-      <p v-if="joinSessionClicked && userName === ''" class="-mt-4 danger">
-        {{ t('retro.session.name_error') }}
-      </p>
-    </transition>
     <BasInput
       v-model="sessionCode"
       name="sessionCode"
       :label="t('retro.session.code')"
-      :placeholder="t('retro.session.code_placeholder')"
+      :placeholder="t('retro.session.create_code_placeholder')"
     ></BasInput>
     <transition name="fade" mode="out-in">
-      <p v-if="joinSessionClicked && sessionCode === ''" class="-mt-4 danger">
+      <p v-if="createSessionClicked && sessionCode === ''" class="-mt-4 danger">
         {{ t('retro.session.code_error') }}
       </p>
     </transition>
     <BasButton class="ml-auto mt-2 w-min bg-secondary-bg">
-      {{ t('retro.session.join_session_btn') }}
+      {{ t('retro.session.create_session_btn') }}
     </BasButton>
   </form>
 </template>
@@ -36,7 +32,7 @@ import BasButton from '@/components/BasButton.vue';
 import BasInput from '@/components/BasInput.vue';
 import { retroRouteNames } from '@/modules/retro';
 import { useRetroStore } from '@/modules/retro/store';
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
@@ -46,36 +42,18 @@ const router = useRouter();
 const retroStore = useRetroStore();
 
 const sessionCode = ref('');
-const userName = ref('');
-const joinSessionClicked = ref(false);
+const createSessionClicked = ref(false);
 
-const joinSessionClickHandler = () => {
-  joinSessionClicked.value = true;
-  if (sessionCode.value.length > 0 && userName.value.length > 0) {
+const createSessionClickHandler = () => {
+  createSessionClicked.value = true;
+  if (sessionCode.value.length > 0) {
     const encodedRoomId = encodeURI(sessionCode.value);
-    retroStore.changeUserName(userName.value);
     router.push({
       name: retroRouteNames.RETRO_ROOT,
       params: { roomId: encodedRoomId },
     });
   }
 };
-
-watch(
-  () => retroStore.roomId,
-  () => {
-    sessionCode.value = retroStore.roomId;
-  },
-  { immediate: true }
-);
-
-watch(
-  () => retroStore.userName,
-  () => {
-    userName.value = retroStore.userName;
-  },
-  { immediate: true }
-);
 </script>
 
 <style scoped></style>

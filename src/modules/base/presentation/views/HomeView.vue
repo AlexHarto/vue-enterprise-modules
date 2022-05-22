@@ -19,26 +19,34 @@
         <JoinSession></JoinSession>
       </div>
 
-      <!-- TODO: Add create new session form when user is logged in -->
       <h2 class="mt-8 text-lg font-bold">
         {{ t('home.create_session.title') }}
       </h2>
-      <p class="mt-0.5">
-        {{ t('home.create_session.text1') }}
-      </p>
-      <p class="mt-1">
-        {{ t('home.create_session.text2') }}
-        <BasLink
-          :route-name="authRouteNames.AUTH_LOGIN"
-          :label="t('auth.login.menu_label')"
-        ></BasLink>
-        {{ t('home.create_session.text3') }}
-        <BasLink
-          :route-name="authRouteNames.AUTH_SIGNUP"
-          :label="t('auth.signup.menu_label')"
-        ></BasLink>
-        {{ t('home.create_session.text4') }}
-      </p>
+      <!-- USER AND CREATE SESSION FROM RETRO -->
+      <div
+        v-if="userName"
+        class="my-4 border-2 p-6 rounded w-min border-primary-bg"
+      >
+        <CreateSession></CreateSession>
+      </div>
+      <div v-else>
+        <p class="mt-0.5">
+          {{ t('home.create_session.text1') }}
+        </p>
+        <p class="mt-1">
+          {{ t('home.create_session.text2') }}
+          <BasLink
+            :route-name="authRouteNames.AUTH_LOGIN"
+            :label="t('auth.login.menu_label')"
+          ></BasLink>
+          {{ t('home.create_session.text3') }}
+          <BasLink
+            :route-name="authRouteNames.AUTH_SIGNUP"
+            :label="t('auth.signup.menu_label')"
+          ></BasLink>
+          {{ t('home.create_session.text4') }}
+        </p>
+      </div>
       <h2 class="mt-8 text-lg font-bold">{{ t('home.disclaimer.title') }}</h2>
       <p class="mt-0.5">
         {{ t('home.disclaimer.text1') }}
@@ -62,12 +70,12 @@
 </template>
 
 <script setup lang="ts">
-import { authRouteNames } from '@/modules/auth';
-import { JoinSession } from '@/modules/retro';
+import BasLink from '@/components/BasLink.vue';
+import { authRouteNames, userName } from '@/modules/auth';
+import { CreateSession, JoinSession } from '@/modules/retro';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { RouterView, useRoute } from 'vue-router';
-import BasLink from '../../../../components/BasLink.vue';
 
 const { t } = useI18n();
 const route = useRoute();

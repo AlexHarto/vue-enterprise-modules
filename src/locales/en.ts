@@ -71,15 +71,17 @@ export default {
     },
     add_button: 'Add',
     loading: 'Loading data...',
-    join_session: {
+    session: {
       title: 'Join session',
-      code: 'Session code',
+      code: 'Session code:',
       code_placeholder: 'Paste the session code here',
+      create_code_placeholder: 'Type the new session code here',
       code_error: 'The session code cannot be empty.',
-      name: 'Your name',
+      name: 'Your name:',
       name_placeholder: 'Type your name',
       name_error: 'Your name cannot be empty.',
-      submit: 'Join session',
+      join_session_btn: 'Join session',
+      create_session_btn: 'Create new session',
     },
     controls: {
       title: 'Controls',

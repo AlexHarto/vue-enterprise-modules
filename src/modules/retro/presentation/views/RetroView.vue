@@ -64,7 +64,7 @@
   <BasModal
     v-if="!retroStore.userName || !retroStore.roomId"
     :open="isModalOpen"
-    :title="t('retro.join_session.title')"
+    :title="t('retro.session.title')"
   >
     <JoinSession></JoinSession>
   </BasModal>
@@ -110,6 +110,7 @@ const openModal = () => {
 };
 
 const deleteRoomClickHandler = () => {
+  // TODO: Add dialog with delete confirmation. Texts are already translated.
   retroStore.deleteRoom();
 };
 
