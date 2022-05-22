@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { useNotifications } from '../..';
+import { useNotifications } from '@/modules/notifications';
 import NotificationModal from './NotificationModal.vue';
 
 const { activeNotifications } = useNotifications();

@@ -8,6 +8,7 @@ const { registerModule, unregisterModule } = useModules(routes);
 const { user, updateUserName } = useAuth();
 
 export const userName = computed(() => user.value?.displayName || '');
+export const isLoggedIn = computed(() => user.value && user.value.displayName);
 
 export { updateUserName };
 export { routeNames as authRouteNames };

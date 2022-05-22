@@ -24,7 +24,7 @@
       </h2>
       <!-- USER AND CREATE SESSION FROM RETRO -->
       <div
-        v-if="userName"
+        v-if="isLoggedIn"
         class="my-4 border-2 p-6 rounded w-min border-primary-bg"
       >
         <CreateSession></CreateSession>
@@ -51,13 +51,11 @@
       <p class="mt-0.5">
         {{ t('home.disclaimer.text1') }}
         {{ t('home.disclaimer.text2') }}
-        <a
+        <BasLink
           href="https://github.com/AlexHarto/vue-enterprise-modules"
-          target="_blank"
-          class="underline"
-        >
-          {{ t('home.disclaimer.text3') }}
-        </a>
+          new-window
+          :label="t('home.disclaimer.text3')"
+        ></BasLink>
         {{ t('home.disclaimer.text4') }}
       </p>
 
@@ -71,7 +69,7 @@
 
 <script setup lang="ts">
 import BasLink from '@/components/BasLink.vue';
-import { authRouteNames, userName } from '@/modules/auth';
+import { authRouteNames, isLoggedIn } from '@/modules/auth';
 import { CreateSession, JoinSession } from '@/modules/retro';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
