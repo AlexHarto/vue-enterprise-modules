@@ -81,13 +81,4 @@ const route = useRoute();
 const roomId = computed(() => route.params.roomId);
 </script>
 
-<style scoped>
-.fade-up-enter-active,
-.fade-up-leave-active {
-  @apply transition-all duration-400 ease-in-out;
-}
-.fade-up-enter-from,
-.fade-up-leave-to {
-  @apply opacity-0 max-h-0;
-}
-</style>
+<style scoped></style>
