@@ -8,23 +8,25 @@
       name="userName"
       :label="t('retro.session.name')"
       :placeholder="t('retro.session.name_placeholder')"
-    ></BasInput>
-    <transition name="fade" mode="out-in">
-      <p v-if="joinSessionClicked && userName === ''" class="-mt-4 danger">
-        {{ t('retro.session.name_error') }}
-      </p>
-    </transition>
+    >
+      <template #message>
+        <p v-if="joinSessionClicked && userName === ''" class="danger">
+          {{ t('retro.session.name_error') }}
+        </p>
+      </template>
+    </BasInput>
     <BasInput
       v-model="sessionCode"
       name="sessionCode"
       :label="t('retro.session.code')"
       :placeholder="t('retro.session.code_placeholder')"
-    ></BasInput>
-    <transition name="fade" mode="out-in">
-      <p v-if="joinSessionClicked && sessionCode === ''" class="-mt-4 danger">
-        {{ t('retro.session.code_error') }}
-      </p>
-    </transition>
+    >
+      <template #message>
+        <p v-if="joinSessionClicked && sessionCode === ''" class="danger">
+          {{ t('retro.session.code_error') }}
+        </p>
+      </template>
+    </BasInput>
     <BasButton class="ml-auto mt-2 w-min bg-secondary-bg">
       {{ t('retro.session.join_session_btn') }}
     </BasButton>

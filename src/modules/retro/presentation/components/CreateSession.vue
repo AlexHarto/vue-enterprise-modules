@@ -15,12 +15,13 @@
       name="sessionCode"
       :label="t('retro.session.code')"
       :placeholder="t('retro.session.create_code_placeholder')"
-    ></BasInput>
-    <transition name="fade" mode="out-in">
-      <p v-if="createSessionClicked && sessionCode === ''" class="-mt-4 danger">
-        {{ t('retro.session.code_error') }}
-      </p>
-    </transition>
+    >
+      <template #message>
+        <p v-if="createSessionClicked && sessionCode === ''" class="danger">
+          {{ t('retro.session.code_error') }}
+        </p>
+      </template>
+    </BasInput>
     <BasButton class="ml-auto mt-2 w-min bg-secondary-bg">
       {{ t('retro.session.create_session_btn') }}
     </BasButton>

@@ -1,7 +1,7 @@
 <template>
   <label class="w-full">
     <span class="text-sm">{{ label }}</span>
-    <div class="my-1 w-full rounded input-wrapper interactive">
+    <div class="mt-1 w-full rounded input-wrapper interactive">
       <input
         v-bind="$attrs"
         v-model="cValue"
@@ -9,9 +9,11 @@
         class="w-full p-2 bg-transparent rounded"
       />
     </div>
-    <div class="text-sm input-message">
-      <slot name="message"></slot>
-    </div>
+    <transition name="fade" mode="out-in">
+      <div v-if="useSlots().message" class="mt-1 text-sm input-message">
+        <slot name="message"></slot>
+      </div>
+    </transition>
   </label>
 </template>
 
@@ -23,7 +25,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, useSlots } from 'vue';
 
 const emits = defineEmits(['update:modelValue']);
 
