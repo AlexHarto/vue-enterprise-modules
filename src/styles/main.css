@@ -6,6 +6,7 @@ html,
 body,
 #app {
   @apply h-full;
+  font-size: 98%;
 }
 
 :root {
@@ -99,7 +100,7 @@ body,
   @apply transition-all ease-in-out duration-400;
 }
 .group-fade-leave-active {
-  @apply absolute right-0;
+  @apply right-0 absolute;
 }
 .group-fade-enter-active,
 .group-fade-leave-active {
@@ -128,7 +129,7 @@ body,
 /* ANIMATION: fade */
 .fade-enter-active,
 .fade-leave-active {
-  @apply transition-opacity duration-200 ease-in-out;
+  @apply transition-opacity ease-in-out duration-200;
 }
 .fade-enter-from,
 .fade-leave-to {
@@ -138,7 +139,7 @@ body,
 /* ANIMATION: fast-fade */
 .fast-fade-enter-active,
 .fast-fade-leave-active {
-  @apply transition-opacity duration-100 ease-in-out;
+  @apply transition-opacity ease-in-out duration-100;
 }
 .fast-fade-enter-from,
 .fast-fade-leave-to {
@@ -148,7 +149,7 @@ body,
 /* ANIMATION: grow-fade */
 .grow-fade-enter-active,
 .grow-fade-leave-active {
-  @apply transform scale-150 transition-all duration-200 ease-out;
+  @apply transform transition-all ease-out scale-150 duration-200;
 }
 .grow-fade-enter-from,
 .grow-fade-leave-to {
@@ -158,7 +159,7 @@ body,
 /* ANIMATION: slide-down */
 .slide-down-enter-active,
 .slide-down-leave-active {
-  @apply transform transition-all duration-200 ease-in-out;
+  @apply transform transition-all ease-in-out duration-200;
 }
 
 .slide-down-enter-from,
