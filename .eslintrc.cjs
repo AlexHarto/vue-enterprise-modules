@@ -8,11 +8,20 @@ module.exports = {
     'eslint:recommended',
     '@vue/eslint-config-typescript/recommended',
     '@vue/eslint-config-prettier',
+    'plugin:vuejs-accessibility/recommended',
   ],
   env: {
     'vue/setup-compiler-macros': true,
   },
   rules: {
+    'vuejs-accessibility/label-has-for': [
+      'error',
+      {
+        required: {
+          some: ['nesting', 'id'],
+        },
+      },
+    ],
     'prettier/prettier': [
       'warn',
       {
