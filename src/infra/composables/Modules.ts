@@ -1,4 +1,5 @@
 import router from '@/router';
+import type { Ref } from 'vue';
 import type { RouteRecordName, RouteRecordRaw } from 'vue-router';
 
 const useModules = (routes: RouteRecordRaw[]) => {
@@ -21,7 +22,18 @@ const useModules = (routes: RouteRecordRaw[]) => {
       }
     }
   };
-  return { registerModule, unregisterModule };
+  const addLocales = (messages: Ref, locales: Record<string, unknown>) => {
+    for (const language of Object.keys(messages.value)) {
+      if (Object.keys(locales).includes(language)) {
+        const key = language as keyof typeof locales;
+        Object.assign(messages.value[key], {
+          ...messages.value[key],
+          ...(locales[key] as object),
+        });
+      }
+    }
+  };
+  return { registerModule, unregisterModule, addLocales };
 };
 
 export default useModules;

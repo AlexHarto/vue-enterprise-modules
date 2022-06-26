@@ -1,0 +1,185 @@
+:root {
+  --font-family: 'Roboto';
+  --font-style: normal;
+  /* body */
+  --font-body-small-weight: 400;
+  --font-body-small-size: 12px;
+  --font-body-small-line-height: 16px;
+  --font-body-small-letter-spacing: 0.4px;
+  --font-body-medium-weight: 400;
+  --font-body-medium-size: 14px;
+  --font-body-medium-line-height: 20px;
+  --font-body-medium-letter-spacing: 0.25px;
+  --font-body-large-weight: 400;
+  --font-body-large-size: 16px;
+  --font-body-large-line-height: 24px;
+  --font-body-large-letter-spacing: 0.15px;
+  /* label */
+  --font-label-small-weight: 500;
+  --font-label-small-size: 11px;
+  --font-label-small-line-height: 16px;
+  --font-label-small-letter-spacing: 0.5px;
+  --font-label-medium-weight: 500;
+  --font-label-medium-size: 12px;
+  --font-label-medium-line-height: 16px;
+  --font-label-medium-letter-spacing: 0.5px;
+  --font-label-large-weight: 500;
+  --font-label-large-size: 14px;
+  --font-label-large-line-height: 20px;
+  --font-label-large-letter-spacing: 0.1px;
+  /* title */
+  --font-title-small-weight: 500;
+  --font-title-small-size: 14px;
+  --font-title-small-line-height: 20px;
+  --font-title-small-letter-spacing: 0.1px;
+  --font-title-medium-weight: 500;
+  --font-title-medium-size: 16px;
+  --font-title-medium-line-height: 24px;
+  --font-title-medium-letter-spacing: 0.15px;
+  --font-title-large-weight: 400;
+  --font-title-large-size: 22px;
+  --font-title-large-line-height: 28px;
+  --font-title-large-letter-spacing: 0;
+  /* headline */
+  --font-headline-small-weight: 400;
+  --font-headline-small-size: 24px;
+  --font-headline-small-line-height: 32px;
+  --font-headline-small-letter-spacing: 0;
+  --font-headline-medium-weight: 400;
+  --font-headline-medium-size: 28px;
+  --font-headline-medium-line-height: 36px;
+  --font-headline-medium-letter-spacing: 0;
+  --font-headline-large-weight: 400;
+  --font-headline-large-size: 32px;
+  --font-headline-large-line-height: 40px;
+  --font-headline-large-letter-spacing: 0;
+  --font-title-large-letter-spacing: 0;
+  /* display */
+  --font-display-small-weight: 400;
+  --font-display-small-size: 36px;
+  --font-display-small-line-height: 44px;
+  --font-display-small-letter-spacing: 0;
+  --font-display-medium-weight: 400;
+  --font-display-medium-size: 45px;
+  --font-display-medium-line-height: 52px;
+  --font-display-medium-letter-spacing: 0;
+  --font-display-large-weight: 400;
+  --font-display-large-size: 57px;
+  --font-display-large-line-height: 64px;
+  --font-display-large-letter-spacing: 0;
+}
+
+.font-body {
+  font-family: var(--font-family);
+  font-style: var(--font-style);
+}
+.font-body--small {
+  font-weight: var(--font-body-small-weight);
+  font-size: var(--font-body-small-size);
+  line-height: var(--font-body-small-line-height);
+  letter-spacing: var(--font-body-small-letter-spacing);
+}
+.font-body--medium {
+  font-weight: var(--font-body-medium-weight);
+  font-size: var(--font-body-medium-size);
+  line-height: var(--font-body-medium-line-height);
+  letter-spacing: var(--font-body-medium-letter-spacing);
+}
+.font-body--large {
+  font-weight: var(--font-body-large-weight);
+  font-size: var(--font-body-large-size);
+  line-height: var(--font-body-large-line-height);
+  letter-spacing: var(--font-body-large-letter-spacing);
+}
+
+.font-label {
+  font-family: var(--font-family);
+  font-style: var(--font-style);
+}
+.font-label--small {
+  font-weight: var(--font-label-small-weight);
+  font-size: var(--font-label-small-size);
+  line-height: var(--font-label-small-line-height);
+  letter-spacing: var(--font-label-small-letter-spacing);
+}
+.font-label--medium {
+  font-weight: var(--font-label-medium-weight);
+  font-size: var(--font-label-medium-size);
+  line-height: var(--font-label-medium-line-height);
+  letter-spacing: var(--font-label-medium-letter-spacing);
+}
+.font-label--large {
+  font-weight: var(--font-label-large-weight);
+  font-size: var(--font-label-large-size);
+  line-height: var(--font-label-large-line-height);
+  letter-spacing: var(--font-label-large-letter-spacing);
+}
+
+.font-title {
+  font-family: var(--font-family);
+  font-style: var(--font-style);
+}
+.font-title--small {
+  font-weight: var(--font-title-small-weight);
+  font-size: var(--font-title-small-size);
+  line-height: var(--font-title-small-line-height);
+  letter-spacing: var(--font-title-small-letter-spacing);
+}
+.font-title--medium {
+  font-weight: var(--font-title-medium-weight);
+  font-size: var(--font-title-medium-size);
+  line-height: var(--font-title-medium-line-height);
+  letter-spacing: var(--font-title-medium-letter-spacing);
+}
+.font-title--large {
+  font-weight: var(--font-title-large-weight);
+  font-size: var(--font-title-large-size);
+  line-height: var(--font-title-large-line-height);
+  letter-spacing: var(--font-title-large-letter-spacing);
+}
+
+.font-headline {
+  font-family: var(--font-family);
+  font-style: var(--font-style);
+}
+.font-headline--small {
+  font-weight: var(--font-headline-small-weight);
+  font-size: var(--font-headline-small-size);
+  line-height: var(--font-headline-small-line-height);
+  letter-spacing: var(--font-headline-small-letter-spacing);
+}
+.font-headline--medium {
+  font-weight: var(--font-headline-medium-weight);
+  font-size: var(--font-headline-medium-size);
+  line-height: var(--font-headline-medium-line-height);
+  letter-spacing: var(--font-headline-medium-letter-spacing);
+}
+.font-headline--large {
+  font-weight: var(--font-headline-large-weight);
+  font-size: var(--font-headline-large-size);
+  line-height: var(--font-headline-large-line-height);
+  letter-spacing: var(--font-headline-large-letter-spacing);
+}
+
+.font-display {
+  font-family: var(--font-family);
+  font-style: var(--font-style);
+}
+.font-display--small {
+  font-weight: var(--font-display-small-weight);
+  font-size: var(--font-display-small-size);
+  line-height: var(--font-display-small-line-height);
+  letter-spacing: var(--font-display-small-letter-spacing);
+}
+.font-display--medium {
+  font-weight: var(--font-display-medium-weight);
+  font-size: var(--font-display-medium-size);
+  line-height: var(--font-display-medium-line-height);
+  letter-spacing: var(--font-display-medium-letter-spacing);
+}
+.font-display--large {
+  font-weight: var(--font-display-large-weight);
+  font-size: var(--font-display-large-size);
+  line-height: var(--font-display-large-line-height);
+  letter-spacing: var(--font-display-large-letter-spacing);
+}

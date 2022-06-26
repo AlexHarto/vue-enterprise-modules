@@ -1,5 +1,5 @@
 <template>
-  <div class="relative w-screen h-screen">
+  <div class="h-screen relative">
     <RouterView />
     <NotificationsContainer class="mt-16">
       <template #notification1>
@@ -42,3 +42,18 @@ addNotification({
   closeAfterMs: 3000,
 });
 </script>
+
+<style>
+@import './styles/colors.css';
+@import './styles/elevation.css';
+
+body {
+  @apply transition-colors;
+  color: hsl(var(--color-light-black));
+  background-color: hsl(var(--color-light-white));
+}
+body.dark {
+  color: hsl(var(--color-dark-black));
+  background-color: hsl(var(--color-dark-white));
+}
+</style>

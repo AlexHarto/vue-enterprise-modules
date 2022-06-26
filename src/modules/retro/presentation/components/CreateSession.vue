@@ -1,8 +1,5 @@
 <template>
-  <form
-    class="w-1/4 min-w-80 grid gap-4"
-    @submit.prevent="createSessionClickHandler"
-  >
+  <form class="min-w-80 grid w-1/4" @submit.prevent="createSessionClickHandler">
     <BasInput
       v-model="retroStore.userName"
       name="userName"
@@ -22,7 +19,7 @@
         </p>
       </template>
     </BasInput>
-    <BasButton class="ml-auto mt-2 w-min bg-secondary-bg">
+    <BasButton class="ml-auto mt-2">
       {{ t('retro.session.create_session_btn') }}
     </BasButton>
   </form>

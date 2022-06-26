@@ -1,10 +1,14 @@
 import useModules from '@/infra/composables/Modules';
 import base from '@/modules/base';
-import { computed } from '@vue/reactivity';
+import { computed, type Ref } from 'vue';
 import useAuth from './infra/composables/Auth';
+import en from './locales/en';
+import es from './locales/es';
 import { routeNames, routes } from './router';
 
-const { registerModule, unregisterModule } = useModules(routes);
+const { registerModule, unregisterModule, addLocales } = useModules(routes);
+const addModuleLocales = (messages: Ref) => addLocales(messages, { en, es });
+
 const { user, updateUserName } = useAuth();
 
 export const userName = computed(() => user.value?.displayName || '');
@@ -26,4 +30,8 @@ export const isUser = (): boolean => {
   return false;
 };
 
-export default { registerModule, unregisterModule };
+export default {
+  registerModule,
+  unregisterModule,
+  addModuleLocales,
+};

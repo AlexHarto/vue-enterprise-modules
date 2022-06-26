@@ -1,8 +1,5 @@
 <template>
-  <form
-    class="w-1/4 min-w-80 grid gap-4"
-    @submit.prevent="joinSessionClickHandler"
-  >
+  <form class="min-w-80 grid w-1/4" @submit.prevent="joinSessionClickHandler">
     <BasInput
       v-model="userName"
       name="userName"
@@ -27,7 +24,7 @@
         </p>
       </template>
     </BasInput>
-    <BasButton class="ml-auto mt-2 w-min bg-secondary-bg">
+    <BasButton class="bg-secondary-bg ml-auto mt-2">
       {{ t('retro.session.join_session_btn') }}
     </BasButton>
   </form>

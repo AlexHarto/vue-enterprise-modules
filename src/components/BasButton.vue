@@ -1,90 +1,149 @@
 <template>
-  <button class="btn interactive" @click="clickHandler">
-    <div class="btn-label interactive">
+  <button class="p-2.5 bas-button colorize">
+    <BasIcon v-if="icon" :icon="icon" class="h-6 w-6"></BasIcon>
+    <div
+      v-else
+      class="flex gap-2 bas-button-label"
+      :class="singleLetter ? 'w-6 justify-center' : 'px-4'"
+    >
+      <span v-if="startIcon" class="-mt-0.2">
+        <BasIcon
+          :icon="startIcon"
+          :aria-label="startIconAriaLabel || startIcon"
+          class="h-6 w-6"
+        ></BasIcon>
+      </span>
       {{ label }}
       <slot></slot>
+      <span v-if="endIcon" class="-mt-0.2">
+        <BasIcon
+          :icon="endIcon"
+          :aria-label="endIconAriaLabel || endIcon"
+          class="h-6 w-6"
+        ></BasIcon>
+      </span>
     </div>
   </button>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import BasIcon from './BasIcon.vue';
 
 /**
  * Hidden props:
- * outline  - string/boolean - makes the button outline.
- * active   - string/boolean - only if it's a switch button. It will appear as active.
+ * outlined    - string/boolean - outlined button.
+ * text        - string/boolean - text button.
+ * tonal       - string/boolean - tonal button.
+ * transparent - string/boolean - button is transparent, background, ring and border.
  */
-const emits = defineEmits(['click', 'shiftClick']);
-
-const props = withDefaults(
+withDefaults(
   defineProps<{
     label?: string;
-    switch?: boolean;
-    hslBorderColor?: string;
+    startIcon?: string;
+    startIconAriaLabel?: string;
+    endIcon?: string;
+    endIconAriaLabel?: string;
+    icon?: string;
+    iconAriaLabel?: string;
+    singleLetter?: boolean;
   }>(),
   {
-    label: '',
-    hslBorderColor: '0 0% 25%',
+    label: undefined,
+    startIcon: undefined,
+    startIconAriaLabel: undefined,
+    endIcon: undefined,
+    endIconAriaLabel: undefined,
+    icon: undefined,
+    iconAriaLabel: undefined,
   }
 );
-
-const isActive = ref(false);
-
-const clickHandler = (e: MouseEvent) => {
-  let event = {};
-  if (props.switch) {
-    isActive.value = !isActive.value;
-    event = { ...e, isActive: isActive.value };
-  } else {
-    event = e;
-  }
-  if (e.shiftKey) {
-    emits('shiftClick', event);
-  } else {
-    emits('click', event);
-  }
-};
 </script>
 
 <style scoped>
-.btn {
-  --color-secondary-border: v-bind(hslBorderColor);
-  @apply rounded outline-primary-text;
+.bas-button {
+  --color-bg: var(--color-primary);
+  --color-text: var(--color-primary-text);
+  --color-border: var(--color-primary-border);
+  --color-ring: var(--color-primary-ring);
+  @apply rounded-full font-medium shadow-none;
 }
-.btn-label {
-  @apply flex items-center justify-center rounded whitespace-nowrap border-2;
+.bas-button[secondary] {
+  --color-bg: var(--color-secondary);
+  --color-text: var(--color-secondary-text);
+  --color-border: var(--color-secondary-border);
+  --color-ring: var(--color-secondary-ring);
 }
-.btn:not([outline]) {
-  @apply text-secondary-text;
-  @apply focus:(text-secondary-text-focus);
+.bas-button[tertiary] {
+  --color-bg: var(--color-tertiary);
+  --color-text: var(--color-tertiary-text);
+  --color-border: var(--color-tertiary-border);
+  --color-ring: var(--color-tertiary-ring);
 }
-.btn:not([outline]) .btn-label {
-  @apply border-secondary-border;
-  @apply focus:(border-secondary-border-focus);
+.bas-button[transparent][transparent] {
+  --color-bg: transparent;
+  --color-border: transparent;
+  --color-ring: transparent;
 }
-.btn[active='true'] .btn-label {
-  @apply bg-base-light text-base-dark;
+.bas-button:not([disabled]):not([outlined]):not([text]) {
+  @apply bg-$color-bg text-$color-white-text;
 }
-.btn[outline] .btn-label {
-  @apply focus:(border-primary-border-focus);
+.bas-button[outlined] {
+  @apply border border-$color-border text-$color-text;
 }
-.btn:not([outline]) .btn-label {
-  @apply py-2 px-4;
+.bas-button[text] {
+  @apply text-$color-text;
 }
-.btn[outline] .btn-label {
-  @apply py-1 px-2;
+.bas-button[disabled] {
+  @apply cursor-default bg-opacity-20 text-$color-black-text;
+}
+.bas-button[disabled]:not([outlined]) {
+  @apply bg-$color-outline text-opacity-40;
+}
+.bas-button[disabled][outlined] {
+  @apply border-opacity-50 text-opacity-40;
+}
+.bas-button[disabled][text] {
+  @apply bg-transparent text-opacity-40;
+}
+
+.bas-button:not([disabled]):not([outlined]):not([text]):hover,
+.bas-button:not([disabled]):not([outlined]):not([text]):focus,
+.bas-button:not([disabled]):not([outlined]):not([text]):hover:focus {
+  @apply bg-opacity-90 shadow-md ring-$color-border;
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 var(--tw-ring-offset-color)),
+    var(--tw-ring-shadow, 0 0 var(--tw-ring-color)), var(--elevation-light-1);
+}
+.bas-button:not([disabled]):not([outlined]):not([text]):focus:active {
+  @apply bg-opacity-80;
+}
+.bas-button:not([disabled])[outlined]:hover,
+.bas-button:not([disabled])[outlined]:focus,
+.bas-button:not([disabled])[outlined]:hover:focus,
+.bas-button:not([disabled])[text]:hover,
+.bas-button:not([disabled])[text]:focus,
+.bas-button:not([disabled])[text]:hover:focus {
+  @apply bg-$color-bg bg-opacity-10;
+}
+.bas-button:not([disabled])[outlined]:focus:active,
+.bas-button:not([disabled])[text]:focus:active {
+  @apply bg-$color-bg bg-opacity-20;
+}
+.bas-button:not([disabled]):focus,
+.bas-button:not([disabled]):hover:focus {
+  @apply outline-none ring-$color-border ring-offset-$color-white-ring ring-2 ring-offset-2;
+}
+.bas-button:not([disabled])[outlined]:focus,
+.bas-button:not([disabled])[outlined]:hover:focus {
+  @apply ring-1;
+}
+.bas-button:not([disabled])[text]:focus,
+.bas-button:not([disabled])[text]:hover:focus {
+  @apply ring-1 ring-offset-0;
 }
 
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .btn[active='true']:hover .btn-label {
-    @apply bg-opacity-90;
-  }
-  .btn:not([active='true']):hover .btn-label {
-    @apply bg-base-light bg-opacity-20;
-  }
-  .btn:hover:active .btn-label {
-    @apply bg-opacity-0;
+  .bas-button {
+    @apply transition-all;
   }
 }
 </style>

@@ -1,37 +1,70 @@
 <template>
-  <div class="grid gap-4 mx-auto max-w-[300px]">
-    <h2 class="text-xl font-bold">{{ t('auth.login.title') }}</h2>
-    <div class="p-4 my-2 text-center rounded bg-warning-bg">
-      <p>
-        {{ t('auth.login.new_to_service') }}
-        <BasLink
-          :route-name="routeNames.AUTH_SIGNUP"
-          :label="t('auth.signup.title') + '!'"
-        ></BasLink>
-      </p>
+  <div class="mx-auto max-w-[300px] grid gap-4">
+    <h2 class="font-bold text-xl">{{ t('auth.login.title') }}</h2>
+    <div class="my-1 text-center">
+      {{ t('auth.login.new_to_service') }}
+      <BasLink
+        :route-name="routeNames.AUTH_SIGNUP"
+        :label="t('auth.signup.title') + '!'"
+      ></BasLink>
     </div>
-    <form class="grid gap-4" @submit.prevent="handleSubmit">
+    <form class="grid gap-1" @submit.prevent="handleSubmit">
       <BasInput
         v-model="email"
         name="email"
         type="email"
         label="Email:"
-      ></BasInput>
+        :error="emailNotFound"
+      >
+        <template #message>
+          <transition name="fade" mode="out-in">
+            <span v-if="emailNotFound">
+              {{ t(`errors.${errorCode}`) }}
+            </span>
+          </transition>
+        </template>
+      </BasInput>
       <BasInput
         v-model="password"
         name="password"
         type="password"
         label="Password:"
-      ></BasInput>
-      <BasButton class="ml-auto bg-secondary-bg">
+        :error="wrongPassword"
+      >
+        <template #message>
+          <transition name="fade" mode="out-in">
+            <span
+              v-if="
+                [
+                  'auth/email-already-in-use',
+                  'auth/invalid-email',
+                  'auth/operation-not-allowed',
+                  'auth/weak-password',
+                ].includes(errorCode)
+              "
+            >
+              {{ t(`errors.${errorCode}`) }}
+            </span>
+          </transition>
+        </template>
+      </BasInput>
+      <BasButton class="bg-secondary-bg ml-auto mt-2">
         {{ t('auth.login.title') }}
       </BasButton>
     </form>
-    <div v-if="errorCode" class="p-4 my-2 text-center rounded bg-error-bg">
-      <p>
-        {{ t(`errors.${errorCode}`) }}
-      </p>
-    </div>
+    <transition name="fade" mode="out-in">
+      <div
+        v-if="
+          errorCode &&
+          !['auth/user-not-found', 'auth/invalid-password'].includes(errorCode)
+        "
+        class="my-2 text-$color-error text-center p-4 colorize"
+      >
+        <p>
+          {{ t(`errors.${errorCode}`) }}
+        </p>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -56,6 +89,10 @@ const email = ref('');
 const password = ref('');
 
 const errorCode = computed(() => getError(error.value));
+const emailNotFound = computed(() => errorCode.value === 'auth/user-not-found');
+const wrongPassword = computed(
+  () => errorCode.value === 'auth/invalid-password'
+);
 
 const handleSubmit = async () => {
   await login(email.value, password.value);

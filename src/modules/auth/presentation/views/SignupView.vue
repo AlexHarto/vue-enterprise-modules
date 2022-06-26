@@ -1,26 +1,53 @@
 <template>
-  <div class="grid gap-4 mx-auto max-w-[300px]">
-    <h2 class="text-xl font-bold">{{ t('auth.signup.title') }}</h2>
-    <p class="p-4 my-2 text-center rounded bg-warning-bg">
+  <div class="mx-auto max-w-[300px] grid gap-4">
+    <h2 class="font-bold text-xl">{{ t('auth.signup.title') }}</h2>
+    <p class="my-1 text-center">
       {{ t('auth.signup.already_registered') }}
       <BasLink
         :route-name="routeNames.AUTH_LOGIN"
         :label="t('auth.login.title')"
       ></BasLink>
     </p>
-    <form class="grid gap-4" @submit.prevent="handleSubmit">
+    <form class="grid gap-1" @submit.prevent="handleSubmit">
       <BasInput
         v-model="displayName"
         name="displayName"
         type="text"
         :label="t('auth.form.name')"
-      ></BasInput>
+        :error="submitted && displayName.length < 1"
+      >
+        <template #message>
+          <transition name="fade" mode="out-in">
+            <span v-if="submitted && displayName.length < 1">
+              {{ t('errors.required') }}
+            </span>
+          </transition>
+        </template>
+      </BasInput>
       <BasInput
         v-model="email"
         name="email"
         type="email"
         :label="t('auth.form.email')"
-      ></BasInput>
+        :error="errorCode"
+      >
+        <template #message>
+          <transition name="fade" mode="out-in">
+            <span
+              v-if="
+                [
+                  'auth/email-already-in-use',
+                  'auth/invalid-email',
+                  'auth/operation-not-allowed',
+                  'auth/weak-password',
+                ].includes(errorCode)
+              "
+            >
+              {{ t(`errors.${errorCode}`) }}
+            </span>
+          </transition>
+        </template>
+      </BasInput>
       <BasInput
         v-model="password"
         name="password"
@@ -31,25 +58,21 @@
         v-model="passwordConfirmation"
         name="passwordConfirmation"
         type="password"
+        :error="!passwordsMatch"
         :label="t('auth.form.confirm_password')"
-      ></BasInput>
-      <BasButton class="ml-auto bg-secondary-bg">
+      >
+        <template #message>
+          <transition name="fade" mode="out-in">
+            <span v-if="!passwordsMatch">
+              {{ t('errors.password_confirmation_doesnt_match') }}
+            </span>
+          </transition>
+        </template>
+      </BasInput>
+      <BasButton class="bg-secondary-bg ml-auto mt-2">
         {{ t('auth.form.submit') }}
       </BasButton>
     </form>
-    <transition name="fade" mode="out-in">
-      <div
-        v-if="errorCode || !passwordsMatch"
-        class="p-4 my-2 text-center rounded bg-error-bg"
-      >
-        <p v-if="!passwordsMatch">
-          {{ t('errors.password_confirmation_doesnt_match') }}
-        </p>
-        <p v-else>
-          {{ t(`errors.${errorCode}`) }}
-        </p>
-      </div>
-    </transition>
   </div>
 </template>
 
@@ -74,15 +97,25 @@ const displayName = ref('');
 const email = ref('');
 const password = ref('');
 const passwordConfirmation = ref('');
-const passwordsMatch = ref(true);
+const submitted = ref(false);
 
 const errorCode = computed(() => getError(error.value));
+const passwordsMatch = computed(
+  () =>
+    !submitted.value ||
+    (submitted.value && password.value === passwordConfirmation.value)
+);
 
 const handleSubmit = async () => {
+  let hasErrors = false;
+  submitted.value = true;
   if (password.value !== passwordConfirmation.value) {
-    passwordsMatch.value = false;
-  } else {
-    passwordsMatch.value = true;
+    hasErrors = true;
+  }
+  if (displayName.value.length < 1) {
+    hasErrors = true;
+  }
+  if (!hasErrors) {
     await signup(displayName.value, email.value, password.value);
     // TODO: Email confirmation page
     if (!error.value && isUser()) {

@@ -1,0 +1,12 @@
+:root {
+  --elevation-light-1: 0px 1px 2px hsla(var(--color-light-black) / 0.3), 0px 1px 3px 1px hsla(var(--color-light-black) / 0.15);
+  --elevation-light-2: 0px 1px 2px hsla(var(--color-light-black) / 0.3), 0px 2px 6px 2px hsla(var(--color-light-black) / 0.15);
+  --elevation-light-3: 0px 4px 8px 3px hsla(var(--color-light-black) / 0.15), 0px 1px 3px hsla(var(--color-light-black) / 0.3);
+  --elevation-light-4: 0px 6px 10px 4px hsla(var(--color-light-black) / 0.15), 0px 2px 3px hsla(var(--color-light-black) / 0.3);
+  --elevation-light-5: 0px 8px 12px 6px hsla(var(--color-light-black) / 0.15), 0px 4px 4px hsla(var(--color-light-black) / 0.3);
+  --elevation-dark-1: 0px 1px 3px 1px hsla(var(--color-light-black) / 0.15), 0px 1px 2px hsla(var(--color-light-black) / 0.3);
+  --elevation-dark-2: 0px 2px 6px 2px hsla(var(--color-light-black) / 0.15), 0px 1px 2px hsla(var(--color-light-black) / 0.3);
+  --elevation-dark-3: 0px 4px 8px 3px hsla(var(--color-light-black) / 0.15), 0px 1px 3px hsla(var(--color-light-black) / 0.3);
+  --elevation-dark-4: 0px 6px 10px 4px hsla(var(--color-light-black) / 0.15), 0px 2px 3px hsla(var(--color-light-black) / 0.3);
+  --elevation-dark-5: 0px 8px 12px 6px hsla(var(--color-light-black) / 0.15), 0px 4px 4px hsla(var(--color-light-black) / 0.3);
+}

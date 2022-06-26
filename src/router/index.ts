@@ -1,3 +1,4 @@
+import { MaterialView } from '@/modules/material';
 import {
   createRouter,
   createWebHistory,
@@ -6,7 +7,13 @@ import {
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [],
+  routes: [
+    {
+      name: 'MaterialPreview',
+      path: '/material',
+      component: MaterialView,
+    },
+  ],
 });
 
 export const getRoutePath = (name: RouteRecordName) => {

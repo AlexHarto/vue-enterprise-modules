@@ -8,21 +8,24 @@
       'bg-error-bg border-error-border text-error-text':
         notification.type === NotificationType.ERROR,
     }"
-    class="flex flex-col p-4 border rounded shadow-md"
+    class="border rounded flex flex-col shadow-md p-4"
     data-test="notification"
   >
-    <header class="flex items-center justify-between mb-2 -mt-2 font-semibold">
+    <header class="flex font-semibold -mt-2 mb-2 items-center justify-between">
       <div v-if="notification.title" data-test="notification-title">
         {{ notification.title }}
       </div>
       <div
         v-if="notification.closable"
         data-test="notification-close"
+        role="button"
+        tabindex="0"
+        @keypress.space="removeNotification(notification.id)"
         @click="removeNotification(notification.id)"
       >
         <BasIcon
           icon="close"
-          class="w-4 h-4 transition-all cursor-pointer stroke-2 hover:stroke-3 hover:scale-105"
+          class="cursor-pointer h-4 transition-all stroke-2 w-4 hover:stroke-3 hover:scale-105"
           data-test="notification-close-icon"
         />
       </div>
@@ -30,7 +33,7 @@
     <section class="flex items-center">
       <div v-if="notification.icon" class="mr-2">
         <BasIcon
-          class="w-8 h-8"
+          class="h-8 w-8"
           data-test="notification-icon"
           :icon="notification.type"
         />

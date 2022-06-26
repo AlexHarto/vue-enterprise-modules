@@ -13,14 +13,17 @@
       <div v-if="editing" class="flex-grow mr-4">
         <input
           v-model="newLabel"
+          :aria-label="t('retro.aria.item')"
           type="text"
-          class="w-full p-1 bg-transparent"
+          class="bg-transparent w-full p-1"
         />
       </div>
       <div
         v-else
-        class="flex-grow p-1 cursor-text"
+        class="cursor-text flex-grow p-1"
         role="button"
+        tabindex="0"
+        @keypress.space="editMode"
         @click="editMode"
       >
         {{ message.label }}
@@ -28,19 +31,19 @@
       <div class="flex-center">
         <transition name="fast-fade" mode="out-in">
           <button v-if="userLikesIt" @click="toggleLiked">
-            <BasIcon icon="heart-filled" class="w-6 h-6 interactive"></BasIcon>
+            <BasIcon icon="heart-filled" class="h-6 w-6 interactive"></BasIcon>
           </button>
           <button v-else @click="toggleLiked">
             <BasIcon
               icon="heart"
-              class="w-6 h-6 interactive heart-icon"
+              class="h-6 w-6 interactive heart-icon"
             ></BasIcon>
           </button>
         </transition>
       </div>
-      <span class="pl-2 text-right min-w-4">{{ numLikes }}</span>
+      <span class="text-right min-w-4 pl-2">{{ numLikes }}</span>
     </div>
-    <div class="my-1 border-t-2 border-opacity-25 border-section-accent"></div>
+    <div class="border-section-accent border-t my-1"></div>
   </div>
 </template>
 
@@ -48,6 +51,7 @@
 import BasCheckbox from '@/components/BasCheckbox.vue';
 import BasIcon from '@/components/BasIcon.vue';
 import { computed, nextTick, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 import type { RetroSectionMessage } from '../../infra/types/Section';
 import { useRetroStore } from '../../store';
 
@@ -56,6 +60,7 @@ const props = defineProps<{
   checks: boolean;
 }>();
 
+const { t } = useI18n();
 const retroStore = useRetroStore();
 
 const editing = ref(false);

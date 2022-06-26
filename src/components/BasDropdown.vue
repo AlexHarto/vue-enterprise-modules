@@ -21,7 +21,7 @@
       <div
         v-if="optionsVisible"
         data-test="options"
-        class="absolute z-10 top-8 right-0 min-w-24 bg-white rounded divide-y divide-gray-100 shadow dark:bg-base-dark"
+        class="absolute right-0 z-10 bg-white divide-y divide-gray-100 rounded shadow top-8 min-w-24 dark:bg-base-dark"
       >
         <ul
           class="text-sm text-base-dark dark:text-base-light"
@@ -29,11 +29,15 @@
         >
           <li
             v-for="(option, optionIndex) in options"
-            :key="`${id}_option_${optionIndex}`"
+            :key="`${id}_${option.label}`"
           >
             <a
               :href="option.link || '#'"
-              class="block transition-colors py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              class="block px-4 py-2 transition-colors hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              :class="{
+                'rounded-t': optionIndex === 0,
+                'rounded-b': optionIndex === options.length - 1,
+              }"
               @click="optionClick(option)"
               >{{ option.label }}</a
             >

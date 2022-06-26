@@ -1,13 +1,13 @@
 <template>
   <div>
     <div v-if="!roomId">
-      <h1 class="text-xl font-bold">
+      <h1 class="font-bold text-xl">
         {{ t('home.presentation.title') }}
       </h1>
       <p class="mt-1">
         {{ t('home.presentation.text') }}
       </p>
-      <h2 class="mt-8 text-lg font-bold">
+      <h2 class="font-bold mt-8 text-lg">
         {{ t('home.join_session.title') }}
       </h2>
       <p class="mt-0.5">
@@ -15,17 +15,17 @@
       </p>
 
       <!-- JOIN SESSION FROM RETRO -->
-      <div class="my-4 border-2 p-6 rounded w-min border-primary-bg">
+      <div class="border-primary-bg rounded border-2 my-4 w-min p-6">
         <JoinSession></JoinSession>
       </div>
 
-      <h2 class="mt-8 text-lg font-bold">
+      <h2 class="font-bold mt-8 text-lg">
         {{ t('home.create_session.title') }}
       </h2>
       <!-- USER AND CREATE SESSION FROM RETRO -->
       <div
         v-if="isLoggedIn"
-        class="my-4 border-2 p-6 rounded w-min border-primary-bg"
+        class="border-primary-bg rounded border-2 my-4 w-min p-6"
       >
         <CreateSession></CreateSession>
       </div>
@@ -47,7 +47,7 @@
           {{ t('home.create_session.text4') }}
         </p>
       </div>
-      <h2 class="mt-8 text-lg font-bold">{{ t('home.disclaimer.title') }}</h2>
+      <h2 class="font-bold mt-8 text-lg">{{ t('home.disclaimer.title') }}</h2>
       <p class="mt-0.5">
         {{ t('home.disclaimer.text1') }}
         {{ t('home.disclaimer.text2') }}
